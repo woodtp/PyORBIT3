@@ -8,6 +8,7 @@ The abstract AbstractRF_Gap class is a parent class for all RF gap model classes
 
 import os
 import math
+import logging
 
 # import the finalization function
 from orbit.utils import orbitFinalize
@@ -24,6 +25,8 @@ from orbit.teapot_base import TPB
 # quad1 - linac quad linear part of tracking
 # quad2 - linac quad non-linear part of tracking
 from orbit.core.linac import linac_tracking
+
+logger = logging.getLogger(__name__)
 
 
 class BaseLinacNode(AccNodeBunchTracker):
@@ -417,8 +420,9 @@ class Quad(LinacMagnetNode):
         of the AccNode class track(probe) method.
         """
         bunch = paramsDict["bunch"]
-        charge = bunch.charge()
-        momentum = bunch.getSyncParticle().momentum()
+        # Unused:
+        # charge = bunch.charge()
+        # momentum = bunch.getSyncParticle().momentum()
         # ---- The sign of dB/dr will be delivered to tracking module
         # ---- functions as kq.
         # ---- The charge sign will be accounted for inside tracking module
@@ -430,6 +434,7 @@ class Quad(LinacMagnetNode):
         poleArr = self.getParam("poles")
         klArr = self.getParam("kls")
         skewArr = self.getParam("skews")
+        logger.debug(f"Tracking through quad {self.getName()} with kq={kq} length={length} index={index} nParts={nParts} poles={poleArr} kls={klArr} skews={skewArr}")
         # print "debug name =",self.getName()," kq=",kq,"  L=",self.getLength(index)," index=",index
         # ===============================================================
         # This is a 3-sub-parts implementation TEAPOT algorithm
@@ -441,18 +446,16 @@ class Quad(LinacMagnetNode):
         step = length
         self.tracking_module.quad1(bunch, step / 4, kq)
         self.tracking_module.quad2(bunch, step / 4)
-        for i in range(len(poleArr)):
-            pole = poleArr[i]
-            kl = klArr[i] / (2 * nParts)
-            skew = skewArr[i]
+        for pole, kl, skew in zip(poleArr, klArr, skewArr):
+            kl /= 2 * nParts
+            logger.debug(f"Applying multipole momentum kick: m={pole} with kl={kl} and skew={skew}")
             TPB.multp(bunch, pole, kl, skew)
         self.tracking_module.quad2(bunch, step / 4)
         self.tracking_module.quad1(bunch, step / 2, kq)
         self.tracking_module.quad2(bunch, step / 4)
-        for i in range(len(poleArr)):
-            pole = poleArr[i]
-            kl = klArr[i] / (2 * nParts)
-            skew = skewArr[i]
+        for pole, kl, skew in zip(poleArr, klArr, skewArr):
+            kl /= 2 * nParts
+            logger.debug(f"Applying multipole momentum kick: m={pole} with kl={kl} and skew={skew}")
             TPB.multp(bunch, pole, kl, skew)
         self.tracking_module.quad2(bunch, step / 4)
         self.tracking_module.quad1(bunch, step / 4, kq)

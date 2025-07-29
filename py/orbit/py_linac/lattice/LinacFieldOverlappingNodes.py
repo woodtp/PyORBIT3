@@ -8,6 +8,7 @@
 import math
 import sys
 import os
+import logging
 
 from orbit.utils import orbitFinalize, phaseNearTargetPhase, phaseNearTargetPhaseDeg
 
@@ -20,6 +21,8 @@ from orbit.teapot_base import TPB
 
 # from linac import the RF gap classes
 from orbit.core.linac import RfGapThreePointTTF, RfGapThreePointTTF_slow
+
+logger = logging.getLogger(__file__)
 
 
 class AxisField_and_Quad_RF_Gap(AbstractRF_Gap):
@@ -648,8 +651,13 @@ class OverlappingQuadsNode(BaseLinacNode):
         if index == 0:
             self.z_value = -self.getLength() / 2
         bunch = paramsDict["bunch"]
-        charge = bunch.charge()
-        momentum = bunch.getSyncParticle().momentum()
+        # Unused:
+        # charge = bunch.charge()
+        # momentum = bunch.getSyncParticle().momentum()
+        # TODO: Some PMQs throw errors because these params don't exist. figure out why it complains here and not LinacAccNodes.py
+        poleArr = self.getParam("poles") if self.hasParam("poles") else []
+        klArr = self.getParam("kls") if self.hasParam("kls") else []
+        skewArr = self.getParam("skews") if self.hasParam("skews") else []
         n_steps = int(length / self.z_step) + 1
         z_step = length / n_steps
         for z_ind in range(n_steps):
@@ -665,8 +673,18 @@ class OverlappingQuadsNode(BaseLinacNode):
             # ------- track through a combined quad
             self.tracking_module.quad1(bunch, z_step / 4.0, kq)
             self.tracking_module.quad2(bunch, z_step / 2.0)
+
+            for pole, kl, skew in zip(poleArr, klArr, skewArr):
+                logger.debug(f"Applying multipole momentum kick: m={pole} with kl={kl} and skew={skew}")
+                TPB.multp(bunch, pole, kl*kq, skew)
+
             self.tracking_module.quad1(bunch, z_step / 2.0, kq)
             self.tracking_module.quad2(bunch, z_step / 2.0)
+
+            for pole, kl, skew in zip(poleArr, klArr, skewArr):
+                logger.debug(f"Applying multipole momentum kick: m={pole} with kl={kl} and skew={skew}")
+                TPB.multp(bunch, pole, kl*kq, skew)
+
             self.tracking_module.quad1(bunch, z_step / 4.0, kq)
             if abs(dB_dz) != 0.0:
                 self.tracking_module.quad3(bunch, z_step, dB_dz)
