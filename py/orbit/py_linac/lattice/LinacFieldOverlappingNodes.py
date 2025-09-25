@@ -8,6 +8,7 @@
 import math
 import sys
 import os
+from collections import defaultdict
 
 from orbit.utils import orbitFinalize, phaseNearTargetPhase, phaseNearTargetPhaseDeg
 
@@ -648,15 +649,21 @@ class OverlappingQuadsNode(BaseLinacNode):
         if index == 0:
             self.z_value = -self.getLength() / 2
         bunch = paramsDict["bunch"]
-        charge = bunch.charge()
-        momentum = bunch.getSyncParticle().momentum()
+
+        # TW: these are unused TODO remove?
+        # charge = bunch.charge()
+        # momentum = bunch.getSyncParticle().momentum()
+
         n_steps = int(length / self.z_step) + 1
         z_step = length / n_steps
+        nParts = self.getnParts()
+
         for z_ind in range(n_steps):
             z = self.z_value + z_step * (z_ind + 0.5)
             G = self.getTotalField(z)
+            poles, kls, skews = self.getTotalKLs(z)
             dB_dz = 0.0
-            if self.useLongField == True:
+            if self.useLongField:
                 dB_dz = self.getTotalFieldDerivative(z)
             kq = G / bunch.B_Rho()
             if abs(kq) == 0.0:
@@ -665,8 +672,18 @@ class OverlappingQuadsNode(BaseLinacNode):
             # ------- track through a combined quad
             self.tracking_module.quad1(bunch, z_step / 4.0, kq)
             self.tracking_module.quad2(bunch, z_step / 2.0)
+
+            for pole, kl, skew in zip(poles, kls, skews):
+                TPB.multp(bunch, pole, kl/(2*nParts), skew)
+
+            self.tracking_module.quad2(bunch, z_step / 4.0)
             self.tracking_module.quad1(bunch, z_step / 2.0, kq)
-            self.tracking_module.quad2(bunch, z_step / 2.0)
+            self.tracking_module.quad2(bunch, z_step / 4.0)
+
+            for pole, kl, skew in zip(poles, kls, skews):
+                TPB.multp(bunch, pole, kl/(2*nParts), skew)
+
+            self.tracking_module.quad2(bunch, z_step / 4.0)
             self.tracking_module.quad1(bunch, z_step / 4.0, kq)
             if abs(dB_dz) != 0.0:
                 self.tracking_module.quad3(bunch, z_step, dB_dz)
@@ -683,7 +700,7 @@ class OverlappingQuadsNode(BaseLinacNode):
         if z < 0.0 or z > self.getLength():
             return G
         for [quad, fieldFunc, z_center_of_field] in self.quads_fields_arr:
-            if fieldFunc != None:
+            if fieldFunc is not None:
                 gl = quad.getParam("dB/dr") * quad.getLength()
                 G += gl * fieldFunc.getFuncValue(z - z_center_of_field)
             else:
@@ -701,9 +718,44 @@ class OverlappingQuadsNode(BaseLinacNode):
         if z < 0.0 or z > self.getLength():
             return GP
         for [quad, fieldFunc, z_center_of_field] in self.quads_fields_arr:
-            if fieldFunc != None:
+            if fieldFunc is not None:
                 gl = quad.getParam("dB/dr") * quad.getLength()
                 GP += gl * fieldFunc.getFuncDerivative(z - z_center_of_field)
             else:
                 GP += 0.0
         return GP
+
+    def getTotalKLs(self, z_from_center: float) -> tuple[list[int], list[float], list[int]]:
+        poles = []
+        kls = []
+        skews = []
+
+        z = z_from_center + self.getLength() / 2
+
+        if z < 0.0 or z > self.getLength():
+            return (poles, kls, skews)
+
+        total = defaultdict(float)
+        for (quad, field_func, z_center_of_field) in self.quads_fields_arr:
+            poles_ = quad.getParam("poles")
+            kls_ = quad.getParam("kls")
+            skews_ = quad.getParam("skews")
+
+            if not poles_ or not kls_ or not skews_:
+                continue
+
+            dBdz = field_func.getFuncValue(z - z_center_of_field) if field_func is not None else 0.0
+
+            # TW: This is probably not quite correct... It effectively enforces that the
+            #    higher-order multipoles scale with dB/dz of the quad component.
+            #    A better model would be to have a separate field function for each pole,
+            #    as I assume it's likely the case that each component has its own longitudinal profile.
+            for pole, kl, skew in zip(poles_, kls_, skews_):
+                total[(pole, skew)] += kl * dBdz
+
+        for (pole, skew), kl in total.items():
+            poles.append(pole)
+            kls.append(kl)
+            skews.append(skew)
+
+        return (poles, kls, skews)
