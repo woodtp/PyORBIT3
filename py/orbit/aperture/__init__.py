@@ -7,6 +7,7 @@
 from .TeapotApertureNode import TeapotApertureNode, CircleApertureNode, EllipseApertureNode, RectangleApertureNode
 from .ApertureLatticeModifications import addTeapotApertureNode
 from .ApertureLatticeRangeModifications import addCircleApertureSet, addEllipseApertureSet, addRectangleApertureSet
+from .aperture_type import ApertureType
 
 # from TeapotApertureShapeNode import CircleApertureNode
 
