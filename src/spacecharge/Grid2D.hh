@@ -5,10 +5,10 @@
 
 //MPI Function Wrappers
 #include "orbit_mpi.hh"
-#include "wrap_mpi_comm.hh"
+// #include "wrap_mpi_comm.hh"
 
 #include <cstdlib>
-#include <cmath>
+// #include <cmath>
 
 //ORBIT bunch
 #include "Bunch.hh"
@@ -34,8 +34,10 @@ public:
   	 double xMin, double xMax,
          double yMin, double yMax);
 
+  Grid2D(double *external, size_t xSize, size_t ySize, double xMin, double xMax, double yMin, double yMax);
+
   /** Destructor */
-  virtual ~Grid2D();
+  ~Grid2D() = default;
 
 	/** Sets all grid points to zero */
 	void setZero();
@@ -48,6 +50,13 @@ public:
 
 	/** Returns the interpolated value on grid*/
 	double getValueOnGrid(int ix, int iy);
+
+	/** Returns value on grid at indices with bounds-checking */
+	double& at(size_t ix, size_t iy);
+	const double& at(size_t ix, size_t iy) const;
+
+	double& operator()(size_t ix, size_t iy);
+	const double& operator()(size_t ix, size_t iy) const;
 
 	/** Sets the value to the one point of the 2D grid  */
 	void setValue(double value, int ix, int iy);
@@ -169,7 +178,11 @@ public:
 
   protected:
 
-		double** arr_;
+	bool owns_{true};
+	std::vector<double> data_;
+	std::vector<double*> rows_; // legacy bridge to double** arr_
+	double** arr_;
+	double* externalData_{nullptr}; // non-owning view
 
 	//Grid size
 	int xSize_;
@@ -183,6 +196,9 @@ public:
 	double xMin_,xMax_;
 	double yMin_,yMax_;
 
+	// returns element on grid without bounds-checking
+	double& elem(size_t ix, size_t iy);
+	const double& elem(size_t ix, size_t iy) const;
 };
 
 #endif

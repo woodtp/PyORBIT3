@@ -18,7 +18,7 @@
 
 //MPI Function Wrappers
 #include "orbit_mpi.hh"
-#include "wrap_mpi_comm.hh"
+// #include "wrap_mpi_comm.hh"
 
 //ORBIT bunch
 #include "Bunch.hh"
@@ -28,7 +28,7 @@
 
 #include "Grid2D.hh"
 
-#include <iostream>
+// #include <iostream>
 #include <cstdlib>
 
 class Grid3D: public OrbitUtils::CppPyWrapper
@@ -40,7 +40,7 @@ public:
 
   Grid3D(int nX, int nY, int nZ);
 
-  virtual ~Grid3D();
+  ~Grid3D() = default;
 
 	/** Returns the reference to the inner 3D array. The array is val[z][x][y].*/
   double*** getArr3D();
@@ -49,7 +49,7 @@ public:
   double**  getSlice2D(int zInd);
 
   /** Returns the reference to Grid2D slice of the inner 3D array */
-  Grid2D* getGrid2D(int zInd);
+  Grid2D* getGrid2D(size_t zInd);
 
   /** Returns the grid size in x-direction */
   int getSizeX();
@@ -138,21 +138,21 @@ public:
 	     longitudinally with period of lambda.
    */
 	void binBunch(Bunch* bunch, double lambda);
-	
-   /** 
+
+   /**
      Bins the Bunch into the 3D grid slice by slice.
      No interpolation between x-y 2D slices during the binning.
      If bunch has a macrosize particle attribute it will be used.
      This method is used in SpaceChargeCalcSliceBySlice2D.cc.
    */
     void binBunchSlice2D(Bunch* bunch);
-    
-   /** 
+
+   /**
       Bins the value into the grid 3D slice by slice.
       No interpolation between x-y 2D slices during the binning.
       This method is used in SpaceChargeCalcSliceBySlice2D.cc.
    */
-    void binValueSlice2D(double macroSize, double x, double y, double z);    
+    void binValueSlice2D(double macroSize, double x, double y, double z);
 
   /** Bins the value onto grid */
   void binValue(double macroSize, double x, double y, double z);
@@ -176,6 +176,20 @@ public:
 
   /** synchronize MPI */
   void synchronizeMPI(pyORBIT_MPI_Comm* pyComm);
+
+  /** Bounds-checked element access */
+  double& at(size_t iz, size_t ix, size_t iy);
+  const double& at(size_t iz, size_t ix, size_t iy) const;
+
+  /** Unchecked element access */
+  double& elem(size_t iz, size_t ix, size_t iy);
+  const double& elem(size_t iz, size_t ix, size_t iy) const;
+
+  double& operator()(size_t iz, size_t ix, size_t iy);
+  const double& operator()(size_t iz, size_t ix, size_t iy) const;
+
+  const double* getDataPtr() const { return data_.data(); }
+  double* getDataPtr() { return  data_.data(); }
 
 protected:
   //---------------------------------------
@@ -206,10 +220,10 @@ protected:
   //---------------------------------------
 
 	//3D array
-  double*** Arr3D;
+  double*** Arr3D{nullptr};
 
   //Grid2D array
-  Grid2D** grid2dArr;
+  // Grid2D** grid2dArr;
 
 // PRIVATE MEMBERS
 //    Arr3D;           holds set of double on each 3D grid points
@@ -221,9 +235,14 @@ protected:
   double xMin_,xMax_,yMin_,yMax_,zMin_,zMax_;
   double dx_, dy_, dz_;
 
+  std::vector<double> data_;
+  std::vector<double*> rows_;
+  std::vector<double**> slices_;
+  std::vector<Grid2D> grid2dSlices_;
+
   //it is equal 0 we do not have longitudinal wrapping
   //if it is 1 we have wrapping. By default it is 0.
-  int longWrapping;
+  bool longWrapping_;
 
 };
 #endif

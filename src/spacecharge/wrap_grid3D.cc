@@ -1,15 +1,13 @@
 #include "wrap_grid3D.hh"
 
-#include <iostream>
-
 #include "orbit_mpi.hh"
 #include "pyORBIT_Object.hh"
 #include "wrap_bunch.hh"
-#include "wrap_spacecharge.hh"
 
 #ifdef PyORBIT_EXPERIMENTAL_WITH_NUMPY
 #define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
 #include <numpy/arrayobject.h>
+#include <cstring>
 
 static int ensure_numpy() {
   static int numpy_initialized = 0;
@@ -39,6 +37,9 @@ extern "C" {
 // It never will be called directly
 static PyObject *Grid3D_new(PyTypeObject *type, PyObject *args,
                             PyObject *kwds) {
+  (void)args; // unused
+  (void)kwds; // unused
+
   pyORBIT_Object *self;
   self = (pyORBIT_Object *)type->tp_alloc(type, 0);
   self->cpp_obj = NULL;
@@ -48,6 +49,8 @@ static PyObject *Grid3D_new(PyTypeObject *type, PyObject *args,
 // initializator for python  Grid3D class
 // this is implementation of the __init__ method
 static int Grid3D_init(pyORBIT_Object *self, PyObject *args, PyObject *kwds) {
+  (void)kwds; // unused
+
   int binX, binY, binZ;
   if (!PyArg_ParseTuple(args, "iii:__init__", &binX, &binY, &binZ)) {
     ORBIT_MPI_Finalize(
@@ -60,6 +63,8 @@ static int Grid3D_init(pyORBIT_Object *self, PyObject *args, PyObject *kwds) {
 
 // setZero()
 static PyObject *Grid3D_setZero(PyObject *self, PyObject *args) {
+  (void)args; // unused
+
   pyORBIT_Object *pyGrid3D = (pyORBIT_Object *)self;
   Grid3D *cpp_Grid3D = (Grid3D *)pyGrid3D->cpp_obj;
   cpp_Grid3D->setZero();
@@ -185,6 +190,8 @@ static PyObject *Grid3D_getGridZ(PyObject *self, PyObject *args) {
 
 // getSizeX()
 static PyObject *Grid3D_getSizeX(PyObject *self, PyObject *args) {
+  (void)args; // unused
+
   pyORBIT_Object *pyGrid3D = (pyORBIT_Object *)self;
   Grid3D *cpp_Grid3D = (Grid3D *)pyGrid3D->cpp_obj;
   return Py_BuildValue("i", cpp_Grid3D->getSizeX());
@@ -192,6 +199,8 @@ static PyObject *Grid3D_getSizeX(PyObject *self, PyObject *args) {
 
 // getSizeY()
 static PyObject *Grid3D_getSizeY(PyObject *self, PyObject *args) {
+  (void)args; // unused
+
   pyORBIT_Object *pyGrid3D = (pyORBIT_Object *)self;
   Grid3D *cpp_Grid3D = (Grid3D *)pyGrid3D->cpp_obj;
   return Py_BuildValue("i", cpp_Grid3D->getSizeY());
@@ -199,6 +208,8 @@ static PyObject *Grid3D_getSizeY(PyObject *self, PyObject *args) {
 
 // getSizeZ()
 static PyObject *Grid3D_getSizeZ(PyObject *self, PyObject *args) {
+  (void)args; // unused
+
   pyORBIT_Object *pyGrid3D = (pyORBIT_Object *)self;
   Grid3D *cpp_Grid3D = (Grid3D *)pyGrid3D->cpp_obj;
   return Py_BuildValue("i", cpp_Grid3D->getSizeZ());
@@ -227,6 +238,8 @@ static PyObject *Grid3D_synchronizeMPI(PyObject *self, PyObject *args) {
 
 // getMinX()
 static PyObject *Grid3D_getMinX(PyObject *self, PyObject *args) {
+  (void)args; // unused
+
   pyORBIT_Object *pyGrid3D = (pyORBIT_Object *)self;
   Grid3D *cpp_Grid3D = (Grid3D *)pyGrid3D->cpp_obj;
   return Py_BuildValue("d", cpp_Grid3D->getMinX());
@@ -234,6 +247,8 @@ static PyObject *Grid3D_getMinX(PyObject *self, PyObject *args) {
 
 // getMaxX()
 static PyObject *Grid3D_getMaxX(PyObject *self, PyObject *args) {
+  (void)args;
+
   pyORBIT_Object *pyGrid3D = (pyORBIT_Object *)self;
   Grid3D *cpp_Grid3D = (Grid3D *)pyGrid3D->cpp_obj;
   return Py_BuildValue("d", cpp_Grid3D->getMaxX());
@@ -241,6 +256,8 @@ static PyObject *Grid3D_getMaxX(PyObject *self, PyObject *args) {
 
 // getMinY()
 static PyObject *Grid3D_getMinY(PyObject *self, PyObject *args) {
+  (void)args;
+
   pyORBIT_Object *pyGrid3D = (pyORBIT_Object *)self;
   Grid3D *cpp_Grid3D = (Grid3D *)pyGrid3D->cpp_obj;
   return Py_BuildValue("d", cpp_Grid3D->getMinY());
@@ -248,6 +265,8 @@ static PyObject *Grid3D_getMinY(PyObject *self, PyObject *args) {
 
 // getMaxY()
 static PyObject *Grid3D_getMaxY(PyObject *self, PyObject *args) {
+  (void)args;
+
   pyORBIT_Object *pyGrid3D = (pyORBIT_Object *)self;
   Grid3D *cpp_Grid3D = (Grid3D *)pyGrid3D->cpp_obj;
   return Py_BuildValue("d", cpp_Grid3D->getMaxY());
@@ -255,6 +274,8 @@ static PyObject *Grid3D_getMaxY(PyObject *self, PyObject *args) {
 
 // getMinZ()
 static PyObject *Grid3D_getMinZ(PyObject *self, PyObject *args) {
+  (void)args;
+
   pyORBIT_Object *pyGrid3D = (pyORBIT_Object *)self;
   Grid3D *cpp_Grid3D = (Grid3D *)pyGrid3D->cpp_obj;
   return Py_BuildValue("d", cpp_Grid3D->getMinZ());
@@ -262,6 +283,8 @@ static PyObject *Grid3D_getMinZ(PyObject *self, PyObject *args) {
 
 // getMaxZ()
 static PyObject *Grid3D_getMaxZ(PyObject *self, PyObject *args) {
+  (void)args;
+
   pyORBIT_Object *pyGrid3D = (pyORBIT_Object *)self;
   Grid3D *cpp_Grid3D = (Grid3D *)pyGrid3D->cpp_obj;
   return Py_BuildValue("d", cpp_Grid3D->getMaxZ());
@@ -369,15 +392,8 @@ static PyObject *Grid3D_to_numpy(PyObject *self, PyObject *args) {
 
   PyArrayObject *arr = (PyArrayObject *)arr_obj;
   double *out_buffer = (double *)PyArray_DATA(arr);
-  double ***src = cpp_Grid3D->getArr3D();
 
-  for (npy_intp iz = 0; iz < nz; ++iz) {
-    for (npy_intp ix = 0; ix < ny; ++ix) {
-      for (npy_intp iy = 0; iy < nx; ++iy) {
-        out_buffer[iy + ix * ny + iz * nx * ny] = src[iz][ix][iy];
-      }
-    }
-  }
+  std::memcpy(out_buffer, cpp_Grid3D->getDataPtr(), nz*nx*ny*sizeof(double));
 
   return arr_obj;
 }
@@ -424,15 +440,8 @@ static PyObject *Grid3D_from_numpy(PyObject *self, PyObject *args) {
   }
 
   const double *in_buffer = (double *)PyArray_DATA(arr);
-  double ***dst = cpp_Grid3D->getArr3D();
 
-  for (npy_intp iz = 0; iz < nz_grid; ++iz) {
-    for (npy_intp ix = 0; ix < nx_grid; ++ix) {
-      for (npy_intp iy = 0; iy < ny_grid; ++iy) {
-        dst[iz][ix][iy] = in_buffer[iy + ix * ny_grid + iz * nx_grid * ny_grid];
-      }
-    }
-  }
+  std::memcpy(cpp_Grid3D->getDataPtr(), in_buffer, nz_grid*nx_grid*ny_grid*sizeof(double));
 
   Py_DECREF(arr);
   Py_RETURN_NONE;
@@ -470,11 +479,12 @@ static PyMethodDef Grid3DClassMethods[] = {
     {"to_numpy",       Grid3D_to_numpy,       METH_VARARGS, "converts the 3D grid to a numpy array"},
     {"from_numpy",     Grid3D_from_numpy,     METH_VARARGS, "converts the numpy array to a 3D grid"},
 #endif // PyORBIT_EXPERIMENTAL_WITH_NUMPY
-    {NULL}};
+    {NULL, NULL, 0, NULL}
+};
 
 // defenition of the memebers of the python Grid3D wrapper class
 // they will be vailable from python level
-static PyMemberDef Grid3DClassMembers[] = {{NULL}};
+static PyMemberDef Grid3DClassMembers[] = {{NULL, 0, 0, 0, NULL}};
 
 // new python Grid3D wrapper type definition
 static PyTypeObject pyORBIT_Grid3D_Type = {

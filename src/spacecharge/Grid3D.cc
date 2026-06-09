@@ -15,50 +15,53 @@
 ///////////////////////////////////////////////////////////////////////////
 
 #include "ParticleMacroSize.hh"
-#include "BufferStore.hh"
+// #include "BufferStore.hh"
 
 #include "Grid3D.hh"
 
-#include <iostream>
+#include <numeric>
+// #include <iostream> // unused
 
 using namespace OrbitUtils;
 
 /** Constructor */
-Grid3D::Grid3D(int nX, int nY, int nZ): CppPyWrapper(NULL)
-{
-  nX_ = nX;
-  nY_ = nY;
-  nZ_ = nZ;
-
-  dx_ = 0.;
-  dy_ = 0.;
-  dz_ = 0.;
-
-  xMin_=0.0; xMax_=0.0;
-  yMin_=0.0; yMax_=0.0;
-  zMin_=0.0; zMax_=0.0;
-
+Grid3D::Grid3D(int nX, int nY, int nZ): CppPyWrapper(NULL),
+  nZ_(nZ), nX_(nX), nY_(nY),
+  xMin_(0.0), xMax_(0.0),
+  yMin_(0.0), yMax_(0.0),
+  zMin_(0.0), zMax_(0.0),
+  dx_(0.0), dy_(0.0), dz_(0.0),
+  data_(nZ*nX*nY),
   // if it is equal 0 we do not have longitudinal wrapping
   // if it is 1 we have wrapping
-  longWrapping = 0;
+  longWrapping_(false)
+{
 
   //Allocate memory for the 3D distribution
-  grid2dArr = new Grid2D*[nZ_];
-  Arr3D = new double**[nZ_];
-  for(int iz=0 ; iz < nZ_; iz++){
-  	grid2dArr[iz] = new Grid2D(nX,nY);
-    Arr3D[iz] = grid2dArr[iz]->getArr();
+  rows_.resize(nZ_ * nX_);
+  slices_.resize(nZ_);
+  for (int iz = 0; iz < nZ_; iz++) {
+    slices_[iz] = rows_.data() + iz * nX_;
+    for (int ix = 0; ix < nX_; ix++) {
+      rows_[iz * nX_ + ix] = data_.data() + (iz * nX_ + ix) * nY_;
+    }
+  }
+  Arr3D = slices_.data();
+
+  grid2dSlices_.reserve(nZ_);
+  for (int iz = 0; iz < nZ_; ++iz) {
+    grid2dSlices_.emplace_back(data_.data() + iz*nX_*nY_, nX_, nY_, xMin_, xMax_, yMin_, yMax_);
   }
 }
 
-Grid3D::~Grid3D()
-{
-	delete [] Arr3D;
-  for(int iz=0 ; iz < nZ_; iz++){
-  	 delete grid2dArr[iz];
-  }
-  delete [] grid2dArr;
-}
+// Grid3D::~Grid3D();
+// {
+	// delete [] Arr3D;
+	//  for(int iz=0 ; iz < nZ_; iz++){
+	//  	 delete grid2dArr[iz];
+	//  }
+	//  delete [] grid2dArr;
+// }
 
 /** Returns the reference to the inner 3D array */
 double*** Grid3D::getArr3D(){return Arr3D;}
@@ -66,8 +69,8 @@ double*** Grid3D::getArr3D(){return Arr3D;}
 /** Returns the reference to one 2D slice of the inner 3D array */
 double** Grid3D::getSlice2D(int zInd){return Arr3D[zInd];}
 
-/** Returns the reference to Grid2D slice of the inner 3D array */
-Grid2D* Grid3D::getGrid2D(int zInd){return grid2dArr[zInd];}
+/** Returns a non-owning Grid2D view of the slice of the inner 3D array */
+Grid2D* Grid3D::getGrid2D(size_t zInd){ return &grid2dSlices_[zInd]; }
 
 /** Returns the grid size in x-direction */
 int Grid3D::getSizeX(){
@@ -142,9 +145,9 @@ void Grid3D::setGridX(double xMin, double xMax){
 	xMin_ = xMin;
 	xMax_ = xMax;
 	dx_ = (xMax_ - xMin_)/(nX_ -1);
-  for(int iz=0 ; iz < nZ_; iz++){
-  	grid2dArr[iz]->setGridX(xMin,xMax);
-  }
+  // for(int iz=0 ; iz < nZ_; iz++){
+  // 	grid2dArr[iz]->setGridX(xMin,xMax);
+  // }
 }
 
 /** Sets the limits for the y-grid */
@@ -152,9 +155,9 @@ void Grid3D::setGridY(double yMin, double yMax){
 	yMin_ = yMin;
 	yMax_ = yMax;
 	dy_ = (yMax_ - yMin_)/(nY_ -1);
-  for(int iz=0 ; iz < nZ_; iz++){
-  	grid2dArr[iz]->setGridY(yMin,yMax);
-  }
+  // for(int iz=0 ; iz < nZ_; iz++){
+  // 	grid2dArr[iz]->setGridY(yMin,yMax);
+  // }
 }
 
 /**
@@ -172,13 +175,7 @@ void Grid3D::setGridZ(double zMin, double zMax)
 /** Set all array values to zero */
 void Grid3D::setZero()
 {
-  for(int k = 0; k < nZ_; k++){
-    for(int i = 0; i < nX_; i++){
-      for(int j = 0; j < nY_; j++){
-	     Arr3D[k][i][j] = 0.;
-      }
-    }
-  }
+  std::fill(data_.begin(), data_.end(), 0.0);
 }
 
 /**
@@ -186,7 +183,7 @@ void Grid3D::setZero()
 */
 void Grid3D::setLongWrapping(int isWrapped)
 {
-	longWrapping = isWrapped;
+	longWrapping_ = isWrapped;
 }
 
 /**
@@ -194,19 +191,13 @@ void Grid3D::setLongWrapping(int isWrapped)
 */
 int Grid3D::getLongWrapping()
 {
-	return longWrapping;
+	return longWrapping_;
 }
 
 /** Multiply all elements of Grid3D by constant coefficient */
 void Grid3D::multiply(double coeff)
 {
-  for(int k = 0; k < nZ_; k++){
-    for(int i = 0; i < nX_; i++){
-      for(int j = 0; j < nY_; j++){
-	      Arr3D[k][i][j] = coeff*Arr3D[k][i][j];
-      }
-    }
-  }
+  for (auto& v : data_) v *= coeff;
 }
 
 void Grid3D::getIndAndFracX(double x, int& ind, double& frac){
@@ -235,7 +226,7 @@ void Grid3D::getGridIndAndFrac(double x, int& xInd, double& xFrac,
     zInd  = int((z - zMin_)/dz_);
 
     if(nZ_ > 2){
-      if(longWrapping == 0){
+      if(longWrapping_ == 0){
         //cut off edge for three point interpolation
         if(zInd <= 0) zInd = 1;
         if(zInd >=  nZ_ -1) zInd =  nZ_  - 2;
@@ -265,12 +256,38 @@ void Grid3D::getGridIndAndFrac(double x, int& xInd, double& xFrac,
 
 /** Sets the value to the one point of the 3D grid  */
 void Grid3D::setValue(double value, int ix, int iy, int iz){
-	Arr3D[iz][ix][iy] = value;
+	elem(iz, ix, iy) = value;
 }
 
 /** Returns the value on grid*/
 double Grid3D::getValueOnGrid(int ix, int iy, int iz){
-	return Arr3D[iz][ix][iy];
+	return elem(iz, ix, iy);
+}
+
+double& Grid3D::elem(size_t iz, size_t ix, size_t iy) {
+  return data_[iz * nX_ * nY_ + ix * nY_ + iy];
+}
+
+const double& Grid3D::elem(size_t iz, size_t ix, size_t iy) const {
+  return data_[iz * nX_ * nY_ + ix * nY_ + iy];
+}
+
+double& Grid3D::at(size_t iz, size_t ix, size_t iy) {
+  if (iz >= nZ_ || ix >= nX_ || iy >= nY_) throw std::out_of_range("Grid3D::at");
+  return elem(iz, ix, iy);
+}
+
+const double& Grid3D::at(size_t iz, size_t ix, size_t iy) const {
+  if (iz >= nZ_ || ix >= nX_ || iy >= nY_) throw std::out_of_range("Grid3D::at");
+  return elem(iz, ix, iy);
+}
+
+double& Grid3D::operator()(size_t iz, size_t ix, size_t iy) {
+  return at(iz, ix, iy);
+}
+
+const double& Grid3D::operator()(size_t iz, size_t ix, size_t iy) const {
+  return at(iz, ix, iy);
 }
 
 /**
@@ -289,7 +306,7 @@ void Grid3D::binBunch(Bunch* bunch,double lambda){
 		for(int i = 0, n = bunch->getSize(); i < n; i++){
 			m_size = macroSizeAttr->macrosize(i);
 			z = part_coord_arr[i][4];
-			if(longWrapping != 0) z = remainder(z,lambda);
+			if(longWrapping_ != 0) z = remainder(z,lambda);
 			this->binValue(m_size,part_coord_arr[i][0],part_coord_arr[i][2],z);
 		}
 		return;
@@ -298,7 +315,7 @@ void Grid3D::binBunch(Bunch* bunch,double lambda){
 	int nParts = bunch->getSize();
 	for(int i = 0; i < nParts; i++){
 		z = part_coord_arr[i][4];
-		if(longWrapping != 0) z = remainder(z,lambda);
+		if(longWrapping_ != 0) z = remainder(z,lambda);
 		this->binValue(m_size,part_coord_arr[i][0],part_coord_arr[i][2],z);
 	}
 }
@@ -306,7 +323,7 @@ void Grid3D::binBunch(Bunch* bunch,double lambda){
 
 /** Bins the Bunch into the 3D grid. If bunch has a macrosize particle attribute it will be used. */
 void Grid3D::binBunch(Bunch* bunch){
-	longWrapping = 0;
+	longWrapping_ = 0;
 	this->binBunch(bunch,0.);
 }
 
@@ -353,90 +370,90 @@ void Grid3D::binValue(double macroSize, double x, double y, double z)
 
   if( nZ_ >= 3){
     tmp = Wym * Wzm *macroSize;
-    Arr3D[iZm][iX-1][iY-1] += Wxm * tmp;
-    Arr3D[iZm][iX  ][iY-1] += Wx0 * tmp;
-    Arr3D[iZm][iX+1][iY-1] += Wxp * tmp;
+    elem(iZm, iX-1, iY-1) += Wxm * tmp;
+    elem(iZm, iX, iY-1) += Wx0 * tmp;
+    elem(iZm, iX+1, iY-1) += Wxp * tmp;
     tmp = Wy0 * Wzm *macroSize;
-    Arr3D[iZm][iX-1][iY  ] += Wxm * tmp;
-    Arr3D[iZm][iX  ][iY  ] += Wx0 * tmp;
-    Arr3D[iZm][iX+1][iY  ] += Wxp * tmp;
+    elem(iZm, iX-1, iY) += Wxm * tmp;
+    elem(iZm, iX, iY) += Wx0 * tmp;
+    elem(iZm, iX+1, iY) += Wxp * tmp;
     tmp = Wyp * Wzm *macroSize;
-    Arr3D[iZm][iX-1][iY+1] += Wxm * tmp;
-    Arr3D[iZm][iX  ][iY+1] += Wx0 * tmp;
-    Arr3D[iZm][iX+1][iY+1] += Wxp * tmp;
+    elem(iZm, iX-1, iY+1) += Wxm * tmp;
+    elem(iZm, iX, iY+1) += Wx0 * tmp;
+    elem(iZm, iX+1, iY+1) += Wxp * tmp;
     tmp = Wym * Wz0 *macroSize;
-    Arr3D[iZ0][iX-1][iY-1] += Wxm * tmp;
-    Arr3D[iZ0][iX  ][iY-1] += Wx0 * tmp;
-    Arr3D[iZ0][iX+1][iY-1] += Wxp * tmp;
+    elem(iZ0, iX-1, iY-1) += Wxm * tmp;
+    elem(iZ0, iX, iY-1) += Wx0 * tmp;
+    elem(iZ0, iX+1, iY-1) += Wxp * tmp;
     tmp = Wy0 * Wz0 *macroSize;
-    Arr3D[iZ0][iX-1][iY  ] += Wxm * tmp;
-    Arr3D[iZ0][iX  ][iY  ] += Wx0 * tmp;
-    Arr3D[iZ0][iX+1][iY  ] += Wxp * tmp;
+    elem(iZ0, iX-1, iY) += Wxm * tmp;
+    elem(iZ0, iX, iY) += Wx0 * tmp;
+    elem(iZ0, iX+1, iY) += Wxp * tmp;
     tmp = Wyp * Wz0 *macroSize;
-    Arr3D[iZ0][iX-1][iY+1] += Wxm * tmp;
-    Arr3D[iZ0][iX  ][iY+1] += Wx0 * tmp;
-    Arr3D[iZ0][iX+1][iY+1] += Wxp * tmp;
+    elem(iZ0, iX-1, iY+1) += Wxm * tmp;
+    elem(iZ0, iX, iY+1) += Wx0 * tmp;
+    elem(iZ0, iX+1, iY+1) += Wxp * tmp;
     tmp = Wym * Wzp *macroSize;
-    Arr3D[iZp][iX-1][iY-1] += Wxm * tmp;
-    Arr3D[iZp][iX  ][iY-1] += Wx0 * tmp;
-    Arr3D[iZp][iX+1][iY-1] += Wxp * tmp;
+    elem(iZp, iX-1, iY-1) += Wxm * tmp;
+    elem(iZp, iX, iY-1) += Wx0 * tmp;
+    elem(iZp, iX+1, iY-1) += Wxp * tmp;
     tmp = Wy0 * Wzp *macroSize;
-    Arr3D[iZp][iX-1][iY  ] += Wxm * tmp;
-    Arr3D[iZp][iX  ][iY  ] += Wx0 * tmp;
-    Arr3D[iZp][iX+1][iY  ] += Wxp * tmp;
+    elem(iZp, iX-1, iY) += Wxm * tmp;
+    elem(iZp, iX, iY) += Wx0 * tmp;
+    elem(iZp, iX+1, iY) += Wxp * tmp;
     tmp = Wyp * Wzp *macroSize;
-    Arr3D[iZp][iX-1][iY+1] += Wxm * tmp;
-    Arr3D[iZp][iX  ][iY+1] += Wx0 * tmp;
-    Arr3D[iZp][iX+1][iY+1] += Wxp * tmp;
+    elem(iZp, iX-1, iY+1) += Wxm * tmp;
+    elem(iZp, iX, iY+1) += Wx0 * tmp;
+    elem(iZp, iX+1, iY+1) += Wxp * tmp;
   }
   if( nZ_ == 2){
     tmp = Wym * Wzm *macroSize;
-    Arr3D[0][iX-1][iY-1] += Wxm * tmp;
-    Arr3D[0][iX  ][iY-1] += Wx0 * tmp;
-    Arr3D[0][iX+1][iY-1] += Wxp * tmp;
+    elem(0, iX-1, iY-1) += Wxm * tmp;
+    elem(0, iX, iY-1) += Wx0 * tmp;
+    elem(0, iX+1, iY-1) += Wxp * tmp;
     tmp = Wy0 * Wzm *macroSize;
-    Arr3D[0][iX-1][iY  ] += Wxm * tmp;
-    Arr3D[0][iX  ][iY  ] += Wx0 * tmp;
-    Arr3D[0][iX+1][iY  ] += Wxp * tmp;
+    elem(0, iX-1, iY) += Wxm * tmp;
+    elem(0, iX, iY) += Wx0 * tmp;
+    elem(0, iX+1, iY) += Wxp * tmp;
     tmp = Wyp * Wzm *macroSize;
-    Arr3D[0][iX-1][iY+1] += Wxm * tmp;
-    Arr3D[0][iX  ][iY+1] += Wx0 * tmp;
-    Arr3D[0][iX+1][iY+1] += Wxp * tmp;
+    elem(0, iX-1, iY+1) += Wxm * tmp;
+    elem(0, iX, iY+1) += Wx0 * tmp;
+    elem(0, iX+1, iY+1) += Wxp * tmp;
     tmp = Wym * Wzp *macroSize;
-    Arr3D[1][iX-1][iY-1] += Wxm * tmp;
-    Arr3D[1][iX  ][iY-1] += Wx0 * tmp;
-    Arr3D[1][iX+1][iY-1] += Wxp * tmp;
+    elem(1, iX-1, iY-1) += Wxm * tmp;
+    elem(1, iX, iY-1) += Wx0 * tmp;
+    elem(1, iX+1, iY-1) += Wxp * tmp;
     tmp = Wy0 * Wzp *macroSize;
-    Arr3D[1][iX-1][iY  ] += Wxm * tmp;
-    Arr3D[1][iX  ][iY  ] += Wx0 * tmp;
-    Arr3D[1][iX+1][iY  ] += Wxp * tmp;
+    elem(1, iX-1, iY) += Wxm * tmp;
+    elem(1, iX, iY) += Wx0 * tmp;
+    elem(1, iX+1, iY) += Wxp * tmp;
     tmp = Wyp * Wzp *macroSize;
-    Arr3D[1][iX-1][iY+1] += Wxm * tmp;
-    Arr3D[1][iX  ][iY+1] += Wx0 * tmp;
-    Arr3D[1][iX+1][iY+1] += Wxp * tmp;
+    elem(1, iX-1, iY+1) += Wxm * tmp;
+    elem(1, iX, iY+1) += Wx0 * tmp;
+    elem(1, iX+1, iY+1) += Wxp * tmp;
   }
   if( nZ_ == 1){
     tmp = Wym * macroSize;
-    Arr3D[0][iX-1][iY-1] += Wxm * tmp;
-    Arr3D[0][iX  ][iY-1] += Wx0 * tmp;
-    Arr3D[0][iX+1][iY-1] += Wxp * tmp;
+    elem(0, iX-1, iY-1) += Wxm * tmp;
+    elem(0, iX, iY-1) += Wx0 * tmp;
+    elem(0, iX+1, iY-1) += Wxp * tmp;
     tmp = Wy0 * macroSize;
-    Arr3D[0][iX-1][iY  ] += Wxm * tmp;
-    Arr3D[0][iX  ][iY  ] += Wx0 * tmp;
-    Arr3D[0][iX+1][iY  ] += Wxp * tmp;
+    elem(0, iX-1, iY) += Wxm * tmp;
+    elem(0, iX, iY) += Wx0 * tmp;
+    elem(0, iX+1, iY) += Wxp * tmp;
     tmp = Wyp * macroSize;
-    Arr3D[0][iX-1][iY+1] += Wxm * tmp;
-    Arr3D[0][iX  ][iY+1] += Wx0 * tmp;
-    Arr3D[0][iX+1][iY+1] += Wxp * tmp;
+    elem(0, iX-1, iY+1) += Wxm * tmp;
+    elem(0, iX, iY+1) += Wx0 * tmp;
+    elem(0, iX+1, iY+1) += Wxp * tmp;
   }
 }
 
-/** 
+/**
    Bins the Bunch into the 3D grid slice by slice.
    No interpolation between x-y 2D slices during the binning.
    If bunch has a macrosize particle attribute it will be used.
    This method is used in SpaceChargeCalcSliceBySlice2D.cc.
-*/	
+*/
 void Grid3D::binBunchSlice2D(Bunch* bunch){
 	double z;
 	bunch->compress();
@@ -449,28 +466,28 @@ void Grid3D::binBunchSlice2D(Bunch* bunch){
 			m_size = macroSizeAttr->macrosize(i);
 			z = part_coord_arr[i][4];
 			this->binValueSlice2D(m_size,part_coord_arr[i][0],part_coord_arr[i][2],z);
-		}	
+		}
 		return;
 	}
 	double m_size = bunch->getMacroSize();
 	int nParts = bunch->getSize();
 	for(int i = 0; i < nParts; i++){
 		z = part_coord_arr[i][4];
-		this->binValueSlice2D(m_size,part_coord_arr[i][0],part_coord_arr[i][2],z);	
+		this->binValueSlice2D(m_size,part_coord_arr[i][0],part_coord_arr[i][2],z);
 	}
 }
 
-/** 
+/**
    Bins the value into the grid 3D slice by slice.
    No interpolation between x-y 2D slices during the binning.
    This method is used in SpaceChargeCalcSliceBySlice2D.cc.
 */
 void Grid3D::binValueSlice2D(double macroSize, double x, double y, double z)
 {
-	if(x < xMin_ || x > xMax_ || y < yMin_ || y > yMax_ || z < zMin_ || z > zMax_) return;	
+	if(x < xMin_ || x > xMax_ || y < yMin_ || y > yMax_ || z < zMin_ || z > zMax_) return;
   int iX, iY, iZ;
-  double xFrac, yFrac, zFrac;
-  
+  double xFrac, yFrac; //, zFrac; // unusued
+
   this->getIndAndFracX( x, iX, xFrac);
   this->getIndAndFracY( y, iY, yFrac);
 
@@ -480,10 +497,10 @@ void Grid3D::binValueSlice2D(double macroSize, double x, double y, double z)
   else {
   	iZ = 0;
   }
-  
+
   //Calculate interpolation weight and indexes
   double Wxm,Wx0,Wxp,Wym,Wy0,Wyp;
- 
+
   Wxm = 0.5 * (0.5 - xFrac) * (0.5 - xFrac);
   Wx0 = 0.75 - xFrac * xFrac;
   Wxp = 0.5 * (0.5 + xFrac) * (0.5 + xFrac);
@@ -492,19 +509,19 @@ void Grid3D::binValueSlice2D(double macroSize, double x, double y, double z)
   Wyp = 0.5 * (0.5 + yFrac) * (0.5 + yFrac);
 
   double tmp;
-  
+
   tmp = Wym * macroSize;
-  Arr3D[iZ][iX-1][iY-1] += Wxm * tmp;
-  Arr3D[iZ][iX  ][iY-1] += Wx0 * tmp;
-  Arr3D[iZ][iX+1][iY-1] += Wxp * tmp;
+  elem(iZ, iX-1, iY-1) += Wxm * tmp;
+  elem(iZ, iX, iY-1) += Wx0 * tmp;
+  elem(iZ, iX+1, iY-1) += Wxp * tmp;
   tmp = Wy0 * macroSize;
-  Arr3D[iZ][iX-1][iY  ] += Wxm * tmp;
-  Arr3D[iZ][iX  ][iY  ] += Wx0 * tmp;
-  Arr3D[iZ][iX+1][iY  ] += Wxp * tmp;
+  elem(iZ, iX-1, iY) += Wxm * tmp;
+  elem(iZ, iX, iY) += Wx0 * tmp;
+  elem(iZ, iX+1, iY) += Wxp * tmp;
   tmp = Wyp * macroSize;
-  Arr3D[iZ][iX-1][iY+1] += Wxm * tmp;
-  Arr3D[iZ][iX  ][iY+1] += Wx0 * tmp;
-  Arr3D[iZ][iX+1][iY+1] += Wxp * tmp;
+  elem(iZ, iX-1, iY+1) += Wxm * tmp;
+  elem(iZ, iX, iY+1) += Wx0 * tmp;
+  elem(iZ, iX+1, iY+1) += Wxp * tmp;
 }
 
 /**
@@ -704,15 +721,7 @@ double Grid3D::getValue(double x,double y,double z)
 /** returns the sum of all grid points */
 double Grid3D::getSum()
 {
-  double sum = 0.;
-  for(int iZ = 0; iZ < nZ_; iZ++){
-    for(int i = 0; i < nX_; i++){
-      for(int j = 0; j < nY_; j++){
-	      sum += Arr3D[iZ][i][j];
-      }
-    }
-  }
-  return sum;
+  return std::accumulate(data_.begin(), data_.end(), 0.0);
 }
 
 /** returns the sum of all grid points in the slice with index iZ */
@@ -721,12 +730,8 @@ double Grid3D::getSliceSum(int iZ)
   double sum = 0.;
   if( iZ <   0 ) return sum;
   if( iZ > (nZ_-1)) return sum;
-  for(int i = 0; i < nX_; i++){
-    for(int j = 0; j < nY_; j++){
-      sum += Arr3D[iZ][i][j];
-    }
-  }
-  return sum;
+  double* slice = data_.data() + iZ * nX_ * nY_;
+  return std::accumulate(slice, slice + nX_ * nY_, 0.0);
 }
 
 /** returns the sum of all grid points in the slice with  position z */
@@ -741,7 +746,7 @@ double Grid3D::getSliceSum(double z)
     double sumM,sum0,sumP;
     zInd  = int((z - zMin_)/dz_);
 
-		if(longWrapping == 0){
+		if(longWrapping_ == 0){
 			//cut off edge for three point interpolation
 			if(zInd <= 0) zInd = 1;
 			if(zInd >=  nZ_ -1) zInd =  nZ_  - 2;
@@ -781,13 +786,13 @@ double Grid3D::getSliceSum(double z)
 /** Calculates interpolated value along x-axis for fixed y and z */
 double Grid3D::calcValueOnX(int iX, int iY, int iZ, double Wxm,double Wx0,double Wxp)
 {
-  return ( Wxm*Arr3D[iZ][iX-1][iY]+Wx0*Arr3D[iZ][iX][iY]+Wxp*Arr3D[iZ][iX+1][iY]);
+  return ( Wxm*elem(iZ, iX-1, iY)+Wx0*elem(iZ, iX, iY)+Wxp*elem(iZ, iX+1, iY));
 }
 
 /** Calculates interpolated value along y-axis for fixed x and z */
 double Grid3D::calcValueOnY(int iX, int iY, int iZ, double Wym,double Wy0,double Wyp)
 {
-  return ( Wym*Arr3D[iZ][iX][iY-1]+Wy0*Arr3D[iZ][iX][iY]+Wyp*Arr3D[iZ][iX][iY+1]);
+  return ( Wym*elem(iZ, iX, iY-1)+Wy0*elem(iZ, iX, iY)+Wyp*elem(iZ, iX, iY+1));
 }
 
 /** Calculates Gradient from each z-sheet without interpolating in z */
@@ -796,55 +801,28 @@ double Grid3D::calcSheetGradient(int iZ,int iX,int iY,
 				 double ym,double y0,double yp)
 {
   double sheetGradient =
-    xm * ym * Arr3D[iZ][iX-1][iY-1] +
-    x0 * ym * Arr3D[iZ][iX  ][iY-1] +
-    xp * ym * Arr3D[iZ][iX+1][iY-1] +
-    xm * y0 * Arr3D[iZ][iX-1][iY  ] +
-    x0 * y0 * Arr3D[iZ][iX  ][iY  ] +
-    xp * y0 * Arr3D[iZ][iX+1][iY  ] +
-    xm * yp * Arr3D[iZ][iX-1][iY+1] +
-    x0 * yp * Arr3D[iZ][iX  ][iY+1] +
-    xp * yp * Arr3D[iZ][iX+1][iY+1];
+    xm * ym * elem(iZ, iX-1, iY-1) +
+    x0 * ym * elem(iZ, iX, iY-1) +
+    xp * ym * elem(iZ, iX+1, iY-1) +
+    xm * y0 * elem(iZ, iX-1, iY) +
+    x0 * y0 * elem(iZ, iX, iY) +
+    xp * y0 * elem(iZ, iX+1, iY) +
+    xm * yp * elem(iZ, iX-1, iY+1) +
+    x0 * yp * elem(iZ, iX, iY+1) +
+    xp * yp * elem(iZ, iX+1, iY+1);
   return sheetGradient;
 }
 
 /**synchronize MPI */
 void Grid3D::synchronizeMPI(pyORBIT_MPI_Comm* pyComm){
+#if USE_MPI > 0
   // ====== MPI  start ========
-	int size_MPI = nX_ * nY_*nZ_;
-	int buff_index0 = 0;
-	int buff_index1 = 0;
-	double* inArr  = BufferStore::getBufferStore()->getFreeDoubleArr(buff_index0,size_MPI);
-	double* outArr = BufferStore::getBufferStore()->getFreeDoubleArr(buff_index1,size_MPI);
-
-	int count = 0;
-	for(int iz = 0; iz < nZ_; iz++){
-		for(int ix = 0; ix < nX_; ix++){
-			for(int iy = 0; iy < nY_; iy++){
-				inArr[count] = Arr3D[iz][ix][iy];
-				count += 1;
-			}
-		}
-	}
-
-	if(pyComm == NULL) {
-		ORBIT_MPI_Allreduce(inArr,outArr,size_MPI,MPI_DOUBLE,MPI_SUM,MPI_COMM_WORLD);
-	} else {
-		ORBIT_MPI_Allreduce(inArr,outArr,size_MPI,MPI_DOUBLE,MPI_SUM,pyComm->comm);
-	}
-
-	count = 0;
-	for(int iz = 0; iz < nZ_; iz++){
-		for(int ix = 0; ix < nX_; ix++){
-			for(int iy = 0; iy < nY_; iy++){
-				Arr3D[iz][ix][iy] = outArr[count];
-				count += 1;
-			}
-		}
-	}
-
-	OrbitUtils::BufferStore::getBufferStore()->setUnusedDoubleArr(buff_index0);
-	OrbitUtils::BufferStore::getBufferStore()->setUnusedDoubleArr(buff_index1);
-
+  const int n = nX_ * nY_ * nZ_;
+  double *ptr = data_.data();
+  MPI_Comm comm = (pyComm == nullptr) ? MPI_COMM_WORLD: pyComm->comm;
+  ORBIT_MPI_Allreduce(MPI_IN_PLACE, ptr, n, MPI_DOUBLE, MPI_SUM, comm);
   // ===== MPI end =====
+#else
+	(void)pyComm;
+#endif // USE_MPI > 0
 }

@@ -2,71 +2,92 @@
 
 #include "Grid2D.hh"
 #include "ParticleMacroSize.hh"
-#include "BufferStore.hh"
+// #include "BufferStore.hh"
 
+#include <numeric>
 #include <iostream>
 
 using namespace OrbitUtils;
 
 // Constructor
-Grid2D::Grid2D(int xSize, int ySize): CppPyWrapper(NULL)
+Grid2D::Grid2D(int xSize, int ySize): CppPyWrapper(NULL),
+	data_(xSize * ySize),
+	xSize_(xSize),
+	ySize_(ySize),
+	xMin_(-1.0),
+	xMax_(+1.0),
+	yMin_(-1.0),
+	yMax_(+1.0)
 {
-	xSize_ = xSize;
-	ySize_ = ySize;
-	xMin_ = -1.0;
-	xMax_ = +1.0;
-	yMin_ = -1.0;
-	yMax_ = +1.0;
 	init();
-	setZero();
+	// setZero();
 }
 
 Grid2D::Grid2D(int xSize, int ySize,
 	       double xMin, double xMax,
-	       double yMin, double yMax): CppPyWrapper(NULL)
+	       double yMin, double yMax): CppPyWrapper(NULL),
+	data_(xSize * ySize),
+	xSize_(xSize),
+	ySize_(ySize),
+	xMin_(xMin),
+	xMax_(xMax),
+	yMin_(yMin),
+	yMax_(yMax)
 {
-	xSize_ = xSize;
-	ySize_ = ySize;
-	xMin_ = xMin;
-	xMax_ = xMax;
-	yMin_ = yMin;
-	yMax_ = yMax;
 	init();
-	setZero();
+	// setZero();
+}
+
+Grid2D::Grid2D(double* externalData,
+		size_t xSize, size_t ySize,
+		double xMin, double xMax,
+		double yMin, double yMax): CppPyWrapper(NULL),
+	owns_(false), externalData_(externalData),
+	xSize_(xSize), ySize_(ySize),
+	xMin_(xMin), xMax_(xMax),
+	yMin_(yMin), yMax_(yMax)
+{
+  init();
+  // setZero();
 }
 
 void Grid2D::init(){
-
-  if( xSize_ < 3 || ySize_ < 3){
-		int rank = 0;
-		ORBIT_MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-		if(rank == 0){
-			std::cerr << "Grid2D::Grid2D - CONSTRUCTOR \n"
-         				<< "The grid size too small (should be more than 3)! \n"
-								<< "number x bins ="<< xSize_ <<" \n"
-								<< "number y bins ="<< ySize_ <<" \n"
-								<< "Stop. \n";
-		}
-		ORBIT_MPI_Finalize();
+  if(xSize_ < 3 || ySize_ < 3) {
+    int rank = 0;
+    ORBIT_MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    if(rank == 0) {
+      std::cerr << "Grid2D::Grid2D - CONSTRUCTOR \n"
+                << "The grid size too small (should be more than 3)! \n"
+                << "number x bins ="<< xSize_ <<" \n"
+                << "number y bins ="<< ySize_ <<" \n"
+                << "Stop. \n";
+    }
+    ORBIT_MPI_Finalize();
   }
 
 	dx_ = (xMax_ - xMin_)/(xSize_ -1);
 	dy_ = (yMax_ - yMin_)/(ySize_ -1);
-	arr_ = new double*[xSize_];
-	for(int i = 0; i < xSize_; i++){
-		arr_[i] = new double[ySize_];
+
+
+	double *ptr = owns_ ? data_.data() : externalData_;
+
+	rows_.resize(xSize_);
+	for (size_t ix = 0; ix < xSize_; ++ix) {
+	  rows_[ix] = ptr + ix*ySize_;
 	}
+
+	arr_ = rows_.data();
 }
 
 // Destructor
-Grid2D::~Grid2D()
-{
+// Grid2D::~Grid2D()
+// {
 	//std::cerr<<"debug Grid2D::~Grid2D()"<<std::endl;
-	for(int i = 0; i < xSize_; i++){
-		delete [] arr_[i];
-	}
-	delete [] arr_;
-}
+	// for(int i = 0; i < xSize_; i++){
+	// 	delete [] arr_[i];
+	// }
+	// delete [] arr_;
+// }
 
 /** Sets the value to the one point of the 2D grid  */
 void Grid2D::setValue(double value, int ix, int iy){
@@ -76,6 +97,32 @@ void Grid2D::setValue(double value, int ix, int iy){
 /** Returns the value on grid*/
 double Grid2D::getValueOnGrid(int ix, int iy){
 	return arr_[ix][iy];
+}
+
+double& Grid2D::operator()(size_t ix, size_t iy) {
+  return at(ix, iy);
+}
+
+const double& Grid2D::operator()(size_t ix, size_t iy) const {
+  return at(ix, iy);
+}
+
+double& Grid2D::at(size_t ix, size_t iy) {
+  if (ix >= xSize_ || iy >= ySize_) throw std::out_of_range("Grid2D::at");
+  return elem(ix, iy);
+}
+
+const double& Grid2D::at(size_t ix, size_t iy) const {
+  if (ix >= xSize_ || iy >= ySize_) throw std::out_of_range("Grid2D::at");
+  return elem(ix, iy);
+}
+
+double& Grid2D::elem(size_t ix, size_t iy) {
+  return data_[ix*ySize_ + iy];
+}
+
+const double& Grid2D::elem(size_t ix, size_t iy) const {
+  return data_[ix*ySize_ + iy];
 }
 
 /** Returns the interpolated value from the 2D grid */
@@ -95,15 +142,15 @@ double Grid2D::getValue(double x, double y){
 	Wy0 = 0.75 - yFract2;
 	Wyp = 0.5 * (0.25 + yFract + yFract2);
 	double value =
-	Wxm * Wym * arr_[iX-1][iY-1] +
-	Wxm * Wy0 * arr_[iX-1][iY]   +
-	Wxm * Wyp * arr_[iX-1][iY+1] +
-	Wx0 * Wym * arr_[iX]  [iY-1] +
-	Wx0 * Wy0 * arr_[iX]  [iY]   +
-	Wx0 * Wyp * arr_[iX]  [iY+1] +
-	Wxp * Wym * arr_[iX+1][iY-1] +
-	Wxp * Wy0 * arr_[iX+1][iY]   +
-	Wxp * Wyp * arr_[iX+1][iY+1];
+	Wxm * Wym * elem(iX-1, iY-1) +
+	Wxm * Wy0 * elem(iX-1, iY)   +
+	Wxm * Wyp * elem(iX-1, iY+1) +
+	Wx0 * Wym * elem(iX,   iY-1) +
+	Wx0 * Wy0 * elem(iX,   iY)   +
+	Wx0 * Wyp * elem(iX,   iY+1) +
+	Wxp * Wym * elem(iX+1, iY-1) +
+	Wxp * Wy0 * elem(iX+1, iY)   +
+	Wxp * Wyp * elem(iX+1, iY+1);
 	return value;
 }
 
@@ -140,29 +187,31 @@ void Grid2D::binBunch(Bunch* bunch, int ind0, int ind1){
 /** Bins the value into the 2D grid */
 void Grid2D::binValue(double value, double x, double y){
 	if(x < xMin_ || x > xMax_ || y < yMin_ || y > yMax_) return;
+
 	int iX, iY;
-	double Wxm, Wx0, Wxp, Wym, Wy0, Wyp;
 	double xFract,  yFract;
-	double xFract2, yFract2;
-	getIndAndFracX(x,iX,xFract);
-	getIndAndFracY(y,iY,yFract);
-	xFract2 = xFract * xFract;
-	yFract2 = yFract * yFract;
-	Wxm = 0.5 * (0.25 - xFract + xFract2);
-	Wx0 = 0.75 - xFract2;
-	Wxp = 0.5 * (0.25 + xFract + xFract2);
-	Wym = 0.5 * (0.25 - yFract + yFract2);
-	Wy0 = 0.75 - yFract2;
-	Wyp = 0.5 * (0.25 + yFract + yFract2);
-	arr_[iX-1][iY-1] += Wxm * Wym * value;
-  arr_[iX-1][iY]   += Wxm * Wy0 * value;
-  arr_[iX-1][iY+1] += Wxm * Wyp * value;
-  arr_[iX]  [iY-1] += Wx0 * Wym * value;
-  arr_[iX]  [iY]   += Wx0 * Wy0 * value;
-  arr_[iX]  [iY+1] += Wx0 * Wyp * value;
-  arr_[iX+1][iY-1] += Wxp * Wym * value;
-  arr_[iX+1][iY]   += Wxp * Wy0 * value;
-  arr_[iX+1][iY+1] += Wxp * Wyp * value;
+	getIndAndFracX(x, iX, xFract);
+	getIndAndFracY(y, iY, yFract);
+
+	const double xFract2 = xFract * xFract;
+	const double yFract2 = yFract * yFract;
+
+	const double Wxm = 0.5 * (0.25 - xFract + xFract2);
+	const double Wx0 = 0.75 - xFract2;
+	const double Wxp = 0.5 * (0.25 + xFract + xFract2);
+	const double Wym = 0.5 * (0.25 - yFract + yFract2);
+	const double Wy0 = 0.75 - yFract2;
+	const double Wyp = 0.5 * (0.25 + yFract + yFract2);
+
+	elem(iX-1, iY-1) += Wxm * Wym * value;
+        elem(iX-1, iY  ) += Wxm * Wy0 * value;
+        elem(iX-1, iY+1) += Wxm * Wyp * value;
+        elem(iX,   iY-1) += Wx0 * Wym * value;
+        elem(iX,   iY  ) += Wx0 * Wy0 * value;
+        elem(iX,   iY+1) += Wx0 * Wyp * value;
+        elem(iX+1, iY-1) += Wxp * Wym * value;
+        elem(iX+1, iY  ) += Wxp * Wy0 * value;
+        elem(iX+1, iY+1) += Wxp * Wyp * value;
 }
 
 /** Does a bilinear binning scheme on the bunch using X and Y coordinates */
@@ -201,57 +250,59 @@ void Grid2D::binValueBilinear(double value, double x, double y){
 
 	getBilinearIndAndFracX(x, iX, xFract);
 	getBilinearIndAndFracY(y, iY, yFract);
-	arr_[iX][iY] += ((1.-xFract) * (1.-yFract)) * value;
-	arr_[iX][iY+1] += ((1.-xFract) * yFract) * value;
-	arr_[iX+1][iY] += (xFract * (1.-yFract)) * value;
-	arr_[iX+1][iY+1] += (xFract * yFract) * value;
+
+	elem(iX,   iY  ) += ((1.-xFract) * (1.-yFract)) * value;
+	elem(iX,   iY+1) += ((1.-xFract) * yFract) * value;
+	elem(iX+1, iY  ) += (xFract * (1.-yFract)) * value;
+	elem(iX+1, iY+1) += (xFract * yFract) * value;
 }
 
 
 /** Calculates gradient at a position (x,y) by using 9-points schema */
 void Grid2D::calcGradient(double x, double y, double& ex, double& ey){
-	double dWxm,dWx0,dWxp,dWym,dWy0,dWyp;
-	double Wxm, Wx0, Wxp, Wym, Wy0, Wyp;
 	int iX, iY;
 	double xFract,  yFract;
-	double xFract2, yFract2;
+
 	getIndAndFracX(x,iX,xFract);
 	getIndAndFracY(y,iY,yFract);
-	xFract2 = xFract * xFract;
-	yFract2 = yFract * yFract;
-	Wxm = 0.5 * (0.25 - xFract + xFract2);
-	Wx0 = 0.75 - xFract2;
-	Wxp = 0.5 * (0.25 + xFract + xFract2);
-	Wym = 0.5 * (0.25 - yFract + yFract2);
-	Wy0 = 0.75 - yFract2;
-	Wyp = 0.5 * (0.25 + yFract + yFract2);
-  dWxm = (-1.0)*(0.5 - xFract);
-	dWx0 = (-1.0)*(+2.) * xFract;
-	dWxp = (-1.0)*(-(0.5 + xFract));
-	dWym = (-1.0)*(0.5 - yFract);
-	dWy0 = (-1.0)*(+2.) * yFract;
-	dWyp = (-1.0)*(-(0.5 + yFract));
+
+	const double xFract2 = xFract * xFract;
+	const double yFract2 = yFract * yFract;
+
+	const double Wxm = 0.5 * (0.25 - xFract + xFract2);
+	const double Wx0 = 0.75 - xFract2;
+	const double Wxp = 0.5 * (0.25 + xFract + xFract2);
+	const double Wym = 0.5 * (0.25 - yFract + yFract2);
+	const double Wy0 = 0.75 - yFract2;
+	const double Wyp = 0.5 * (0.25 + yFract + yFract2);
+
+        const double dWxm = (-1.0)*(0.5 - xFract);
+	const double dWx0 = (-1.0)*(+2.) * xFract;
+	const double dWxp = (-1.0)*(-(0.5 + xFract));
+	const double dWym = (-1.0)*(0.5 - yFract);
+	const double dWy0 = (-1.0)*(+2.) * yFract;
+	const double dWyp = (-1.0)*(-(0.5 + yFract));
   ex =
-	dWxm * Wym * arr_[iX-1][iY-1] +
-	dWxm * Wy0 * arr_[iX-1][iY]   +
-	dWxm * Wyp * arr_[iX-1][iY+1] +
-	dWx0 * Wym * arr_[iX]  [iY-1] +
-	dWx0 * Wy0 * arr_[iX]  [iY]   +
-	dWx0 * Wyp * arr_[iX]  [iY+1] +
-	dWxp * Wym * arr_[iX+1][iY-1] +
-	dWxp * Wy0 * arr_[iX+1][iY]   +
-	dWxp * Wyp * arr_[iX+1][iY+1];
+	dWxm * Wym * elem(iX-1, iY-1) +
+	dWxm * Wy0 * elem(iX-1, iY  ) +
+	dWxm * Wyp * elem(iX-1, iY+1) +
+	dWx0 * Wym * elem(iX,   iY-1) +
+	dWx0 * Wy0 * elem(iX,   iY  ) +
+	dWx0 * Wyp * elem(iX,   iY+1) +
+	dWxp * Wym * elem(iX+1, iY-1) +
+	dWxp * Wy0 * elem(iX+1, iY  ) +
+	dWxp * Wyp * elem(iX+1, iY+1);
 	ex = ex / dx_;
   ey =
-	Wxm * dWym * arr_[iX-1][iY-1] +
-	Wxm * dWy0 * arr_[iX-1][iY]   +
-	Wxm * dWyp * arr_[iX-1][iY+1] +
-	Wx0 * dWym * arr_[iX]  [iY-1] +
-	Wx0 * dWy0 * arr_[iX]  [iY]   +
-	Wx0 * dWyp * arr_[iX]  [iY+1] +
-	Wxp * dWym * arr_[iX+1][iY-1] +
-	Wxp * dWy0 * arr_[iX+1][iY]   +
-	Wxp * dWyp * arr_[iX+1][iY+1];
+	Wxm * dWym * elem(iX-1, iY-1) +
+	Wxm * dWy0 * elem(iX-1, iY  ) +
+	Wxm * dWyp * elem(iX-1, iY+1) +
+	Wx0 * dWym * elem(iX,   iY-1) +
+	Wx0 * dWy0 * elem(iX,   iY  ) +
+	Wx0 * dWyp * elem(iX,   iY+1) +
+	Wxp * dWym * elem(iX+1, iY-1) +
+	Wxp * dWy0 * elem(iX+1, iY  ) +
+	Wxp * dWyp * elem(iX+1, iY+1);
 	ey = ey / dy_;
 }
 
@@ -285,38 +336,38 @@ void Grid2D::calcGradient(int iX, int iY, double& ex, double& ey){
 void Grid2D::calcGradientBilinear(double x, double y, double& ex, double& ey){
 	int iX, iY;
 	double xFract,  yFract;
-	double xFract2, yFract2;
+
 	getBilinearIndAndFracX(x,iX,xFract);
 	getBilinearIndAndFracY(y,iY,yFract);
-  ex = (arr_[iX+1][iY] - arr_[iX][iY])*(1.0 - yFract) + yFract*(arr_[iX+1][iY+1] - arr_[iX][iY+1]);
-	ex = ex / dx_;
-  ey =(arr_[iX][iY+1] - arr_[iX][iY])*(1.0 - xFract) + xFract*(arr_[iX+1][iY+1] - arr_[iX+1][iY]);
-	ey = ey / dy_;
+
+  ex = (elem(iX+1, iY) - elem(iX, iY))*(1.0 - yFract) + yFract*(elem(iX+1, iY+1) - elem(iX, iY+1));
+  ex = ex / dx_;
+
+  ey =(elem(iX, iY+1) - elem(iX, iY))*(1.0 - xFract) + xFract*(elem(iX+1, iY+1) - elem(iX+1, iY));
+  ey = ey / dy_;
 }
 
 /** Calculates bilinear interpolated value at a position (x,y) */
 void Grid2D::interpolateBilinear(double x, double y, double& value){
-	double f1, f2, f3, f4;
 	int iX, iY;
 	double xFract,  yFract;
+
 	getBilinearIndAndFracX(x,iX,xFract);
 	getBilinearIndAndFracY(y,iY,yFract);
-	f1 = arr_[iX][iY];
-	f2 = arr_[iX+1][iY];
-	f3 = arr_[iX+1][iY+1];
-	f4 = arr_[iX][iY+1];
+
+	const double f1 = elem(iX  , iY  );
+	const double f2 = elem(iX+1, iY  );
+	const double f3 = elem(iX+1, iY+1);
+	const double f4 = elem(iX  , iY+1);
 
 	value = (1. - xFract) * (1. - yFract) * f1 + xFract * (1. - yFract) * f2 +
 	(1. - xFract) * yFract * f4 + xFract * yFract * f3;
 
 }
 /** Sets all grid points to zero */
-void Grid2D::setZero(){
-	for(int i = 0; i < xSize_; i++){
-		for(int j = 0; j < ySize_; j++){
-			arr_[i][j] = 0.;
-		}
-	}
+void Grid2D::setZero() {
+  double* data_ptr = owns_ ? data_.data() : externalData_;
+  std::fill(data_ptr, data_ptr + xSize_ * ySize_, 0.0);
 }
 
 /** Returns the reference to the 2D array */
@@ -399,23 +450,17 @@ double Grid2D::getMinY(){return yMin_;};
 
 /** Returns the sum of all grid points */
 double Grid2D::getSum(){
-	double sum = 0;
-	for(int ix = 0; ix < xSize_; ix++){
-	  for(int iy = 0; iy < ySize_; iy++){
-			sum += arr_[ix][iy];
-		}
-	}
-	return sum;
+  double* data_ptr = owns_ ? data_.data() : externalData_;
+  return std::accumulate(data_ptr, data_ptr + xSize_ * ySize_, 0.0);
 };
 
 
 /** Multiply all elements of Grid2D by constant coefficient */
 void Grid2D::multiply(double coeff){
-	for(int ix = 0; ix < xSize_; ix++){
-	  for(int iy = 0; iy < ySize_; iy++){
-			arr_[ix][iy] *= coeff;
-		}
-	}
+  double* data_ptr = owns_ ? data_.data() : externalData_;
+  for (size_t i = 0; i < xSize_ * ySize_; ++i) {
+    data_ptr[i] *= coeff;
+  }
 }
 
 /** Sets x-grid */
@@ -441,37 +486,15 @@ int Grid2D::isInside(double x,double y){
 
 /**synchronizeMPI */
 void Grid2D::synchronizeMPI(pyORBIT_MPI_Comm* pyComm){
+#if USE_MPI > 0
   // ====== MPI  start ========
-	int size_MPI = xSize_ * ySize_;
-	int buff_index0 = 0;
-	int buff_index1 = 0;
-	double* inArr  = BufferStore::getBufferStore()->getFreeDoubleArr(buff_index0,size_MPI);
-	double* outArr = BufferStore::getBufferStore()->getFreeDoubleArr(buff_index1,size_MPI);
+    const int n = xSize_ * ySize_;
+    double* ptr = owns_ ? data_.data() : externalData_;
+    MPI_Comm comm = (pyComm == nullptr) ? MPI_COMM_WORLD : pyComm->comm;
 
-	int count = 0;
-	for(int ix = 0; ix < xSize_; ix++){
-	  for(int iy = 0; iy < ySize_; iy++){
-			inArr[count] = arr_[ix][iy];
-			count += 1;
-		}
-	}
-
-	if(pyComm == NULL) {
-		ORBIT_MPI_Allreduce(inArr,outArr,size_MPI,MPI_DOUBLE,MPI_SUM,MPI_COMM_WORLD);
-	} else {
-		ORBIT_MPI_Allreduce(inArr,outArr,size_MPI,MPI_DOUBLE,MPI_SUM,pyComm->comm);
-	}
-
-	count = 0;
-	for(int ix = 0; ix < xSize_; ix++){
-	  for(int iy = 0; iy < ySize_; iy++){
-			arr_[ix][iy] = outArr[count];
-			count += 1;
-		}
-	}
-
-	OrbitUtils::BufferStore::getBufferStore()->setUnusedDoubleArr(buff_index0);
-	OrbitUtils::BufferStore::getBufferStore()->setUnusedDoubleArr(buff_index1);
-
+    ORBIT_MPI_Allreduce(MPI_IN_PLACE, ptr, n, MPI_DOUBLE, MPI_SUM, comm);
   // ===== MPI end =====
+#else // no-op
+        (void)pyComm;
+#endif // USE_MPI > 0
 }
