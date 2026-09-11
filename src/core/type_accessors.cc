@@ -8,36 +8,47 @@
 
 extern "C" {
 
+namespace {
+
+PyObject* getModuleAttribute(const char* module_name, const char* name){
+    PyObject* module = PyImport_ImportModule(module_name);
+    if(module == NULL){
+        return NULL;
+    }
+    PyObject* attribute = PyDict_GetItemString(PyModule_GetDict(module), name);
+    Py_DECREF(module);
+    if(attribute == NULL){
+        PyErr_Format(PyExc_AttributeError, "module '%s' has no attribute '%s'", module_name, name);
+    }
+    return attribute;
+}
+
+}
+
 namespace wrap_orbit_bunch {
 
 PyObject* getBunchType(const char* name){
-    PyObject* mod = PyImport_ImportModule("orbit.core.bunch");
-    PyObject* pyType = PyObject_GetAttrString(mod,name);
-    Py_DECREF(mod);
-	Py_DECREF(pyType);
-    return pyType;
+    return getModuleAttribute("orbit.core.bunch", name);
 }
 
 }
 
 PyObject* getSpaceChargeType(const char* name){
-    PyObject* mod = PyImport_ImportModule("orbit.core.spacecharge");
-    PyObject* pyType = PyObject_GetAttrString(mod,name);
-    Py_DECREF(mod);
-    Py_DECREF(pyType);
-    return pyType;
+    return getModuleAttribute("orbit.core.spacecharge", name);
 }
 
 namespace wrap_orbit_mpi_comm {
 
 PyObject* getMPI_CommType(const char* name){
-    PyObject* mod = PyImport_ImportModule("orbit.core.orbit_mpi");
-    PyObject* mpi_comm_mod = PyObject_GetAttrString(mod,"mpi_comm");
-    PyObject* pyType = PyObject_GetAttrString(mpi_comm_mod,name);
-    Py_DECREF(mpi_comm_mod);
-    Py_DECREF(mod);
-    Py_DECREF(pyType);
-    return pyType;
+    PyObject* mpi_comm_module = getModuleAttribute("orbit.core.orbit_mpi", "mpi_comm");
+    if(mpi_comm_module == NULL){
+        return NULL;
+    }
+    PyObject* type = PyDict_GetItemString(PyModule_GetDict(mpi_comm_module), name);
+    if(type == NULL){
+        PyErr_Format(PyExc_AttributeError, "module 'mpi_comm' has no attribute '%s'", name);
+    }
+    return type;
 }
 
 }
@@ -45,21 +56,13 @@ PyObject* getMPI_CommType(const char* name){
 namespace wrap_orbit_utils {
 
 PyObject* getOrbitUtilsType(const char* name){
-    PyObject* mod = PyImport_ImportModule(const_cast<char*>("orbit.core.orbit_utils"));
-    PyObject* pyType = PyObject_GetAttrString(mod,name);
-    Py_DECREF(mod);
-    Py_DECREF(pyType);
-    return pyType;
+    return getModuleAttribute("orbit.core.orbit_utils", name);
 }
 
 }
 
 PyObject* getTrackerRK4Type(const char* name){
-    PyObject* mod = PyImport_ImportModule("orbit.core.trackerrk4");
-    PyObject* pyType = PyObject_GetAttrString(mod,name);
-    Py_DECREF(mod);
-    Py_DECREF(pyType);
-    return pyType;
+    return getModuleAttribute("orbit.core.trackerrk4", name);
 }
 
 }

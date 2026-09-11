@@ -117,7 +117,11 @@ namespace OrbitUtils{
 			}
 			ORBIT_MPI_Finalize();
 		}
-		if(bunch_in->getMPI_Comm_Local() != bunch_out->getMPI_Comm_Local()){
+		int comm_comparison = MPI_UNEQUAL;
+		if(ORBIT_MPI_Comm_compare(bunch_in->getMPI_Comm_Local(),
+		                          bunch_out->getMPI_Comm_Local(),
+		                          &comm_comparison) != MPI_SUCCESS ||
+		   (comm_comparison != MPI_IDENT && comm_comparison != MPI_CONGRUENT)){
 			if(rank_MPI == 0){
 				std::cerr << "OrbitUtils::bunch_utils_functions::transport_mtrx(...) function"<< std::endl;
 				std::cerr << "Bunches In and Out have different MPI communicators!"<< std::endl;

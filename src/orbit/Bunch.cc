@@ -1679,12 +1679,12 @@ MPI_Comm Bunch::getMPI_Comm_Local() const noexcept {
 }
 
 void  Bunch::setMPI_Comm_Local(MPI_Comm comm){
-  // wrap_orbit_mpi_comm::freeMPI_Comm(comm_);
   comm_ = comm;
-  // Py_INCREF((PyObject *) this->comm_);
-  if(iMPIini > 0) {
-    ORBIT_MPI_Comm_size(comm, &size_MPI);
-    ORBIT_MPI_Comm_rank(comm, &rank_MPI);
+  rank_MPI = 0;
+  size_MPI = 1;
+  if(iMPIini > 0 && comm_ != MPI_COMM_NULL) {
+    ORBIT_MPI_Comm_size(comm_, &size_MPI);
+    ORBIT_MPI_Comm_rank(comm_, &rank_MPI);
   }
 }
 

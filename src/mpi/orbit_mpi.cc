@@ -176,6 +176,7 @@ int ORBIT_MPI_Comm_dup(MPI_Comm comm, MPI_Comm *comm_out){
   res = MPI_Comm_dup(comm, comm_out);
 #else
   res  = MPI_SUCCESS;
+	*comm_out = comm;
 #endif
 	return res;
 }
@@ -233,6 +234,7 @@ int ORBIT_MPI_Comm_compare(MPI_Comm  comm1, MPI_Comm  comm2, int *result){
   res = MPI_Comm_compare(comm1, comm2, result);
 #else
   res  = MPI_SUCCESS;
+	*result = MPI_IDENT;
 #endif
 	return res;
 }
