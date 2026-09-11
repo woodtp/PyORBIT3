@@ -23,7 +23,7 @@ using namespace OrbitUtils;
 
 
 // Constructor
-RfGapThreePointTTF::RfGapThreePointTTF(): CppPyWrapper(NULL)
+RfGapThreePointTTF::RfGapThreePointTTF()
 {
 }
 

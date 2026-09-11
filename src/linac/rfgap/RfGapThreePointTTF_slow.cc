@@ -25,7 +25,7 @@ using namespace OrbitUtils;
 
 
 // Constructor
-RfGapThreePointTTF_slow::RfGapThreePointTTF_slow(): CppPyWrapper(NULL)
+RfGapThreePointTTF_slow::RfGapThreePointTTF_slow()
 {
 }
 

@@ -22,7 +22,7 @@ using namespace OrbitUtils;
 
 
 // Constructor
-RfGapTTF::RfGapTTF(): CppPyWrapper(NULL)
+RfGapTTF::RfGapTTF()
 {
 }
 

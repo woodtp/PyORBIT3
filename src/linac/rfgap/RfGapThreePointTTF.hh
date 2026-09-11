@@ -19,7 +19,6 @@
 #include "orbit/Bunch.hh"
 
 //pyORBIT utils
-#include "utils/CppPyWrapper.hh"
 
 using namespace std;
 
@@ -27,7 +26,7 @@ using namespace std;
   This class represents a RF gap as a Three Points type gap.
 */
 
-class RfGapThreePointTTF: public OrbitUtils::CppPyWrapper
+class RfGapThreePointTTF
 {
 public:
 

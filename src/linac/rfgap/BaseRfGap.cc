@@ -21,7 +21,7 @@ ORNL Tech. Note ORNL/TM-2015/247, June 2015
 using namespace OrbitUtils;
 
 // Constructor
-BaseRfGap::BaseRfGap(): CppPyWrapper(NULL)
+BaseRfGap::BaseRfGap()
 {
 }
 

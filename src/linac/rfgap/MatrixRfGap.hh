@@ -17,7 +17,6 @@ For this RF gap we know the E0TL, frequency, and phase only.
 #include "orbit/Bunch.hh"
 
 //pyORBIT utils
-#include "utils/CppPyWrapper.hh"
 
 using namespace std;
 
@@ -25,7 +24,7 @@ using namespace std;
   This class represents a RF gap as transport matrix. No nonlinear effects.
 */
 
-class MatrixRfGap: public OrbitUtils::CppPyWrapper
+class MatrixRfGap
 {
 public:
 

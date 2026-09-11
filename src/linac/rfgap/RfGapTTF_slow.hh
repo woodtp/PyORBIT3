@@ -20,7 +20,6 @@
 #include "orbit/Bunch.hh"
 
 //pyORBIT utils
-#include "utils/CppPyWrapper.hh"
 #include "utils/polynomial/OU_Polynomial.hh"
 
 using namespace std;
@@ -29,7 +28,7 @@ using namespace std;
   This class represents a RF gap as a Parmila type gap.
 */
 
-class RfGapTTF_slow: public OrbitUtils::CppPyWrapper
+class RfGapTTF_slow
 {
 public:
 

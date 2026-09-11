@@ -38,7 +38,6 @@ extern "C" {
   //this is implementation of the __init__ method
   static int RfGapTTF_slow_init(pyORBIT_Object *self, PyObject *args, PyObject *kwds){
 		self->cpp_obj = new RfGapTTF_slow();
-		((RfGapTTF_slow*) self->cpp_obj)->setPyWrapper((PyObject*) self);
 		return 0;
   }
 

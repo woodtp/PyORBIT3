@@ -29,7 +29,7 @@ using namespace OrbitUtils;
 
 
 // Constructor
-RfGapTTF_slow::RfGapTTF_slow(): CppPyWrapper(NULL)
+RfGapTTF_slow::RfGapTTF_slow()
 {
 }
 

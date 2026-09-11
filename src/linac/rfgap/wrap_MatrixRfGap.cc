@@ -35,7 +35,6 @@ extern "C" {
   //this is implementation of the __init__ method
   static int MatrixRfGap_init(pyORBIT_Object *self, PyObject *args, PyObject *kwds){
 		self->cpp_obj = new MatrixRfGap();
-		((MatrixRfGap*) self->cpp_obj)->setPyWrapper((PyObject*) self);
 		return 0;
   }
 

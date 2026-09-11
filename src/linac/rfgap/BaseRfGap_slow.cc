@@ -28,7 +28,7 @@ so the name of the class has the word slow in the name.
 using namespace OrbitUtils;
 
 // Constructor
-BaseRfGap_slow::BaseRfGap_slow(): CppPyWrapper(NULL)
+BaseRfGap_slow::BaseRfGap_slow()
 {
 }
 

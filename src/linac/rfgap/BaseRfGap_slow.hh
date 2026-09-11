@@ -18,7 +18,6 @@
 #include "orbit/Bunch.hh"
 
 //pyORBIT utils
-#include "utils/CppPyWrapper.hh"
 
 using namespace std;
 
@@ -26,7 +25,7 @@ using namespace std;
   This class represents a 2D rectangular grid.
 */
 
-class BaseRfGap_slow: public OrbitUtils::CppPyWrapper
+class BaseRfGap_slow
 {
 public:
 
