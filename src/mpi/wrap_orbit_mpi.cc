@@ -28,6 +28,10 @@ using namespace OrbitUtils;
 /** The namespace for the python wrappers around MPI functions. */
 namespace wrap_orbit_mpi{
 
+	static void finalize_mpi_at_exit(){
+		ORBIT_MPI_FinalizeMPI();
+	}
+
 	/** A local error(message) function. */
   void error(const char* msg){ ORBIT_MPI_Finalize(msg); }
 
@@ -181,6 +185,7 @@ namespace wrap_orbit_mpi{
 		PyMODINIT_FUNC initorbit_mpi(void) {
 			// Initialize MPI
 			ORBIT_MPI_Init();
+			Py_AtExit(finalize_mpi_at_exit);
 
 			PyObject *m, *d;
 			m = PyModule_Create(&cModPyDem);

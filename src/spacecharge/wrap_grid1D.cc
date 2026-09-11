@@ -1,4 +1,5 @@
 #include "mpi/orbit_mpi.hh"
+#include "mpi/wrap_orbit_mpi_types.hh"
 #include "main/pyORBIT_Object.hh"
 
 #include "spacecharge/wrap_grid1D.hh"

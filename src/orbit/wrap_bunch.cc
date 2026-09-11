@@ -25,7 +25,12 @@ namespace wrap_orbit_bunch{
   typedef struct {
     pyORBIT_Object base;
     PyObject* mpi_comm;
+    PyObject* sync_part;
   } pyORBIT_Bunch;
+
+  PyObject* getSyncPartWrapper(PyObject* pyBunch){
+    return ((pyORBIT_Bunch*) pyBunch)->sync_part;
+  }
 
   static void setMPICommOwner(pyORBIT_Bunch* bunch, PyObject* mpi_comm){
     Py_INCREF(mpi_comm);
@@ -47,6 +52,7 @@ namespace wrap_orbit_bunch{
         }
         self->base.cpp_obj = NULL;
         self->mpi_comm = NULL;
+        self->sync_part = NULL;
         return (PyObject *) self;
     }
 
@@ -80,8 +86,7 @@ namespace wrap_orbit_bunch{
 			return -1;
 		}
 
-		//the references should be decreased because they were created as "new reference"
-		Py_DECREF(pySyncPart);
+		self->sync_part = pySyncPart;
     return 0;
   }
 
@@ -93,8 +98,7 @@ namespace wrap_orbit_bunch{
 
   //returns the SyncPart python class wrapper instance
     static PyObject* Bunch_getSyncParticle(PyObject *self, PyObject *Py_UNUSED(ignored)){
-        Bunch* cpp_bunch = (Bunch*) ((pyORBIT_Object *) self)->cpp_obj;
-        PyObject* pySyncPart = cpp_bunch->getSyncPart()->getPyWrapper();
+        PyObject* pySyncPart = ((pyORBIT_Bunch*) self)->sync_part;
         Py_INCREF(pySyncPart);
     return pySyncPart;
   }
@@ -1236,6 +1240,7 @@ namespace wrap_orbit_bunch{
   static void Bunch_del(pyORBIT_Object* self){
         Bunch* cpp_bunch = (Bunch*) self->cpp_obj;
         delete cpp_bunch;
+        Py_XDECREF(((pyORBIT_Bunch*) self)->sync_part);
         Py_XDECREF(((pyORBIT_Bunch*) self)->mpi_comm);
         self->ob_base.ob_type->tp_free((PyObject*)self);
   }

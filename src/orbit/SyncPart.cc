@@ -24,8 +24,6 @@
 // INCLUDE FILES
 //
 ///////////////////////////////////////////////////////////////////////////
-#include <Python.h>
-
 #include "orbit/SyncPart.hh"
 
 #include "orbit/Bunch.hh"
@@ -55,24 +53,11 @@ SyncPart::SyncPart(Bunch* bunchIn)
 
 SyncPart::~SyncPart()
 {
-	Py_XDECREF(py_wrapper);
-}
-
-void SyncPart::setPyWrapper(PyObject* py_wrapper_In){
-	if(py_wrapper != NULL) Py_XDECREF(py_wrapper);
-	Py_INCREF(py_wrapper_In);
-	py_wrapper = py_wrapper_In;
-}
-
-PyObject* SyncPart::getPyWrapper(){
-	return py_wrapper;
 }
 
 //initialization all necessary variables and attributes
 void SyncPart::init()
 {
-	py_wrapper = NULL;
-
 	energy = 0.;
 	time = 0.;
 

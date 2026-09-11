@@ -55,9 +55,6 @@ class  SyncPart
   //--------------------------------------
   virtual ~SyncPart();
 
-	void setPyWrapper(PyObject* py_wrapper_In);
-	PyObject* getPyWrapper();
-
 	/**
 	  Kinetic energy in GeV
 	*/
@@ -134,7 +131,7 @@ private:
 
   friend class Bunch;
 
-  SyncPart(Bunch* bunch);
+	SyncPart(Bunch* bunch);
 
 	//initilaze the sync. particle from file
 	void readSyncPart(const char* fileName);
@@ -143,7 +140,6 @@ private:
 	void print(std::ostream& Out);
 
   Bunch* bunch;
-	PyObject* py_wrapper;
 
 	//--------------------------------------------
 	//parameters

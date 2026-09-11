@@ -26,6 +26,7 @@ extern "C" {
     /* The name of the function was changed to avoid collision with PyImport magic naming */
     PyMODINIT_FUNC initbunch(void);
 	PyObject* getBunchType(const char* name);
+	PyObject* getSyncPartWrapper(PyObject* pyBunch);
   }
 
 #ifdef __cplusplus
