@@ -29,7 +29,7 @@ using namespace OrbitUtils;
 
 LImpedance::LImpedance(double length,
                        int nMacrosMin,
-                       int nBins): CppPyWrapper(NULL)
+                       int nBins)
 {
   _length        = length;
   _nMacrosMin    = nMacrosMin;

@@ -14,7 +14,6 @@
 #include "orbit/Bunch.hh"
 
 //pyORBIT utils
-#include "utils/CppPyWrapper.hh"
 #include "utils/bunch/BunchExtremaCalculator.hh"
 #include "spacecharge/Grid1D.hh"
 
@@ -23,7 +22,7 @@
 
 using namespace std;
 
-class LImpedance: public OrbitUtils::CppPyWrapper
+class LImpedance
 {
 public:
 

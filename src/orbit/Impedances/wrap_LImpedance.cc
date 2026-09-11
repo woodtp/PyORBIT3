@@ -63,7 +63,6 @@ extern "C"
 
     self->cpp_obj = new LImpedance(length, nMacrosMin, nBins);
 
-    ((LImpedance*) self->cpp_obj)->setPyWrapper((PyObject*) self);
 
     return 0;
   }

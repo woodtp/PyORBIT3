@@ -69,7 +69,6 @@ extern "C"
 
     self->cpp_obj = new TImpedance(length, nMacrosMin, nBins, useX, useY);
 
-    ((TImpedance*) self->cpp_obj)->setPyWrapper((PyObject*) self);
 
     return 0;
   }

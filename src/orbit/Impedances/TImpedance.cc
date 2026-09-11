@@ -30,7 +30,7 @@ TImpedance::TImpedance(double length,
                        int nMacrosMin,
                        int nBins,
                        int useX,
-                       int useY): CppPyWrapper(NULL)
+                       int useY)
 {
   _length       = length;
   _nMacrosMin   = nMacrosMin;
