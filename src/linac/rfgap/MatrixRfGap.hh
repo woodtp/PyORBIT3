@@ -9,7 +9,6 @@ For this RF gap we know the E0TL, frequency, and phase only.
 
 //MPI Function Wrappers
 #include "orbit_mpi.hh"
-#include "wrap_mpi_comm.hh"
 
 #include <cstdlib>
 #include <cmath>

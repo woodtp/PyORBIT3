@@ -10,16 +10,14 @@ dependencies = []
 
 dependencies += dependency('fftw3', version: '>= 3.0.0', required: true)
 
-py_link_args = []
+python_embed_dependency = python.dependency(embed: true)
+core_link_args = []
 
 if host_machine.system() == 'darwin'
-  # The unresolved symbols will be resolved once the Python interpreter loads libpyorbit.
-  # The linker on MacOS is a bit more strict, so we need to explicitly tell it that
-  # symbols from libpython will be nont resolvable for now.
   dependencies += python.dependency()
-  py_link_args += ['-Wl,-undefined,dynamic_lookup']
+  core_link_args += ['-Wl,-undefined,dynamic_lookup']
 else
-  dependencies += python.dependency(embed : true)
+  dependencies += python_embed_dependency
 endif
 
 # Detecting if MPICH or OPENMPI are installed and enabling support if present
@@ -168,7 +166,7 @@ sources = files([
   'teapot/MatrixGenerator.cc'
 ])
 
-inc = include_directories([
+include_paths = [
   'main',
   'mpi',
   'orbit',
@@ -196,18 +194,34 @@ inc = include_directories([
   'linac',
   'linac/rfgap',
   'linac/tracking',
-])
+]
+
+inc = include_directories(include_paths)
 
 core_lib = library(
   'pyorbit3',
   sources: sources,
   include_directories: inc,
   dependencies: dependencies,
-  link_args: py_link_args,
+  link_args: core_link_args,
   install: true,
 )
 
-core_dep = declare_dependency(link_with : core_lib, dependencies: dependencies)
+core_install_dir = get_option('prefix') / get_option('libdir')
+extension_install_dir = python.get_install_dir() / 'orbit/core'
+core_relative_install_dir = run_command(
+  python,
+  '-c',
+  'import os, sys; print(os.path.relpath(sys.argv[1], sys.argv[2]))',
+  core_install_dir,
+  extension_install_dir,
+  check: true,
+).stdout().strip()
+if host_machine.system() == 'darwin'
+  core_install_rpath = '@loader_path/' + core_relative_install_dir
+else
+  core_install_rpath = '$ORIGIN/' + core_relative_install_dir
+endif
 
 api_headers = [
   'linac/rfgap/BaseRfGap.hh',
@@ -219,7 +233,6 @@ api_headers = [
   'linac/rfgap/RfGapTTF_slow.hh',
   'linac/rfgap/SuperFishFieldSource.hh',
   'linac/tracking/linac_tracking.hh',
-  'main/pyORBIT_Object.hh',
   'mpi/orbit_mpi.hh',
   'orbit/Apertures/Aperture.hh',
   'orbit/Apertures/BaseAperture.hh',
@@ -305,7 +318,6 @@ api_headers = [
   'utils/bunch/InitialCoordsAttrFunctions.hh',
   'utils/bunch/ParticlesWithIdFunctions.hh',
   'utils/bunch/TwissFilteringFunctions.hh',
-  'utils/ellipticalint/elliptint.hh',
   'utils/field_sources/DipoleFieldSource.hh',
   'utils/field_sources/LoopFieldSource.hh',
   'utils/field_sources/MagnetFieldSourceGrid3D.hh',
@@ -324,7 +336,14 @@ api_headers = [
 
 install_headers(api_headers, subdir : 'pyorbit3', preserve_path : true)
 
-pc_requires = ['fftw3 >= 3.0.0']
+pc_include_subdirs = ['pyorbit3']
+foreach path : include_paths
+  if path != 'main' and path != 'utils/ellipticalint'
+    pc_include_subdirs += 'pyorbit3' / path
+  endif
+endforeach
+
+pc_requires = [python_embed_dependency, 'fftw3 >= 3.0.0']
 if get_option('USE_MPI') == 'mpich'
   pc_requires += ['mpich >= 4.0.0']
 elif get_option('USE_MPI') == 'ompi'
@@ -340,7 +359,7 @@ pkgconfig.generate(
   version: meson.project_version(),
   libraries: core_lib,
   requires: pc_requires,
-  subdirs: 'pyorbit3',
+  subdirs: pc_include_subdirs,
   extra_cflags: '-DUSE_MPI=' + use_mpi_flag,
   install_dir: get_option('libdir') / 'pkgconfig',
 )
@@ -497,6 +516,7 @@ foreach name, src_list : ext_modules
   include_directories: inc,
   link_with: core_lib,
   dependencies: dependencies,
+  install_rpath: core_install_rpath,
   install: true,
   subdir: 'orbit/core',
   )
