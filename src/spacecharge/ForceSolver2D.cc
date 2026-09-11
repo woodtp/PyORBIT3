@@ -1,4 +1,4 @@
-#include "ForceSolver2D.hh"
+#include "spacecharge/ForceSolver2D.hh"
 
 #include <iostream>
 

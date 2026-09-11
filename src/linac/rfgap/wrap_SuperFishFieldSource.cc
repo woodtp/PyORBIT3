@@ -1,12 +1,12 @@
-#include "orbit_mpi.hh"
-#include "pyORBIT_Object.hh"
+#include "mpi/orbit_mpi.hh"
+#include "main/pyORBIT_Object.hh"
 
-#include "wrap_SuperFishFieldSource.hh"
-#include "wrap_linacmodule.hh"
+#include "linac/rfgap/wrap_SuperFishFieldSource.hh"
+#include "linac/wrap_linacmodule.hh"
 
-#include "wrap_utils.hh"
-#include "wrap_spacecharge.hh"
-#include "SuperFishFieldSource.hh"
+#include "utils/wrap_utils.hh"
+#include "spacecharge/wrap_spacecharge.hh"
+#include "linac/rfgap/SuperFishFieldSource.hh"
 
 #include <iostream>
 

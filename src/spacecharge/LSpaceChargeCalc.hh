@@ -4,19 +4,19 @@
 #define SC_SPACECHARGE_CALC_L_H
 
 //MPI Function Wrappers
-#include "orbit_mpi.hh"
+#include "mpi/orbit_mpi.hh"
 
 #include <cstdlib>
 #include <cmath>
 #include <complex>
 
 //ORBIT bunch
-#include "Bunch.hh"
+#include "orbit/Bunch.hh"
 
 //pyORBIT utils
-#include "CppPyWrapper.hh"
-#include "BunchExtremaCalculator.hh"
-#include "Grid1D.hh"
+#include "utils/CppPyWrapper.hh"
+#include "utils/bunch/BunchExtremaCalculator.hh"
+#include "spacecharge/Grid1D.hh"
 
 //FFTW library header
 #include "fftw3.h"

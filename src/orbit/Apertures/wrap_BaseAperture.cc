@@ -1,12 +1,12 @@
-#include "orbit_mpi.hh"
-#include "pyORBIT_Object.hh"
+#include "mpi/orbit_mpi.hh"
+#include "main/pyORBIT_Object.hh"
 
-#include "wrap_bunch.hh"
+#include "orbit/wrap_bunch.hh"
 
 #include <iostream>
 
-#include "BaseAperture.hh"
-#include "BaseApertureShape.hh"
+#include "orbit/Apertures/BaseAperture.hh"
+#include "orbit/Apertures/BaseApertureShape.hh"
 
 namespace wrap_base_aperture{
 

@@ -31,7 +31,7 @@
 
 #include <Python.h>
 
-#include "ExternalEffects.hh"
+#include "trackerrk4/ExternalEffects.hh"
 
 namespace TrackerRK4{
 

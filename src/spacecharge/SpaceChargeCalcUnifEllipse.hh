@@ -8,18 +8,18 @@
 #define SC_SPACECHARGE_CALC_UNIFORM_ELLIPSE_HH
 
 //MPI Function Wrappers
-#include "orbit_mpi.hh"
+#include "mpi/orbit_mpi.hh"
 
 #include <cstdlib>
 #include <cmath>
 
 //ORBIT bunch
-#include "Bunch.hh"
+#include "orbit/Bunch.hh"
 
 //pyORBIT utils
-#include "CppPyWrapper.hh"
+#include "utils/CppPyWrapper.hh"
 
-#include "UniformEllipsoidFieldCalculator.hh"
+#include "spacecharge/UniformEllipsoidFieldCalculator.hh"
 
 using namespace std;
 

@@ -2,10 +2,10 @@
 #define ELLIPSE_APERTURE_SHAPE_H
 
 //pyORBIT utils
-#include "CppPyWrapper.hh"
+#include "utils/CppPyWrapper.hh"
 
-#include "Bunch.hh"
-#include "BaseApertureShape.hh"
+#include "orbit/Bunch.hh"
+#include "orbit/Apertures/BaseApertureShape.hh"
 
 using namespace std;
 

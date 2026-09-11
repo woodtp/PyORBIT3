@@ -19,8 +19,8 @@
 ///////////////////////////////////////////////////////////////////////////
 #include <cfloat>
 
-#include "orbit_mpi.hh"
-#include "OU_Polynomial.hh"
+#include "mpi/orbit_mpi.hh"
+#include "utils/polynomial/OU_Polynomial.hh"
 
 using namespace OrbitUtils;
 

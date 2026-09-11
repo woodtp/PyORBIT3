@@ -16,11 +16,11 @@
 //
 /////////////////////////////////////////////////////////////////////////////
 
-#include "Grid1D.hh"
-#include "Grid2D.hh"
-#include "PoissonSolverFFT2D.hh"
-#include "SpaceChargeCalc2p5Drb.hh"
-#include "BufferStore.hh"
+#include "spacecharge/Grid1D.hh"
+#include "spacecharge/Grid2D.hh"
+#include "spacecharge/PoissonSolverFFT2D.hh"
+#include "spacecharge/SpaceChargeCalc2p5Drb.hh"
+#include "utils/BufferStore.hh"
 
 #include <iostream>
 #include <cmath>

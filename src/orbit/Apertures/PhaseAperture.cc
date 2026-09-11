@@ -20,16 +20,16 @@
 ///////////////////////////////////////////////////////////////////////////
 
 
-#include "PhaseAperture.hh"
-#include "SyncPart.hh"
-#include "OrbitConst.hh"
+#include "orbit/Apertures/PhaseAperture.hh"
+#include "orbit/SyncPart.hh"
+#include "orbit/OrbitConst.hh"
 
 #include <iostream>
 #include <cmath>
 #include <cfloat>
 #include <cstdlib>
 
-#include "ParticleAttributes.hh"
+#include "orbit/ParticlesAttributes/ParticleAttributes.hh"
 
 /**
  The PhaseAperture class constructor. It needs the RF frequency in Hz to translate

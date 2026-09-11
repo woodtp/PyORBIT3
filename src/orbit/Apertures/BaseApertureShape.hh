@@ -2,11 +2,11 @@
 #ifndef BASE_APERTURE_SHAPE_H
 #define BASE_APERTURE_SHAPE_H
 
-#include "Bunch.hh"
-#include "BaseApertureShape.hh"
+#include "orbit/Bunch.hh"
+#include "orbit/Apertures/BaseApertureShape.hh"
 
 //pyORBIT utils
-#include "CppPyWrapper.hh"
+#include "utils/CppPyWrapper.hh"
 
 using namespace std;
 

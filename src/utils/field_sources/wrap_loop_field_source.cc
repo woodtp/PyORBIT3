@@ -1,9 +1,9 @@
-#include "orbit_mpi.hh"
-#include "pyORBIT_Object.hh"
-#include "wrap_spacecharge.hh"
+#include "mpi/orbit_mpi.hh"
+#include "main/pyORBIT_Object.hh"
+#include "spacecharge/wrap_spacecharge.hh"
 
-#include "wrap_utils.hh"
-#include "LoopFieldSource.hh"
+#include "utils/wrap_utils.hh"
+#include "utils/field_sources/LoopFieldSource.hh"
 
 #include <iostream>
 

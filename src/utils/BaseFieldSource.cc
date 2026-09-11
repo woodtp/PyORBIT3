@@ -14,7 +14,7 @@
 ///////////////////////////////////////////////////////////////////////////
 
 
-#include "BaseFieldSource.hh"
+#include "utils/BaseFieldSource.hh"
 
 using namespace OrbitUtils;
 

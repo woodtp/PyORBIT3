@@ -11,10 +11,10 @@
 //
 /////////////////////////////////////////////////////////////////////////////
 
-#include "LSpaceChargeCalc.hh"
-#include "BufferStore.hh"
-#include "Grid1D.hh"
-#include "OrbitConst.hh"
+#include "spacecharge/Grid1D.hh"
+#include "utils/BufferStore.hh"
+#include "spacecharge/LSpaceChargeCalc.hh"
+#include "orbit/OrbitConst.hh"
 #include <cfloat>
 #include <cmath>
 #include <complex>

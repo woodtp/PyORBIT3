@@ -25,10 +25,10 @@
 ///////////////////////////////////////////////////////////////////////////
 #include <Python.h>
 
-#include "orbit_mpi.hh"
+#include "mpi/orbit_mpi.hh"
 
-#include "ShiftedFieldSource.hh"
-#include "MatrixOperations.hh"
+#include "utils/field_sources/ShiftedFieldSource.hh"
+#include "utils/matrix/MatrixOperations.hh"
 
 using namespace OrbitUtils;
 

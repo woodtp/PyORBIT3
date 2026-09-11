@@ -1,10 +1,10 @@
 #ifndef SC_SHAPED_BOUNDARY_2D_H
 #define SC_SHAPED_BOUNDARY_2D_H
 
-#include "Grid2D.hh"
+#include "spacecharge/Grid2D.hh"
 #include <string>
 
-#include "BaseBoundary2D.hh"
+#include "spacecharge/BaseBoundary2D.hh"
 
 using namespace std;
 

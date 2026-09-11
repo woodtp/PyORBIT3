@@ -15,8 +15,8 @@
 //    It is using linear interpolation.
 //
 ///////////////////////////////////////////////////////////////////////////
-#include "orbit_mpi.hh"
-#include "OU_Function.hh"
+#include "mpi/orbit_mpi.hh"
+#include "utils/OU_Function.hh"
 
 #include <iomanip>
 

@@ -13,9 +13,9 @@
 //    A class for a plain double values vector
 //
 ///////////////////////////////////////////////////////////////////////////
-#include "orbit_mpi.hh"
+#include "mpi/orbit_mpi.hh"
 
-#include "PhaseVector.hh"
+#include "utils/matrix/PhaseVector.hh"
 
 #include <cstdlib>
 

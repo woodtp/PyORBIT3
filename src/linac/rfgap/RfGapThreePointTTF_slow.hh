@@ -12,17 +12,17 @@
 #define THREE_POINTS_RF_GAP_SLOW_H
 
 //MPI Function Wrappers
-#include "orbit_mpi.hh"
+#include "mpi/orbit_mpi.hh"
 
 
 #include <cstdlib>
 #include <cmath>
 
 //ORBIT bunch
-#include "Bunch.hh"
+#include "orbit/Bunch.hh"
 
 //pyORBIT utils
-#include "CppPyWrapper.hh"
+#include "utils/CppPyWrapper.hh"
 
 using namespace std;
 

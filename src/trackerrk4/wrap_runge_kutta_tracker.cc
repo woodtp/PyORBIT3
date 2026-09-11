@@ -1,11 +1,11 @@
-#include "orbit_mpi.hh"
-#include "pyORBIT_Object.hh"
+#include "mpi/orbit_mpi.hh"
+#include "main/pyORBIT_Object.hh"
 
-#include "wrap_runge_kutta_tracker.hh"
+#include "trackerrk4/wrap_runge_kutta_tracker.hh"
 
 #include <iostream>
 
-#include "RungeKuttaTracker.hh"
+#include "trackerrk4/RungeKuttaTracker.hh"
 
 using namespace TrackerRK4;
 using namespace OrbitUtils;

@@ -166,37 +166,7 @@ sources = files([
   'teapot/MatrixGenerator.cc'
 ])
 
-include_paths = [
-  'main',
-  'mpi',
-  'orbit',
-  'orbit/Apertures',
-  'orbit/BunchDiagnostics',
-  'orbit/Errors',
-  'orbit/FieldTracker',
-  'orbit/Impedances',
-  'orbit/MaterialInteractions',
-  'orbit/ParticlesAttributes',
-  'orbit/RFCavities',
-  'orbit/SynchPartRedefinition',
-  'spacecharge',
-  'teapot',
-  'trackerrk4',
-  'utils',
-  'utils/bunch',
-  'utils/ellipticalint',
-  'utils/field_sources',
-  'utils/harmonic_analysis',
-  'utils/integration',
-  'utils/matrix',
-  'utils/polynomial',
-  'utils/statistics',
-  'linac',
-  'linac/rfgap',
-  'linac/tracking',
-]
-
-inc = include_directories(include_paths)
+inc = include_directories('.')
 
 core_lib = library(
   'pyorbit3',
@@ -336,13 +306,6 @@ api_headers = [
 
 install_headers(api_headers, subdir : 'pyorbit3', preserve_path : true)
 
-pc_include_subdirs = ['pyorbit3']
-foreach path : include_paths
-  if path != 'main' and path != 'utils/ellipticalint'
-    pc_include_subdirs += 'pyorbit3' / path
-  endif
-endforeach
-
 pc_requires = [python_embed_dependency, 'fftw3 >= 3.0.0']
 if get_option('USE_MPI') == 'mpich'
   pc_requires += ['mpich >= 4.0.0']
@@ -359,7 +322,7 @@ pkgconfig.generate(
   version: meson.project_version(),
   libraries: core_lib,
   requires: pc_requires,
-  subdirs: pc_include_subdirs,
+  subdirs: 'pyorbit3',
   extra_cflags: '-DUSE_MPI=' + use_mpi_flag,
   install_dir: get_option('libdir') / 'pkgconfig',
 )

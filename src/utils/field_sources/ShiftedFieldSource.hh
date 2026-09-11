@@ -27,16 +27,16 @@
 #ifndef SHIFTED_FIELD_SOURCE_H
 #define SHIFTED_FIELD_SOURCE_H
 
-#include "orbit_mpi.hh"
+#include "mpi/orbit_mpi.hh"
 
 #include <cstdlib>
 #include <iostream>
 #include <cmath>
 #include <cfloat>
 
-#include "BaseFieldSource.hh"
-#include "Matrix.hh"
-#include "PhaseVector.hh"
+#include "utils/BaseFieldSource.hh"
+#include "utils/matrix/Matrix.hh"
+#include "utils/matrix/PhaseVector.hh"
 
 namespace OrbitUtils{
 

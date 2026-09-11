@@ -14,12 +14,12 @@
 //
 ///////////////////////////////////////////////////////////////////////////
 
-#include "Bunch.hh"
+#include "orbit/Bunch.hh"
 
-#include "ParticleAttributesFactory.hh"
-#include "OrbitConst.hh"
-#include "StringUtils.hh"
-#include "BufferStore.hh"
+#include "orbit/ParticlesAttributes/ParticleAttributesFactory.hh"
+#include "orbit/OrbitConst.hh"
+#include "utils/StringUtils.hh"
+#include "utils/BufferStore.hh"
 
 #include <iomanip>
 #include <string>

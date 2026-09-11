@@ -4,16 +4,16 @@
 #define SC_POISSON_SOLVER_BASE_3D_H
 
 //MPI Function Wrappers
-#include "orbit_mpi.hh"
+#include "mpi/orbit_mpi.hh"
 
 #include <cstdlib>
 #include <cmath>
 #include <string>
 
 //pyORBIT utils
-#include "CppPyWrapper.hh"
+#include "utils/CppPyWrapper.hh"
 
-#include "Grid3D.hh"
+#include "spacecharge/Grid3D.hh"
 
 using namespace std;
 

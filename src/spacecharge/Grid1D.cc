@@ -14,12 +14,12 @@
 //   Correction done by A. Shishlo 2023.02.10
 //
 /////////////////////////////////////////////////////////////////////////////
-#include "orbit_mpi.hh"
+#include "mpi/orbit_mpi.hh"
 
-#include "Grid1D.hh"
-#include "Bunch.hh"
-#include "ParticleMacroSize.hh"
-#include "BufferStore.hh"
+#include "spacecharge/Grid1D.hh"
+#include "orbit/Bunch.hh"
+#include "orbit/ParticlesAttributes/ParticleMacroSize.hh"
+#include "utils/BufferStore.hh"
 
 #include <iostream>
 

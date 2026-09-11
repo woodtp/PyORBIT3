@@ -20,7 +20,7 @@
 
 #include <Python.h>
 
-#include "BaseFieldSource.hh"
+#include "utils/BaseFieldSource.hh"
 #include <vector>
 
 namespace OrbitUtils{

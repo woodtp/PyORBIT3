@@ -17,7 +17,7 @@
 #ifndef PLAIN_MATRIX_H
 #define PLAIN_MATRIX_H
 
-#include "CppPyWrapper.hh"
+#include "utils/CppPyWrapper.hh"
 
 namespace OrbitUtils{
 

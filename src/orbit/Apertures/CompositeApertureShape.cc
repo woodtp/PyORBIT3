@@ -1,4 +1,4 @@
-#include "CompositeApertureShape.hh"
+#include "orbit/Apertures/CompositeApertureShape.hh"
 
 #include <iostream>
 #include <cmath>

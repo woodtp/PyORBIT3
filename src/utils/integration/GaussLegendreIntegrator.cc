@@ -13,12 +13,12 @@
 //    The integrator for the Gauss-Legendre schema.
 //
 ///////////////////////////////////////////////////////////////////////////
-#include "orbit_mpi.hh"
-#include "orbit_mpi.hh"
-#include "GaussLegendreIntegrator.hh"
-#include "gauss_legendre_points.hh"
-#include "OU_Function.hh"
-#include "OU_SplineCH.hh"
+#include "mpi/orbit_mpi.hh"
+#include "mpi/orbit_mpi.hh"
+#include "utils/integration/GaussLegendreIntegrator.hh"
+#include "utils/integration/gauss_legendre_points.hh"
+#include "utils/OU_Function.hh"
+#include "utils/OU_SplineCH.hh"
 
 #include <iomanip>
 

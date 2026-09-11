@@ -1,11 +1,11 @@
-#include "Dual_Harmonic_Cav.hh"
-#include "ParticleMacroSize.hh"
+#include "orbit/RFCavities/Dual_Harmonic_Cav.hh"
+#include "orbit/ParticlesAttributes/ParticleMacroSize.hh"
 
 #include <iostream>
 #include <cmath>
 
-#include "Bunch.hh"
-#include "OrbitConst.hh"
+#include "orbit/Bunch.hh"
+#include "orbit/OrbitConst.hh"
 
 using namespace OrbitUtils;
 

@@ -4,9 +4,9 @@
 #define FIELDTRACKER_H
 
 //pyORBIT utils
-#include "CppPyWrapper.hh"
-#include "Bunch.hh"
-#include "Grid3D.hh"
+#include "utils/CppPyWrapper.hh"
+#include "orbit/Bunch.hh"
+#include "spacecharge/Grid3D.hh"
 
 using namespace std;
 

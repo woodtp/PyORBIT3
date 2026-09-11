@@ -22,16 +22,16 @@
 //
 ///////////////////////////////////////////////////////////////////////////
 
-#include "orbit_mpi.hh"
-#include "BufferStore.hh"
+#include "mpi/orbit_mpi.hh"
+#include "utils/BufferStore.hh"
 
 #include <cstdlib>
 #include <iostream>
 #include <cmath>
 #include <cfloat>
 
-#include "ShiftedFieldSource.hh"
-#include "MagnetFieldSourceGrid3D.hh"
+#include "utils/field_sources/ShiftedFieldSource.hh"
+#include "utils/field_sources/MagnetFieldSourceGrid3D.hh"
 
 using namespace OrbitUtils;
 

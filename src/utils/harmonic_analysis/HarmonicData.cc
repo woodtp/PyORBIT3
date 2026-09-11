@@ -30,9 +30,9 @@
 ///////////////////////////////////////////////////////////////////////////
 #include <cfloat>
 
-#include "orbit_mpi.hh"
-#include "HarmonicData.hh"
-#include "OrbitConst.hh"
+#include "mpi/orbit_mpi.hh"
+#include "utils/harmonic_analysis/HarmonicData.hh"
+#include "orbit/OrbitConst.hh"
 
 using namespace OrbitUtils;
 

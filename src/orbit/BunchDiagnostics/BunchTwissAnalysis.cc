@@ -1,12 +1,12 @@
-#include "BunchTwissAnalysis.hh"
+#include "orbit/BunchDiagnostics/BunchTwissAnalysis.hh"
 
 #include <iostream>
 #include <cmath>
 #include <cfloat>
 #include <cstdlib>
 
-#include "ParticleMacroSize.hh"
-#include "SyncPart.hh"
+#include "orbit/ParticlesAttributes/ParticleMacroSize.hh"
+#include "orbit/SyncPart.hh"
 
 /** Constructor */
 BunchTwissAnalysis::BunchTwissAnalysis(): CppPyWrapper(NULL)

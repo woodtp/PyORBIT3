@@ -4,7 +4,7 @@
 #define SC_FORCE_SOLVER_FFT_2D_H
 
 //MPI Function Wrappers
-#include "orbit_mpi.hh"
+#include "mpi/orbit_mpi.hh"
 
 #include <cstdlib>
 #include <cmath>
@@ -12,12 +12,12 @@
 #include <complex>
 
 //pyORBIT utils
-#include "CppPyWrapper.hh"
+#include "utils/CppPyWrapper.hh"
 
 //FFTW library header
 #include "fftw3.h"
 
-#include "ForceSolver2D.hh"
+#include "spacecharge/ForceSolver2D.hh"
 
 using namespace std;
 

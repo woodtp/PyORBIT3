@@ -3,12 +3,12 @@
 // INCLUDE FILES
 //
 ///////////////////////////////////////////////////////////////////////////
-#include "wrap_syncpart.hh"
+#include "orbit/wrap_syncpart.hh"
 
-#include "pyORBIT_Object.hh"
+#include "main/pyORBIT_Object.hh"
 
-#include "Bunch.hh"
-#include "SyncPart.hh"
+#include "orbit/Bunch.hh"
+#include "orbit/SyncPart.hh"
 
 namespace wrap_orbit_syncpart{
 

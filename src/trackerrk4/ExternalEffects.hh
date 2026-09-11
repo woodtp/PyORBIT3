@@ -16,10 +16,10 @@
 
 #include <string>
 
-#include "Bunch.hh"
-#include "BaseFieldSource.hh"
+#include "orbit/Bunch.hh"
+#include "utils/BaseFieldSource.hh"
 
-#include "CppPyWrapper.hh"
+#include "utils/CppPyWrapper.hh"
 
 namespace TrackerRK4{
 

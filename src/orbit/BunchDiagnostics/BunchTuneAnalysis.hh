@@ -1,10 +1,11 @@
 #ifndef BUNCH_TUNE_ANALYSIS_H
 #define BUNCH_TUNE_ANALYSIS_H
 
-#include "CppPyWrapper.hh"
+//pyORBIT utils
+#include "utils/CppPyWrapper.hh"
 
-#include "Bunch.hh"
-#include "BunchTwissAnalysis.hh"
+#include "orbit/Bunch.hh"
+#include "orbit/BunchDiagnostics/BunchTwissAnalysis.hh"
 
 using namespace std;
 

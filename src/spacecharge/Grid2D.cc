@@ -1,8 +1,8 @@
 //This class repersents a 2D rectangular grid
 
-#include "Grid2D.hh"
-#include "ParticleMacroSize.hh"
-#include "BufferStore.hh"
+#include "spacecharge/Grid2D.hh"
+#include "orbit/ParticlesAttributes/ParticleMacroSize.hh"
+#include "utils/BufferStore.hh"
 
 #include <iostream>
 

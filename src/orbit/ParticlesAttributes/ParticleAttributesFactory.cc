@@ -15,19 +15,19 @@
 //
 ///////////////////////////////////////////////////////////////////////////
 
-#include "ParticleAttributesFactory.hh"
+#include "orbit/ParticlesAttributes/ParticleAttributesFactory.hh"
 
-#include "ParticleMacroSize.hh"
-#include "WaveFunctionAmplitudes.hh"
-#include "AtomPopulations.hh"
-#include "pq_coordinates.hh"
-#include "part_time.hh"
-#include "Evolution.hh"
-#include "LostParticleAttributes.hh"
-#include "ParticlePhaseAttributes.hh"
-#include "ParticleIdNumber.hh"
-#include "ParticleInitialCoordinates.hh"
-#include "TurnNumberAttributes.hh"
+#include "orbit/ParticlesAttributes/ParticleMacroSize.hh"
+#include "orbit/ParticlesAttributes/WaveFunctionAmplitudes.hh"
+#include "orbit/ParticlesAttributes/AtomPopulations.hh"
+#include "orbit/ParticlesAttributes/pq_coordinates.hh"
+#include "orbit/ParticlesAttributes/part_time.hh"
+#include "orbit/ParticlesAttributes/Evolution.hh"
+#include "orbit/ParticlesAttributes/LostParticleAttributes.hh"
+#include "orbit/ParticlesAttributes/ParticlePhaseAttributes.hh"
+#include "orbit/ParticlesAttributes/ParticleIdNumber.hh"
+#include "orbit/ParticlesAttributes/ParticleInitialCoordinates.hh"
+#include "orbit/ParticlesAttributes/TurnNumberAttributes.hh"
 
 ParticleAttributesFactory::ParticleAttributesFactory()
 {

@@ -13,13 +13,13 @@
 //    The container for instances of the BaseFieldSource class.
 //
 ///////////////////////////////////////////////////////////////////////////
-#include "orbit_mpi.hh"
+#include "mpi/orbit_mpi.hh"
 #include <iostream>
 #include <iomanip>
 #include <cmath>
 #include <fstream>
 
-#include "FieldSourceContainer.hh"
+#include "utils/FieldSourceContainer.hh"
 
 
 using namespace OrbitUtils;

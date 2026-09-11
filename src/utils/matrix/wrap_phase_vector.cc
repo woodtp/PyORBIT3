@@ -1,14 +1,14 @@
-#include "orbit_mpi.hh"
-#include "pyORBIT_Object.hh"
+#include "mpi/orbit_mpi.hh"
+#include "main/pyORBIT_Object.hh"
 
-#include "wrap_utils.hh"
-#include "wrap_phase_vector.hh"
+#include "utils/wrap_utils.hh"
+#include "utils/matrix/wrap_phase_vector.hh"
 
 #include <iostream>
 
-#include "PhaseVector.hh"
-#include "Matrix.hh"
-#include "MatrixOperations.hh"
+#include "utils/matrix/PhaseVector.hh"
+#include "utils/matrix/Matrix.hh"
+#include "utils/matrix/MatrixOperations.hh"
 
 using namespace OrbitUtils;
 using namespace wrap_orbit_utils;

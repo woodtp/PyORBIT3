@@ -14,7 +14,7 @@
 //
 //
 ///////////////////////////////////////////////////////////////////////////
-#include "RungeKuttaTracker.hh"
+#include "trackerrk4/RungeKuttaTracker.hh"
 
 #include <iostream>
 #include <fstream>
@@ -23,7 +23,7 @@
 using namespace TrackerRK4;
 using namespace OrbitUtils;
 
-#include "OrbitConst.hh"
+#include "orbit/OrbitConst.hh"
 
 RungeKuttaTracker::RungeKuttaTracker(double lengthIn){
 

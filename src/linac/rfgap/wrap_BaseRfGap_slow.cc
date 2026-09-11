@@ -1,13 +1,13 @@
-#include "orbit_mpi.hh"
-#include "pyORBIT_Object.hh"
+#include "mpi/orbit_mpi.hh"
+#include "main/pyORBIT_Object.hh"
 
-#include "wrap_BaseRfGap_slow.hh"
-#include "wrap_linacmodule.hh"
-#include "wrap_bunch.hh"
+#include "linac/rfgap/wrap_BaseRfGap_slow.hh"
+#include "linac/wrap_linacmodule.hh"
+#include "orbit/wrap_bunch.hh"
 
 #include <iostream>
 
-#include "BaseRfGap_slow.hh"
+#include "linac/rfgap/BaseRfGap_slow.hh"
 
 using namespace OrbitUtils;
 

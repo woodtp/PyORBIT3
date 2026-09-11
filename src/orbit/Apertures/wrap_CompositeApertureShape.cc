@@ -1,11 +1,11 @@
-#include "orbit_mpi.hh"
-#include "pyORBIT_Object.hh"
+#include "mpi/orbit_mpi.hh"
+#include "main/pyORBIT_Object.hh"
 
-#include "wrap_bunch.hh"
+#include "orbit/wrap_bunch.hh"
 
 #include <iostream>
 
-#include "CompositeApertureShape.hh"
+#include "orbit/Apertures/CompositeApertureShape.hh"
 
 namespace wrap_py_composite_aperture_shape{
 

@@ -2,9 +2,9 @@
 #define SYNCH_PARTICLE_REDEFINITION_H
 
 //pyORBIT utils
-#include "CppPyWrapper.hh"
+#include "utils/CppPyWrapper.hh"
 
-#include "Bunch.hh"
+#include "orbit/Bunch.hh"
 
 using namespace std;
 

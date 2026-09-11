@@ -18,7 +18,7 @@
 #ifndef ORBIT_UTILS_POLYNOMIAL_H
 #define ORBIT_UTILS_POLYNOMIAL_H
 
-#include "CppPyWrapper.hh"
+#include "utils/CppPyWrapper.hh"
 
 using namespace std;
 

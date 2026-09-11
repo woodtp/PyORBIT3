@@ -1,11 +1,11 @@
 #ifndef SC_BASE_BOUNDARY_2D_H
 #define SC_BASE_BOUNDARY_2D_H
 
-#include "Grid2D.hh"
+#include "spacecharge/Grid2D.hh"
 #include <string>
 
 //pyORBIT utils
-#include "CppPyWrapper.hh"
+#include "utils/CppPyWrapper.hh"
 
 using namespace std;
 

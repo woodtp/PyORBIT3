@@ -25,8 +25,8 @@
 #ifndef MAGNET_FIELD_SOURCE_GRID3D_H
 #define MAGNET_FIELD_SOURCE_GRID3D_H
 
-#include "Grid3D.hh"
-#include "ShiftedFieldSource.hh"
+#include "spacecharge/Grid3D.hh"
+#include "utils/field_sources/ShiftedFieldSource.hh"
 
 namespace OrbitUtils{
 

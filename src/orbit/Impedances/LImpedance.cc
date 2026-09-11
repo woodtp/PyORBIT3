@@ -11,10 +11,10 @@
 //
 /////////////////////////////////////////////////////////////////////////////
 
-#include "Grid1D.hh"
-#include "BufferStore.hh"
-#include "LImpedance.hh"
-#include "OrbitConst.hh"
+#include "spacecharge/Grid1D.hh"
+#include "utils/BufferStore.hh"
+#include "orbit/Impedances/LImpedance.hh"
+#include "orbit/OrbitConst.hh"
 #include <complex>
 #include <iostream>
 #include <cmath>

@@ -5,8 +5,8 @@
 	 The class can represent several RF gaps.
 */
 
-#include "OrbitConst.hh"
-#include "SuperFishFieldSource.hh"
+#include "orbit/OrbitConst.hh"
+#include "linac/rfgap/SuperFishFieldSource.hh"
 
 #include <iostream>
 #include <cmath>

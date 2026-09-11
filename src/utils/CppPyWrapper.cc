@@ -12,7 +12,7 @@
 //    this class.
 //
 ///////////////////////////////////////////////////////////////////////////
-#include "CppPyWrapper.hh"
+#include "utils/CppPyWrapper.hh"
 
 using namespace OrbitUtils;
 

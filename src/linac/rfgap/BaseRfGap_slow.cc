@@ -15,15 +15,15 @@ so the name of the class has the word slow in the name.
 
 */
 
-#include "BaseRfGap_slow.hh"
-#include "ParticleMacroSize.hh"
+#include "linac/rfgap/BaseRfGap_slow.hh"
+#include "orbit/ParticlesAttributes/ParticleMacroSize.hh"
 
 #include <iostream>
 #include <cmath>
 
-#include "Bunch.hh"
-#include "bessel.hh"
-#include "OrbitConst.hh"
+#include "orbit/Bunch.hh"
+#include "utils/bessel.hh"
+#include "orbit/OrbitConst.hh"
 
 using namespace OrbitUtils;
 

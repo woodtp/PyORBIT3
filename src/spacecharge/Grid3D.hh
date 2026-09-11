@@ -17,15 +17,15 @@
 #define SC_GRID3D_HH
 
 //MPI Function Wrappers
-#include "orbit_mpi.hh"
+#include "mpi/orbit_mpi.hh"
 
 //ORBIT bunch
-#include "Bunch.hh"
+#include "orbit/Bunch.hh"
 
 //pyORBIT utils
-#include "CppPyWrapper.hh"
+#include "utils/CppPyWrapper.hh"
 
-#include "Grid2D.hh"
+#include "spacecharge/Grid2D.hh"
 
 #include <iostream>
 #include <cstdlib>

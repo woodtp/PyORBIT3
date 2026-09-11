@@ -8,17 +8,17 @@
 // INCLUDE FILES
 //
 ///////////////////////////////////////////////////////////////////////////
-#include "wrap_bunch.hh"
-#include "wrap_mpi_comm.hh"
-#include "wrap_syncpart.hh"
-#include "wrap_bunch_twiss_analysis.hh"
-#include "wrap_bunch_tune_analysis.hh"
-#include "wrap_synch_part_redefinition_z_de.hh"
+#include "orbit/wrap_bunch.hh"
+#include "mpi/wrap_mpi_comm.hh"
+#include "orbit/wrap_syncpart.hh"
+#include "orbit/BunchDiagnostics/wrap_bunch_twiss_analysis.hh"
+#include "orbit/BunchDiagnostics/wrap_bunch_tune_analysis.hh"
+#include "orbit/SynchPartRedefinition/wrap_synch_part_redefinition_z_de.hh"
 
-#include "pyORBIT_Object.hh"
+#include "main/pyORBIT_Object.hh"
 
-#include "Bunch.hh"
-#include "ParticleAttributesFactory.hh"
+#include "orbit/Bunch.hh"
+#include "orbit/ParticlesAttributes/ParticleAttributesFactory.hh"
 
 namespace wrap_orbit_bunch{
 

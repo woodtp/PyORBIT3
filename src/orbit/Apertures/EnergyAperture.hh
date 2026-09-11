@@ -21,8 +21,8 @@
 ///////////////////////////////////////////////////////////////////////////
 
 //pyORBIT utils
-#include "CppPyWrapper.hh"
-#include "Bunch.hh"
+#include "utils/CppPyWrapper.hh"
+#include "orbit/Bunch.hh"
 
 using namespace std;
 

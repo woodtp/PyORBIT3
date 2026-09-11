@@ -1,12 +1,12 @@
-#include "orbit_mpi.hh"
-#include "pyORBIT_Object.hh"
+#include "mpi/orbit_mpi.hh"
+#include "main/pyORBIT_Object.hh"
 
-#include "wrap_synch_part_redefinition_z_de.hh"
-#include "wrap_bunch.hh"
+#include "orbit/SynchPartRedefinition/wrap_synch_part_redefinition_z_de.hh"
+#include "orbit/wrap_bunch.hh"
 
 #include <iostream>
 
-#include "SynchPartRedefinitionZdE.hh"
+#include "orbit/SynchPartRedefinition/SynchPartRedefinitionZdE.hh"
 
 namespace wrap_synch_part_redefinition{
 

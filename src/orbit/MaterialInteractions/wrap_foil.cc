@@ -1,12 +1,12 @@
-#include "orbit_mpi.hh"
-#include "pyORBIT_Object.hh"
+#include "mpi/orbit_mpi.hh"
+#include "main/pyORBIT_Object.hh"
 
-#include "wrap_foil.hh"
-#include "wrap_bunch.hh"
+#include "orbit/MaterialInteractions/wrap_foil.hh"
+#include "orbit/wrap_bunch.hh"
 
 #include <iostream>
 
-#include "Foil.hh"
+#include "orbit/MaterialInteractions/Foil.hh"
 
 namespace wrap_foil{
 

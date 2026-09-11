@@ -1,14 +1,14 @@
-#include "Aperture.hh"
-#include "SyncPart.hh"
-#include "OrbitConst.hh"
-#include "Random.hh"
+#include "orbit/Apertures/Aperture.hh"
+#include "orbit/SyncPart.hh"
+#include "orbit/OrbitConst.hh"
+#include "utils/Random.hh"
 
 #include <iostream>
 #include <cmath>
 #include <cfloat>
 #include <cstdlib>
 
-#include "ParticleAttributes.hh"
+#include "orbit/ParticlesAttributes/ParticleAttributes.hh"
 // Constructor
 ///////////////////////////////////////////////////////////////////////////
 //

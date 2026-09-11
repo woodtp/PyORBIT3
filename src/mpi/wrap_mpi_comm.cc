@@ -3,12 +3,12 @@
 // INCLUDE FILES
 //
 ///////////////////////////////////////////////////////////////////////////
-#include "orbit_mpi.hh"
+#include "mpi/orbit_mpi.hh"
 
 //this header is from Python package
 #include <structmember.h>
 
-#include "wrap_mpi_comm.hh"
+#include "mpi/wrap_mpi_comm.hh"
 
 namespace wrap_orbit_mpi_comm{
 

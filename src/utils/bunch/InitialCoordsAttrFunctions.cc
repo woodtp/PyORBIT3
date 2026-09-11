@@ -39,14 +39,14 @@
 //    wx = exp(-(x^2+(alphax*x+betax*x')^2)/(2*(betax*emittancex)) etc.
 //
 ///////////////////////////////////////////////////////////////////////////
-#include "orbit_mpi.hh"
-#include "InitialCoordsAttrFunctions.hh"
-#include "ParticleInitialCoordinates.hh"
-#include "ParticleMacroSize.hh"
+#include "mpi/orbit_mpi.hh"
+#include "utils/bunch/InitialCoordsAttrFunctions.hh"
+#include "orbit/ParticlesAttributes/ParticleInitialCoordinates.hh"
+#include "orbit/ParticlesAttributes/ParticleMacroSize.hh"
 
-#include "BufferStore.hh"
-#include "MatrixOperations.hh"
-#include "BunchTwissAnalysis.hh"
+#include "utils/BufferStore.hh"
+#include "utils/matrix/MatrixOperations.hh"
+#include "orbit/BunchDiagnostics/BunchTwissAnalysis.hh"
 
 #include <algorithm>    // std::sort
 #include <vector>       // std::vector

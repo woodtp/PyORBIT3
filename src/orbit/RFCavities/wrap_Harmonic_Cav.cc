@@ -1,12 +1,12 @@
-#include "orbit_mpi.hh"
-#include "pyORBIT_Object.hh"
+#include "mpi/orbit_mpi.hh"
+#include "main/pyORBIT_Object.hh"
 
-#include "wrap_Harmonic_Cav.hh"
-#include "wrap_bunch.hh"
+#include "orbit/RFCavities/wrap_Harmonic_Cav.hh"
+#include "orbit/wrap_bunch.hh"
 
 #include <iostream>
 
-#include "Harmonic_Cav.hh"
+#include "orbit/RFCavities/Harmonic_Cav.hh"
 
 using namespace OrbitUtils;
 

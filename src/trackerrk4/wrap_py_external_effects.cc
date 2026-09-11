@@ -1,13 +1,13 @@
-#include "orbit_mpi.hh"
-#include "pyORBIT_Object.hh"
+#include "mpi/orbit_mpi.hh"
+#include "main/pyORBIT_Object.hh"
 
-#include "wrap_utils.hh"
-#include "wrap_py_external_effects.hh"
+#include "utils/wrap_utils.hh"
+#include "trackerrk4/wrap_py_external_effects.hh"
 
 #include <iostream>
 #include <string>
 
-#include "PyExternalEffects.hh"
+#include "trackerrk4/PyExternalEffects.hh"
 
 using namespace OrbitUtils;
 using namespace TrackerRK4;

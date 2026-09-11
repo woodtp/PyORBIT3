@@ -1,12 +1,12 @@
-#include "orbit_mpi.hh"
-#include "pyORBIT_Object.hh"
+#include "mpi/orbit_mpi.hh"
+#include "main/pyORBIT_Object.hh"
 
-#include "wrap_aperture.hh"
-#include "wrap_bunch.hh"
+#include "orbit/Apertures/wrap_aperture.hh"
+#include "orbit/wrap_bunch.hh"
 
 #include <iostream>
 
-#include "EnergyAperture.hh"
+#include "orbit/Apertures/EnergyAperture.hh"
 
 namespace wrap_energy_aperture{
 

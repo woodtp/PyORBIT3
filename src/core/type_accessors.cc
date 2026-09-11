@@ -1,10 +1,10 @@
 #include <Python.h>
 
-#include "wrap_bunch.hh"
-#include "wrap_spacecharge.hh"
-#include "wrap_mpi_comm.hh"
-#include "wrap_utils.hh"
-#include "wrap_trackerrk4.hh"
+#include "orbit/wrap_bunch.hh"
+#include "spacecharge/wrap_spacecharge.hh"
+#include "mpi/wrap_mpi_comm.hh"
+#include "utils/wrap_utils.hh"
+#include "trackerrk4/wrap_trackerrk4.hh"
 
 extern "C" {
 

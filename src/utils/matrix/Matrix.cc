@@ -14,9 +14,9 @@
 //
 ///////////////////////////////////////////////////////////////////////////
 
-#include "orbit_mpi.hh"
-#include "Matrix.hh"
-#include "BufferStore.hh"
+#include "mpi/orbit_mpi.hh"
+#include "utils/matrix/Matrix.hh"
+#include "utils/BufferStore.hh"
 
 #include <cstdlib>
 

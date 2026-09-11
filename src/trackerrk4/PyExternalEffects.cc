@@ -26,11 +26,11 @@
 //               debugging only.
 //
 ///////////////////////////////////////////////////////////////////////////
-#include "orbit_mpi.hh"
+#include "mpi/orbit_mpi.hh"
 #include <iostream>
 
-#include "PyExternalEffects.hh"
-#include "RungeKuttaTracker.hh"
+#include "trackerrk4/PyExternalEffects.hh"
+#include "trackerrk4/RungeKuttaTracker.hh"
 //#include <c++/4.4.6/bits/stl_vector.h>
 
 using namespace TrackerRK4;

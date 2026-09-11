@@ -1,4 +1,4 @@
-#include "ShapedBoundary2D.hh"
+#include "spacecharge/ShapedBoundary2D.hh"
 
 #include <iostream>
 #include <cfloat>

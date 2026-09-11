@@ -1,12 +1,12 @@
-#include "FieldTracker.hh"
+#include "orbit/FieldTracker/FieldTracker.hh"
 
 #include <iostream>
 #include <fstream>
 #include <cmath>
 #include <cfloat>
 #include <cstdlib>
-#include "OrbitConst.hh"
-#include "SyncPart.hh"
+#include "orbit/OrbitConst.hh"
+#include "orbit/SyncPart.hh"
 
 //////////////////////////////////////////////////////////////////////////
 //Constructor for FieldTracker

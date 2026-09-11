@@ -17,10 +17,10 @@
 
 */
 
-#include "Bunch.hh"
-#include "bessel.hh"
-#include "OrbitConst.hh"
-#include "RfGapTTF_slow.hh"
+#include "orbit/Bunch.hh"
+#include "utils/bessel.hh"
+#include "orbit/OrbitConst.hh"
+#include "linac/rfgap/RfGapTTF_slow.hh"
 
 #include <iostream>
 #include <cmath>

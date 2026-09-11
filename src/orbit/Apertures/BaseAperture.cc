@@ -1,5 +1,5 @@
-#include "BaseAperture.hh"
-#include "ParticleAttributes.hh"
+#include "orbit/Apertures/BaseAperture.hh"
+#include "orbit/ParticlesAttributes/ParticleAttributes.hh"
 
 #include <iostream>
 #include <cmath>

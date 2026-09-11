@@ -26,12 +26,12 @@
 ///////////////////////////////////////////////////////////////////////////
 #include <Python.h>
 
-#include "SyncPart.hh"
+#include "orbit/SyncPart.hh"
 
-#include "Bunch.hh"
-#include "OrbitConst.hh"
-#include "StringUtils.hh"
-#include "BufferStore.hh"
+#include "orbit/Bunch.hh"
+#include "orbit/OrbitConst.hh"
+#include "utils/StringUtils.hh"
+#include "utils/BufferStore.hh"
 
 #include <iomanip>
 #include <string>

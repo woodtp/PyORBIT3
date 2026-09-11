@@ -1,12 +1,12 @@
-#include "orbit_mpi.hh"
-#include "pyORBIT_Object.hh"
+#include "mpi/orbit_mpi.hh"
+#include "main/pyORBIT_Object.hh"
 
-#include "wrap_utils.hh"
-#include "wrap_py_base_field_source.hh"
+#include "utils/wrap_utils.hh"
+#include "utils/wrap_py_base_field_source.hh"
 
 #include <iostream>
 
-#include "PyBaseFieldSource.hh"
+#include "utils/PyBaseFieldSource.hh"
 
 using namespace OrbitUtils;
 using namespace wrap_orbit_utils;

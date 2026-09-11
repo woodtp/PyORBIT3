@@ -2,10 +2,10 @@
 #define UNIFORM_SC_ELLIPSOID_HH
 
 //pyORBIT utils
-#include "CppPyWrapper.hh"
+#include "utils/CppPyWrapper.hh"
 
 //Function from OrbitUtils
-#include "OU_Function.hh"
+#include "utils/OU_Function.hh"
 
 #include <cstdlib>
 #include <cmath>

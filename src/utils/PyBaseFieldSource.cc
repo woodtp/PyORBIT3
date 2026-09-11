@@ -19,9 +19,9 @@
 //               debugging only.
 //
 ///////////////////////////////////////////////////////////////////////////
-#include "PyBaseFieldSource.hh"
+#include "utils/PyBaseFieldSource.hh"
 
-#include "orbit_mpi.hh"
+#include "mpi/orbit_mpi.hh"
 #include <iostream>
 
 using namespace OrbitUtils;

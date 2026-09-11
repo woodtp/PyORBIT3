@@ -1,10 +1,10 @@
 #ifndef STAT_MOMENTS_2D_H
 #define STAT_MOMENTS_2D_H
 
-#include "orbit_mpi.hh"
+#include "mpi/orbit_mpi.hh"
 
 //pyORBIT utils
-#include "CppPyWrapper.hh"
+#include "utils/CppPyWrapper.hh"
 
 using namespace std;
 

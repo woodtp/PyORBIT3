@@ -18,7 +18,7 @@
 #define BUNCH_EXTREMA_CALCULATIONS_H
 
 //ORBIT bunch
-#include "Bunch.hh"
+#include "orbit/Bunch.hh"
 
 namespace OrbitUtils{
 

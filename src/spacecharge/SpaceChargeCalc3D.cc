@@ -18,11 +18,11 @@
 //
 /////////////////////////////////////////////////////////////////////////////
 
-#include "Grid3D.hh"
-#include "PoissonSolverFFT3D.hh"
-#include "SpaceChargeCalc3D.hh"
-#include "BufferStore.hh"
-#include "OrbitConst.hh"
+#include "spacecharge/Grid3D.hh"
+#include "spacecharge/PoissonSolverFFT3D.hh"
+#include "spacecharge/SpaceChargeCalc3D.hh"
+#include "utils/BufferStore.hh"
+#include "orbit/OrbitConst.hh"
 
 #include <iostream>
 #include <cmath>

@@ -1,14 +1,14 @@
-#include "orbit_mpi.hh"
-#include "pyORBIT_Object.hh"
+#include "mpi/orbit_mpi.hh"
+#include "main/pyORBIT_Object.hh"
 
-#include "wrap_boundary2d.hh"
-#include "wrap_spacecharge.hh"
+#include "spacecharge/wrap_boundary2d.hh"
+#include "spacecharge/wrap_spacecharge.hh"
 
 #include <iostream>
 
-#include "BaseBoundary2D.hh"
-#include "ShapedBoundary2D.hh"
-#include "Grid2D.hh"
+#include "spacecharge/BaseBoundary2D.hh"
+#include "spacecharge/ShapedBoundary2D.hh"
+#include "spacecharge/Grid2D.hh"
 
 using namespace OrbitUtils;
 

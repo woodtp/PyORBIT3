@@ -31,10 +31,10 @@
 //
 ///////////////////////////////////////////////////////////////////////////
 
-#include "teapotbase.hh"
-#include "OrbitConst.hh"
-#include "Bunch.hh"
-#include "SyncPart.hh"
+#include "teapot/teapotbase.hh"
+#include "orbit/OrbitConst.hh"
+#include "orbit/Bunch.hh"
+#include "orbit/SyncPart.hh"
 
 #include <complex>
 

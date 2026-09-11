@@ -23,8 +23,8 @@
 //    m[n-2] = (y[n-1] - y[n-2])/(x[n-1]-x[n-2])
 //
 ///////////////////////////////////////////////////////////////////////////
-#include "orbit_mpi.hh"
-#include "OU_SplineCH.hh"
+#include "mpi/orbit_mpi.hh"
+#include "utils/OU_SplineCH.hh"
 
 #include <iomanip>
 

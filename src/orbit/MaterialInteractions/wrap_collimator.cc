@@ -1,12 +1,12 @@
-#include "orbit_mpi.hh"
-#include "pyORBIT_Object.hh"
+#include "mpi/orbit_mpi.hh"
+#include "main/pyORBIT_Object.hh"
 
-#include "wrap_collimator.hh"
-#include "wrap_bunch.hh"
+#include "orbit/MaterialInteractions/wrap_collimator.hh"
+#include "orbit/wrap_bunch.hh"
 
 #include <iostream>
 
-#include "Collimator.hh"
+#include "orbit/MaterialInteractions/Collimator.hh"
 
 namespace wrap_collimator{
 

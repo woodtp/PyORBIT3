@@ -8,18 +8,18 @@
 #define TTF_RF_GAP_H
 
 //MPI Function Wrappers
-#include "orbit_mpi.hh"
+#include "mpi/orbit_mpi.hh"
 
 
 #include <cstdlib>
 #include <cmath>
 
 //ORBIT bunch
-#include "Bunch.hh"
+#include "orbit/Bunch.hh"
 
 //pyORBIT utils
-#include "CppPyWrapper.hh"
-#include "OU_Polynomial.hh"
+#include "utils/CppPyWrapper.hh"
+#include "utils/polynomial/OU_Polynomial.hh"
 
 using namespace std;
 

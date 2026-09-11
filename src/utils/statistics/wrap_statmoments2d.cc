@@ -1,14 +1,14 @@
-#include "orbit_mpi.hh"
-#include "pyORBIT_Object.hh"
+#include "mpi/orbit_mpi.hh"
+#include "main/pyORBIT_Object.hh"
 
-#include "wrap_utils.hh"
-#include "wrap_statmoments2d.hh"
-#include "wrap_mpi_comm.hh"
+#include "utils/wrap_utils.hh"
+#include "utils/statistics/wrap_statmoments2d.hh"
+#include "mpi/wrap_mpi_comm.hh"
 
 #include <iostream>
 #include <string>
 
-#include "StatMoments2D.hh"
+#include "utils/statistics/StatMoments2D.hh"
 
 using namespace OrbitUtils;
 using namespace wrap_orbit_utils;

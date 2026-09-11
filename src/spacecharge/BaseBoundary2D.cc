@@ -1,5 +1,5 @@
-#include "BaseBoundary2D.hh"
-#include "OrbitConst.hh"
+#include "spacecharge/BaseBoundary2D.hh"
+#include "orbit/OrbitConst.hh"
 
 #include <iostream>
 #include <cfloat>

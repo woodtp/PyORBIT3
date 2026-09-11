@@ -17,11 +17,11 @@
 #ifndef RUNGE_KUTTA_3D_TRACKER_H
 #define RUNGE_KUTTA_3D_TRACKER_H
 
-#include "Bunch.hh"
-#include "BaseFieldSource.hh"
-#include "ExternalEffects.hh"
+#include "orbit/Bunch.hh"
+#include "utils/BaseFieldSource.hh"
+#include "trackerrk4/ExternalEffects.hh"
 
-#include "CppPyWrapper.hh"
+#include "utils/CppPyWrapper.hh"
 
 namespace TrackerRK4{
 

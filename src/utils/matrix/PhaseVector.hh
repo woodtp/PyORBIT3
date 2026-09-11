@@ -17,7 +17,7 @@
 #ifndef PHASE_VECTOR_H
 #define PHASE_VECTOR_H
 
-#include "CppPyWrapper.hh"
+#include "utils/CppPyWrapper.hh"
 
 namespace OrbitUtils{
 

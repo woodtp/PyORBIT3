@@ -8,8 +8,8 @@
 #ifndef SUPER_FISH_RF_FIELD_SOURCE_H
 #define SUPER_FISH_RF_FIELD_SOURCE_H
 
-#include "BaseFieldSource.hh"
-#include "Grid2D.hh"
+#include "utils/BaseFieldSource.hh"
+#include "spacecharge/Grid2D.hh"
 
 #include <cstdlib>
 #include <cmath>

@@ -1,14 +1,14 @@
-#include "orbit_mpi.hh"
-#include "pyORBIT_Object.hh"
+#include "mpi/orbit_mpi.hh"
+#include "main/pyORBIT_Object.hh"
 
-#include "wrap_grid1D.hh"
-#include "wrap_spacecharge.hh"
-#include "wrap_bunch.hh"
-#include "wrap_mpi_comm.hh"
+#include "spacecharge/wrap_grid1D.hh"
+#include "spacecharge/wrap_spacecharge.hh"
+#include "orbit/wrap_bunch.hh"
+#include "mpi/wrap_mpi_comm.hh"
 
 #include <iostream>
 
-#include "Grid1D.hh"
+#include "spacecharge/Grid1D.hh"
 
 using namespace OrbitUtils;
 

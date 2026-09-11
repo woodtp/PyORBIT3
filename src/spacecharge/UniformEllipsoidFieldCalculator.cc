@@ -4,11 +4,11 @@
 	*/
 
 //MPI Function Wrappers
-#include "orbit_mpi.hh"
-#include "wrap_mpi_comm.hh"
+#include "mpi/orbit_mpi.hh"
+#include "mpi/wrap_mpi_comm.hh"
 
-#include "UniformEllipsoidFieldCalculator.hh"
-#include "gauss_legendre_points.hh"
+#include "spacecharge/UniformEllipsoidFieldCalculator.hh"
+#include "utils/integration/gauss_legendre_points.hh"
 
 #include <iostream>
 

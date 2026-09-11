@@ -1,13 +1,13 @@
-#include "orbit_mpi.hh"
-#include "pyORBIT_Object.hh"
+#include "mpi/orbit_mpi.hh"
+#include "main/pyORBIT_Object.hh"
 #
-#include "wrap_spacechargecalc3d.hh"
-#include "wrap_spacecharge.hh"
-#include "wrap_bunch.hh"
+#include "spacecharge/wrap_spacechargecalc3d.hh"
+#include "spacecharge/wrap_spacecharge.hh"
+#include "orbit/wrap_bunch.hh"
 
 #include <iostream>
 
-#include "SpaceChargeCalc3D.hh"
+#include "spacecharge/SpaceChargeCalc3D.hh"
 
 using namespace OrbitUtils;
 

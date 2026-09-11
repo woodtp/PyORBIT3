@@ -1,4 +1,4 @@
-#include "SynchPartRedefinitionZdE.hh"
+#include "orbit/SynchPartRedefinition/SynchPartRedefinitionZdE.hh"
 
 #include <iostream>
 #include <cmath>
@@ -6,10 +6,10 @@
 #include <cstdlib>
 
 //#include "Bunch.hh"
-#include "ParticlesAttributes/ParticleMacroSize.hh"
-#include "SyncPart.hh"
+#include "orbit/ParticlesAttributes/ParticleMacroSize.hh"
+#include "orbit/SyncPart.hh"
 
-#include "OrbitConst.hh"
+#include "orbit/OrbitConst.hh"
 
 /** Constructor */
 SynchPartRedefinitionZdE::SynchPartRedefinitionZdE(): CppPyWrapper(NULL)

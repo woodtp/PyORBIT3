@@ -4,7 +4,7 @@
 #define SC_POISSON_SOLVER_FFT_3D_H
 
 //MPI Function Wrappers
-#include "orbit_mpi.hh"
+#include "mpi/orbit_mpi.hh"
 
 #include <cstdlib>
 #include <cmath>
@@ -12,12 +12,12 @@
 #include <cfloat>
 
 //pyORBIT utils
-#include "CppPyWrapper.hh"
+#include "utils/CppPyWrapper.hh"
 
 //FFTW library header
 #include "fftw3.h"
 
-#include "PoissonSolver3D.hh"
+#include "spacecharge/PoissonSolver3D.hh"
 
 using namespace std;
 

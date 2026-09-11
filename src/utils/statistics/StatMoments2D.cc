@@ -1,10 +1,10 @@
-#include "StatMoments2D.hh"
+#include "utils/statistics/StatMoments2D.hh"
 
 #include <iostream>
 #include <cmath>
 #include <cfloat>
 
-#include "BufferStore.hh"
+#include "utils/BufferStore.hh"
 
 using namespace OrbitUtils;
 

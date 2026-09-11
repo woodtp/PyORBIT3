@@ -24,7 +24,7 @@
 
 #include <Python.h>
 
-#include "BaseFieldSource.hh"
+#include "utils/BaseFieldSource.hh"
 
 namespace OrbitUtils{
 

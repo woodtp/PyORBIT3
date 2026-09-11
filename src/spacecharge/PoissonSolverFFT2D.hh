@@ -4,19 +4,19 @@
 #define SC_POISSON_SOLVER_FFT_2D_H
 
 //MPI Function Wrappers
-#include "orbit_mpi.hh"
+#include "mpi/orbit_mpi.hh"
 
 #include <cstdlib>
 #include <cmath>
 #include <string>
 
 //pyORBIT utils
-#include "CppPyWrapper.hh"
+#include "utils/CppPyWrapper.hh"
 
 //FFTW library header
 #include "fftw3.h"
 
-#include "PoissonSolver2D.hh"
+#include "spacecharge/PoissonSolver2D.hh"
 
 using namespace std;
 

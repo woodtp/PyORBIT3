@@ -13,10 +13,10 @@
 //    A class for storing hadron material interaction methods.
 //
 ///////////////////////////////////////////////////////////////////////////
-#include "MaterialInteractions.hh"
-#include "OrbitConst.hh"
-#include "Random.hh"
-#include "bessel.hh"
+#include "orbit/MaterialInteractions/MaterialInteractions.hh"
+#include "orbit/OrbitConst.hh"
+#include "utils/Random.hh"
+#include "utils/bessel.hh"
 
 #include <iostream>
 #include <cmath>

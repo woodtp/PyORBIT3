@@ -14,9 +14,9 @@
 //
 ///////////////////////////////////////////////////////////////////////////
 
-#include "orbit_mpi.hh"
-#include "BunchExtremaCalculator.hh"
-#include "BufferStore.hh"
+#include "mpi/orbit_mpi.hh"
+#include "utils/bunch/BunchExtremaCalculator.hh"
+#include "utils/BufferStore.hh"
 
 #include <cstdlib>
 #include <iostream>

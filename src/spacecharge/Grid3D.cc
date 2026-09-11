@@ -14,10 +14,10 @@
 //
 ///////////////////////////////////////////////////////////////////////////
 
-#include "ParticleMacroSize.hh"
-#include "BufferStore.hh"
+#include "orbit/ParticlesAttributes/ParticleMacroSize.hh"
+#include "utils/BufferStore.hh"
 
-#include "Grid3D.hh"
+#include "spacecharge/Grid3D.hh"
 
 #include <iostream>
 

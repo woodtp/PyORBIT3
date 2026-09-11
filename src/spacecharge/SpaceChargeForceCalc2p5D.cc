@@ -10,11 +10,11 @@
 //
 /////////////////////////////////////////////////////////////////////////////
 
-#include "Grid1D.hh"
-#include "Grid2D.hh"
-#include "ForceSolverFFT2D.hh"
-#include "SpaceChargeForceCalc2p5D.hh"
-#include "BufferStore.hh"
+#include "spacecharge/Grid1D.hh"
+#include "spacecharge/Grid2D.hh"
+#include "spacecharge/ForceSolverFFT2D.hh"
+#include "spacecharge/SpaceChargeForceCalc2p5D.hh"
+#include "utils/BufferStore.hh"
 
 #include <iostream>
 #include <cmath>

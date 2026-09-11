@@ -10,20 +10,20 @@
 #define SC_SPACECHARGE_CALC_3D_H
 
 //MPI Function Wrappers
-#include "orbit_mpi.hh"
+#include "mpi/orbit_mpi.hh"
 
 #include <cstdlib>
 #include <cmath>
 
 //ORBIT bunch
-#include "Bunch.hh"
+#include "orbit/Bunch.hh"
 
 //pyORBIT utils
-#include "CppPyWrapper.hh"
-#include "BunchExtremaCalculator.hh"
+#include "utils/CppPyWrapper.hh"
+#include "utils/bunch/BunchExtremaCalculator.hh"
 
-#include "Grid3D.hh"
-#include "PoissonSolverFFT3D.hh"
+#include "spacecharge/Grid3D.hh"
+#include "spacecharge/PoissonSolverFFT3D.hh"
 
 using namespace std;
 

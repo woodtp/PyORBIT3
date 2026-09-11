@@ -1,10 +1,10 @@
-#include "orbit_mpi.hh"
-#include "pyORBIT_Object.hh"
+#include "mpi/orbit_mpi.hh"
+#include "main/pyORBIT_Object.hh"
 
-#include "UniformEllipsoidFieldCalculator.hh"
+#include "spacecharge/UniformEllipsoidFieldCalculator.hh"
 
-#include "wrap_uniform_ellipsoid_field_calculator.hh"
-#include "wrap_spacecharge.hh"
+#include "spacecharge/wrap_uniform_ellipsoid_field_calculator.hh"
+#include "spacecharge/wrap_spacecharge.hh"
 
 #include <iostream>
 

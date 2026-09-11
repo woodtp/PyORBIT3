@@ -21,8 +21,8 @@
 //    This is an example of embedding Python in C++ Orbit level.
 //
 ///////////////////////////////////////////////////////////////////////////
-#include "orbit_mpi.hh"
-#include "ExtEffectsContainer.hh"
+#include "mpi/orbit_mpi.hh"
+#include "trackerrk4/ExtEffectsContainer.hh"
 #include <iostream>
 #include <iomanip>
 #include <cmath>

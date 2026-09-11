@@ -4,21 +4,21 @@
 #define SC_SPACECHARGE_CALC_2P5D_H
 
 //MPI Function Wrappers
-#include "orbit_mpi.hh"
+#include "mpi/orbit_mpi.hh"
 
 #include <cstdlib>
 #include <cmath>
 
 //ORBIT bunch
-#include "Bunch.hh"
+#include "orbit/Bunch.hh"
 
 //pyORBIT utils
-#include "CppPyWrapper.hh"
-#include "BunchExtremaCalculator.hh"
+#include "utils/CppPyWrapper.hh"
+#include "utils/bunch/BunchExtremaCalculator.hh"
 
-#include "Grid3D.hh"
-#include "PoissonSolverFFT2D.hh"
-#include "BaseBoundary2D.hh"
+#include "spacecharge/Grid3D.hh"
+#include "spacecharge/PoissonSolverFFT2D.hh"
+#include "spacecharge/BaseBoundary2D.hh"
 
 using namespace std;
 

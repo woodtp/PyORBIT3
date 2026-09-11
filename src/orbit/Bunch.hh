@@ -20,7 +20,7 @@
 // INCLUDE FILES
 //
 ///////////////////////////////////////////////////////////////////////////
-#include "orbit_mpi.hh"
+#include "mpi/orbit_mpi.hh"
 
 #include <iostream>
 #include <cstdlib>
@@ -29,12 +29,12 @@
 #include <map>
 #include <vector>
 
-#include "ParticleAttributes.hh"
-#include "SyncPart.hh"
+#include "orbit/ParticlesAttributes/ParticleAttributes.hh"
+#include "orbit/SyncPart.hh"
 
 //from utils
-#include "AttributesBucket.hh"
-#include "CppPyWrapper.hh"
+#include "utils/AttributesBucket.hh"
+#include "utils/CppPyWrapper.hh"
 
 #ifndef BUNCH_H
 #define BUNCH_H

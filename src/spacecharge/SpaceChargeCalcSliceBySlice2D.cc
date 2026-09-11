@@ -10,10 +10,10 @@
 //
 /////////////////////////////////////////////////////////////////////////////
 
-#include "Grid3D.hh"
-#include "PoissonSolverFFT2D.hh"
-#include "SpaceChargeCalcSliceBySlice2D.hh"
-#include "BufferStore.hh"
+#include "spacecharge/Grid3D.hh"
+#include "spacecharge/PoissonSolverFFT2D.hh"
+#include "spacecharge/SpaceChargeCalcSliceBySlice2D.hh"
+#include "utils/BufferStore.hh"
 
 #include <iostream>
 #include <cmath>

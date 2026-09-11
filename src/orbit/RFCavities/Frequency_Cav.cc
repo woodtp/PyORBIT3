@@ -1,12 +1,12 @@
-#include "Frequency_Cav.hh"
-#include "ParticleMacroSize.hh"
+#include "orbit/RFCavities/Frequency_Cav.hh"
+#include "orbit/ParticlesAttributes/ParticleMacroSize.hh"
 
 #include <iostream>
 #include <cmath>
 
-#include "Bunch.hh"
-#include "bessel.hh"
-#include "OrbitConst.hh"
+#include "orbit/Bunch.hh"
+#include "utils/bessel.hh"
+#include "orbit/OrbitConst.hh"
 
 using namespace OrbitUtils;
 

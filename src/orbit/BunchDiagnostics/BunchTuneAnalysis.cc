@@ -1,6 +1,6 @@
-#include "BunchTuneAnalysis.hh"
-#include "SyncPart.hh"
-#include "OrbitConst.hh"
+#include "orbit/BunchDiagnostics/BunchTuneAnalysis.hh"
+#include "orbit/SyncPart.hh"
+#include "orbit/OrbitConst.hh"
 
 #include <iostream>
 #include <cmath>

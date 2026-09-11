@@ -8,15 +8,15 @@ A. Shishlo, J. Holmes,
 ORNL Tech. Note ORNL/TM-2015/247, June 2015
 */
 
-#include "BaseRfGap.hh"
-#include "ParticleMacroSize.hh"
+#include "linac/rfgap/BaseRfGap.hh"
+#include "orbit/ParticlesAttributes/ParticleMacroSize.hh"
 
 #include <iostream>
 #include <cmath>
 
-#include "Bunch.hh"
-#include "bessel.hh"
-#include "OrbitConst.hh"
+#include "orbit/Bunch.hh"
+#include "utils/bessel.hh"
+#include "orbit/OrbitConst.hh"
 
 using namespace OrbitUtils;
 

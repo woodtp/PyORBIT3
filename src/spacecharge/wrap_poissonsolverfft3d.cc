@@ -1,11 +1,11 @@
-#include "orbit_mpi.hh"
-#include "pyORBIT_Object.hh"
+#include "mpi/orbit_mpi.hh"
+#include "main/pyORBIT_Object.hh"
 
-#include "PoissonSolverFFT3D.hh"
-#include "Grid3D.hh"
+#include "spacecharge/PoissonSolverFFT3D.hh"
+#include "spacecharge/Grid3D.hh"
 
-#include "wrap_poissonsolverfft2d.hh"
-#include "wrap_spacecharge.hh"
+#include "spacecharge/wrap_poissonsolverfft2d.hh"
+#include "spacecharge/wrap_spacecharge.hh"
 
 #include <iostream>
 
