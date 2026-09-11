@@ -44,11 +44,7 @@ SpaceChargeCalcUnifEllipse::SpaceChargeCalcUnifEllipse(int nEllipses_in)
 
 SpaceChargeCalcUnifEllipse::~SpaceChargeCalcUnifEllipse(){
 	for(int ie = 0; ie < nEllipses; ie++){
-		if(ellipsoidCalc_arr[ie]->getPyWrapper() != NULL){
-			Py_DECREF(ellipsoidCalc_arr[ie]->getPyWrapper());
-		} else {
-			delete ellipsoidCalc_arr[ie];
-		}
+		delete ellipsoidCalc_arr[ie];
 	}
 	delete [] ellipsoidCalc_arr;
 

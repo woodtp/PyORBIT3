@@ -1,9 +1,6 @@
 #ifndef CIRCULAR_APERTURE_SHAPE_H
 #define CIRCULAR_APERTURE_SHAPE_H
 
-//pyORBIT utils
-#include "utils/CppPyWrapper.hh"
-
 #include "orbit/Bunch.hh"
 #include "orbit/Apertures/BaseApertureShape.hh"
 

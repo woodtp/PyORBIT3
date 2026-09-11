@@ -1,10 +1,6 @@
 #ifndef MATERIAL_INTERACTIONS_H
 #define MATERIAL_INTERACTIONS_H
 
-//pyORBIT utils
-#include "utils/CppPyWrapper.hh"
-
-
 using namespace std;
 
 /**
