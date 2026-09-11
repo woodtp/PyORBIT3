@@ -3,6 +3,8 @@
 
 #include <Python.h>
 
+class Grid1D;
+
 #ifdef __cplusplus
 extern "C"
 {
@@ -11,6 +13,7 @@ extern "C"
   namespace wrap_spacecharge
   {
     void initGrid1D(PyObject* module);
+    PyObject* wrapGrid1D(Grid1D* grid, PyObject* owner);
   }
 
 #ifdef __cplusplus

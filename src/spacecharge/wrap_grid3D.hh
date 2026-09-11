@@ -3,12 +3,15 @@
 
 #include <Python.h>
 
+class Grid3D;
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
   namespace wrap_spacecharge{
     void initGrid3D(PyObject* module);
+    PyObject* wrapGrid3D(Grid3D* grid, PyObject* owner);
   }
 
 #ifdef __cplusplus

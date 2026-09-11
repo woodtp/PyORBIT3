@@ -26,8 +26,8 @@ SpaceChargeCalcSliceBySlice2D::SpaceChargeCalcSliceBySlice2D(int xSize, int ySiz
 	xy_ratio = xy_ratio_in;
 	useLongTracking = 0;
 	poissonSolver = new PoissonSolverFFT2D(xSize, ySize, -xy_ratio, xy_ratio, -1.0, 1.0);
-	rhoGrid3D = new Grid3D(xSize, ySize, zSize);
-	phiGrid3D = new Grid3D(xSize, ySize, zSize);
+	rhoGrid3D.reset(new Grid3D(xSize, ySize, zSize));
+	phiGrid3D.reset(new Grid3D(xSize, ySize, zSize));
 	bunchExtremaCalc = new BunchExtremaCalculator();
 }
 
@@ -36,23 +36,13 @@ SpaceChargeCalcSliceBySlice2D::SpaceChargeCalcSliceBySlice2D(int xSize, int ySiz
 	xy_ratio = 1.0;
 	useLongTracking = 0;
 	poissonSolver = new PoissonSolverFFT2D(xSize, ySize, -xy_ratio, xy_ratio, -1.0, 1.0);
-	rhoGrid3D = new Grid3D(xSize, ySize, zSize);
-	phiGrid3D = new Grid3D(xSize, ySize, zSize);
+	rhoGrid3D.reset(new Grid3D(xSize, ySize, zSize));
+	phiGrid3D.reset(new Grid3D(xSize, ySize, zSize));
 	bunchExtremaCalc = new BunchExtremaCalculator();
 }
 
 SpaceChargeCalcSliceBySlice2D::~SpaceChargeCalcSliceBySlice2D(){
 	delete poissonSolver;
-	if(rhoGrid3D->getPyWrapper() != NULL){
-		Py_DECREF(rhoGrid3D->getPyWrapper());
-	} else {
-		delete rhoGrid3D;
-	}
-	if(phiGrid3D->getPyWrapper() != NULL){
-		Py_DECREF(phiGrid3D->getPyWrapper());
-	} else {
-		delete phiGrid3D;
-	}
 	delete bunchExtremaCalc;
 }
 
@@ -66,11 +56,11 @@ int SpaceChargeCalcSliceBySlice2D::getLongitudinalTracking()
 }
 
 Grid3D* SpaceChargeCalcSliceBySlice2D::getRhoGrid(){
-	return rhoGrid3D;
+	return rhoGrid3D.get();
 }
 
 Grid3D* SpaceChargeCalcSliceBySlice2D::getPhiGrid(){
-	return phiGrid3D;
+	return phiGrid3D.get();
 }
 
 

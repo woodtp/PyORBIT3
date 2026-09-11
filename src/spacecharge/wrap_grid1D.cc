@@ -3,6 +3,7 @@
 #include "main/pyORBIT_Object.hh"
 
 #include "spacecharge/wrap_grid1D.hh"
+#include "spacecharge/wrap_grid.hh"
 #include "spacecharge/wrap_spacecharge.hh"
 #include "orbit/wrap_bunch.hh"
 #include "mpi/wrap_mpi_comm.hh"
@@ -31,9 +32,11 @@ extern "C"
 
 static PyObject* Grid1D_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
 {
-  pyORBIT_Object* self;
-  self = (pyORBIT_Object *) type->tp_alloc(type, 0);
+  pyORBIT_Grid* self;
+  self = (pyORBIT_Grid *) type->tp_alloc(type, 0);
   self->cpp_obj = NULL;
+  self->owns_cpp = 0;
+  self->owner = NULL;
   // std::cerr << "The Grid1D new has been called!" << std::endl;
   return (PyObject *) self;
 }
@@ -42,7 +45,7 @@ static PyObject* Grid1D_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
 // Initializator for python  Grid1D class
 // This is implementation of the __init__ method
 
-static int Grid1D_init(pyORBIT_Object *self, PyObject *args, PyObject *kwds)
+static int Grid1D_init(pyORBIT_Grid *self, PyObject *args, PyObject *kwds)
 {
   int nVars = PyTuple_Size(args);
   int binZ;
@@ -62,7 +65,8 @@ static int Grid1D_init(pyORBIT_Object *self, PyObject *args, PyObject *kwds)
 	}
 	self->cpp_obj = new Grid1D(binZ, zMin, zMax);
   }
-	((Grid1D*) self->cpp_obj)->setPyWrapper((PyObject*) self);
+  self->owns_cpp = 1;
+  pyorbit::registerPyWrapper(self->cpp_obj, (PyObject*) self);
   // std::cerr << "The Grid1D __init__ has been called!" << std::endl;
   return 0;
 }
@@ -457,11 +461,14 @@ static PyObject* Grid1D_synchronizeMPI(PyObject *self, PyObject *args)
 // Destructor for python Grid1D class (__del__ method).
 //-----------------------------------------------------
 
-static void Grid1D_del(pyORBIT_Object* self)
+static void Grid1D_del(pyORBIT_Grid* self)
 {
   //std::cerr << "The Grid1D __del__ has been called!" << std::endl;
   Grid1D* cpp_Grid1D = (Grid1D*) self->cpp_obj;
-  delete cpp_Grid1D;
+  pyorbit::unregisterPyWrapper(cpp_Grid1D, (PyObject*) self);
+  if(self->owns_cpp) delete cpp_Grid1D;
+  self->cpp_obj = NULL;
+  Py_CLEAR(self->owner);
   self->ob_base.ob_type->tp_free((PyObject*)self);
 }
 
@@ -512,7 +519,7 @@ static PyTypeObject pyORBIT_Grid1D_Type =
 {
   PyVarObject_HEAD_INIT(NULL, 0)
   "Grid1D", /*tp_name*/
-  sizeof(pyORBIT_Object), /*tp_basicsize*/
+  sizeof(pyORBIT_Grid), /*tp_basicsize*/
   0, /*tp_itemsize*/
   (destructor) Grid1D_del , /*tp_dealloc*/
   0, /*tp_print*/
@@ -549,6 +556,24 @@ static PyTypeObject pyORBIT_Grid1D_Type =
   0, /* tp_alloc */
   Grid1D_new, /* tp_new */
 };
+
+PyObject* wrapGrid1D(Grid1D* grid, PyObject* owner)
+{
+  PyObject* wrapper = pyorbit::getPyWrapper(grid);
+  if(wrapper != NULL) {
+    Py_INCREF(wrapper);
+    return wrapper;
+  }
+
+  pyORBIT_Grid* self = (pyORBIT_Grid*) pyORBIT_Grid1D_Type.tp_alloc(&pyORBIT_Grid1D_Type, 0);
+  if(self == NULL) return NULL;
+  self->cpp_obj = grid;
+  self->owns_cpp = 0;
+  self->owner = owner;
+  Py_XINCREF(owner);
+  pyorbit::registerPyWrapper(grid, (PyObject*) self);
+  return (PyObject*) self;
+}
 
 
 //--------------------------------------------------

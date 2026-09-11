@@ -8,6 +8,7 @@
 
 #include <cstdlib>
 #include <cmath>
+#include <memory>
 #include <complex>
 
 //ORBIT bunch
@@ -62,7 +63,7 @@ public:
     int smooth;
 
 //protected:
-	Grid1D* zGrid;
+	std::unique_ptr<Grid1D> zGrid;
 	OrbitUtils::BunchExtremaCalculator* bunchExtremaCalc;
 
 	//FFT arrays

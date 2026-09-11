@@ -8,6 +8,7 @@
 
 #include <cstdlib>
 #include <cmath>
+#include <memory>
 
 //ORBIT bunch
 #include "orbit/Bunch.hh"
@@ -60,8 +61,8 @@ private:
 
 protected:
 	PoissonSolverFFT2D* poissonSolver;
-	Grid3D* rhoGrid3D;
-	Grid3D* phiGrid3D;
+	std::unique_ptr<Grid3D> rhoGrid3D;
+	std::unique_ptr<Grid3D> phiGrid3D;
 	OrbitUtils::BunchExtremaCalculator* bunchExtremaCalc;
 
 	double xy_ratio;

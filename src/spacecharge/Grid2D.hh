@@ -12,16 +12,13 @@
 //ORBIT bunch
 #include "orbit/Bunch.hh"
 
-//pyORBIT utils
-#include "utils/CppPyWrapper.hh"
-
 using namespace std;
 
 /**
   This class repersents a 2D rectangular grid.
 */
 
-class Grid2D: public OrbitUtils::CppPyWrapper
+class Grid2D
 {
 public:
 

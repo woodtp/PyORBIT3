@@ -8,6 +8,7 @@
 
 #include <cstdlib>
 #include <cmath>
+#include <memory>
 
 //ORBIT bunch
 #include "orbit/Bunch.hh"
@@ -55,11 +56,11 @@ private:
 
 protected:
 	ForceSolverFFT2D* forceSolver;
-	Grid2D* rhoGrid;
-	Grid2D* phiGrid;
-	Grid2D* forceGridX;
-	Grid2D* forceGridY;
-	Grid1D* zGrid;
+	std::unique_ptr<Grid2D> rhoGrid;
+	std::unique_ptr<Grid2D> phiGrid;
+	std::unique_ptr<Grid2D> forceGridX;
+	std::unique_ptr<Grid2D> forceGridY;
+	std::unique_ptr<Grid1D> zGrid;
 	OrbitUtils::BunchExtremaCalculator* bunchExtremaCalc;
 
 };

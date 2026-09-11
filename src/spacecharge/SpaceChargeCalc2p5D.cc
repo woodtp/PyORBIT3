@@ -26,9 +26,9 @@ SpaceChargeCalc2p5D::SpaceChargeCalc2p5D(int xSize, int ySize, int zSize, double
 {
 	xy_ratio = xy_ratio_in;
 	poissonSolver = new PoissonSolverFFT2D(xSize, ySize, -xy_ratio, xy_ratio, -1.0, 1.0);
-	rhoGrid = new Grid2D(xSize, ySize);
-	phiGrid = new Grid2D(xSize, ySize);
-	zGrid = new Grid1D(zSize);
+	rhoGrid.reset(new Grid2D(xSize, ySize));
+	phiGrid.reset(new Grid2D(xSize, ySize));
+	zGrid.reset(new Grid1D(zSize));
 	bunchExtremaCalc = new BunchExtremaCalculator();
 }
 
@@ -36,42 +36,27 @@ SpaceChargeCalc2p5D::SpaceChargeCalc2p5D(int xSize, int ySize, int zSize)
 {
 	xy_ratio = 1.0;
 	poissonSolver = new PoissonSolverFFT2D(xSize, ySize, -xy_ratio, xy_ratio, -1.0, 1.0);
-	rhoGrid = new Grid2D(xSize, ySize);
-	phiGrid = new Grid2D(xSize, ySize);
-	zGrid = new Grid1D(zSize);
+	rhoGrid.reset(new Grid2D(xSize, ySize));
+	phiGrid.reset(new Grid2D(xSize, ySize));
+	zGrid.reset(new Grid1D(zSize));
 	bunchExtremaCalc = new BunchExtremaCalculator();
 }
 
 SpaceChargeCalc2p5D::~SpaceChargeCalc2p5D(){
 	delete poissonSolver;
-	if(rhoGrid->getPyWrapper() != NULL){
-		Py_DECREF(rhoGrid->getPyWrapper());
-	} else {
-		delete rhoGrid;
-	}
-	if(phiGrid->getPyWrapper() != NULL){
-		Py_DECREF(phiGrid->getPyWrapper());
-	} else {
-		delete phiGrid;
-	}
-	if(zGrid->getPyWrapper() != NULL){
-		Py_DECREF(zGrid->getPyWrapper());
-	} else {
-		delete zGrid;
-	}
 	delete bunchExtremaCalc;
 }
 
 Grid2D* SpaceChargeCalc2p5D::getRhoGrid(){
-	return rhoGrid;
+	return rhoGrid.get();
 }
 
 Grid2D* SpaceChargeCalc2p5D::getPhiGrid(){
-	return phiGrid;
+	return phiGrid.get();
 }
 
 Grid1D* SpaceChargeCalc2p5D::getLongGrid(){
-	return zGrid;
+	return zGrid.get();
 }
 
 void SpaceChargeCalc2p5D::trackBunch(Bunch* bunch, double length, BaseBoundary2D* boundary){
@@ -85,11 +70,11 @@ void SpaceChargeCalc2p5D::trackBunch(Bunch* bunch, double length, BaseBoundary2D
 	double z_step = zGrid->getStepZ();
 
 	//calculate phiGrid
-	poissonSolver->findPotential(rhoGrid,phiGrid);
+	poissonSolver->findPotential(rhoGrid.get(),phiGrid.get());
 
 	if(boundary != NULL){
 		//update potential with boundary condition
-		boundary->addBoundaryPotential(rhoGrid,phiGrid);
+		boundary->addBoundaryPotential(rhoGrid.get(),phiGrid.get());
 		//std::cerr<<"Boundary ADDED."<<std::endl;
 	}
 

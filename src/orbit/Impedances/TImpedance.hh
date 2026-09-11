@@ -8,6 +8,7 @@
 
 #include <cstdlib>
 #include <cmath>
+#include <memory>
 #include <complex>
 
 //ORBIT bunch
@@ -80,7 +81,7 @@ public:
   double _betaY;
   double _charge2TKick;
   int _Turns;
-  Grid1D* zGrid;
+  std::unique_ptr<Grid1D> zGrid;
   OrbitUtils::BunchExtremaCalculator* bunchExtremaCalc;
 
   double* _xCentroid;

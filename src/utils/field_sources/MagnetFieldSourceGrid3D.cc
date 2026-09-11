@@ -85,28 +85,6 @@ MagnetFieldSourceGrid3D::MagnetFieldSourceGrid3D(Grid3D* BxGrid_In, Grid3D* ByGr
 
 MagnetFieldSourceGrid3D::~MagnetFieldSourceGrid3D()
 {
-
-	if(BxGrid->getPyWrapper() == NULL){
-		delete BxGrid;
-	}
-	else {
-		Py_XDECREF(BxGrid->getPyWrapper());
-	}
-
-	if(ByGrid->getPyWrapper() == NULL){
-		delete ByGrid;
-	}
-	else {
-		Py_XDECREF(ByGrid->getPyWrapper());
-	}
-
-	if(BzGrid->getPyWrapper() == NULL){
-		delete BzGrid;
-	}
-	else {
-		Py_XDECREF(BzGrid->getPyWrapper());
-	}
-
 	for(int i = 0; i < 8; i++){
 		delete [] field_sign_arr[i];
 	}

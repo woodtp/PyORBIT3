@@ -34,7 +34,7 @@ LImpedance::LImpedance(double length,
   _length        = length;
   _nMacrosMin    = nMacrosMin;
   _nBins         = nBins;
-  zGrid          = new Grid1D(_nBins, _length);
+  zGrid.reset(new Grid1D(_nBins, _length));
 
   _fftmagnitude  = new double[_nBins / 2];
   _fftphase      = new double[_nBins / 2];
@@ -64,14 +64,6 @@ LImpedance::LImpedance(double length,
 
 LImpedance::~LImpedance()
 {
-  if(zGrid->getPyWrapper() != NULL)
-  {
-    Py_DECREF(zGrid->getPyWrapper());
-  }
-  else
-  {
-    delete zGrid;
-  }
   delete[] _fftmagnitude;
   delete[] _fftphase;
   delete[] _z;

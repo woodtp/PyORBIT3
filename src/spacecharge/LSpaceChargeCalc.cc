@@ -31,7 +31,7 @@ LSpaceChargeCalc::LSpaceChargeCalc(double b_a_in, double length_in, int nMacrosM
     nMacrosMin = nMacrosMin_in;
     useSpaceCharge = useSpaceCharge_in;
     nBins = nBins_in;
-    zGrid = new Grid1D(nBins, length);
+    zGrid.reset(new Grid1D(nBins, length));
 
     nModes = nBins / 2;
     useGrad = 0;
@@ -62,11 +62,6 @@ LSpaceChargeCalc::LSpaceChargeCalc(double b_a_in, double length_in, int nMacrosM
 }
 
 LSpaceChargeCalc::~LSpaceChargeCalc() {
-    if (zGrid->getPyWrapper() != NULL) {
-        Py_DECREF(zGrid->getPyWrapper());
-    } else {
-        delete zGrid;
-    }
     delete[] _fftmagnitude;
     delete[] _fftphase;
     delete[] _z;

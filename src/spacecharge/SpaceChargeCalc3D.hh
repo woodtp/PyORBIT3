@@ -14,6 +14,7 @@
 
 #include <cstdlib>
 #include <cmath>
+#include <memory>
 
 //ORBIT bunch
 #include "orbit/Bunch.hh"
@@ -73,8 +74,8 @@ private:
 
 protected:
 	PoissonSolverFFT3D* poissonSolver;
-	Grid3D* rhoGrid;
-	Grid3D* phiGrid;
+	std::unique_ptr<Grid3D> rhoGrid;
+	std::unique_ptr<Grid3D> phiGrid;
 	OrbitUtils::BunchExtremaCalculator* bunchExtremaCalc;
 
 	double xy_ratio;

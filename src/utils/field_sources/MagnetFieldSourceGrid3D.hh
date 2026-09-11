@@ -36,7 +36,7 @@ namespace OrbitUtils{
 	{
 		public:
 
-			/** Constructor. */
+			/** Constructor. The caller retains ownership of the grids. */
 			MagnetFieldSourceGrid3D(Grid3D* BxGrid, Grid3D* ByGrid, Grid3D* BzGrid);
 
 			/** Destructor */

@@ -27,7 +27,7 @@ using namespace OrbitUtils;
 
 
 /** Constructor with grid size only */
-Grid1D::Grid1D(int zSize):CppPyWrapper(NULL)
+Grid1D::Grid1D(int zSize)
 {
   zSize_ = zSize;
   zMin_  = -0.5;
@@ -37,7 +37,7 @@ Grid1D::Grid1D(int zSize):CppPyWrapper(NULL)
 }
 
 /** Constructor with grid size and grid physical length */
-Grid1D::Grid1D(int zSize, double length):CppPyWrapper(NULL)
+Grid1D::Grid1D(int zSize, double length)
 {
 	zSize_ = zSize;
 	zMin_  = 0.;
@@ -47,7 +47,7 @@ Grid1D::Grid1D(int zSize, double length):CppPyWrapper(NULL)
 }
 
 /** Constructor with grid size and spatial limits */
-Grid1D::Grid1D(int zSize, double zMin, double zMax):CppPyWrapper(NULL)
+Grid1D::Grid1D(int zSize, double zMin, double zMax)
 {
   zSize_ = zSize;
   zMin_  = zMin;

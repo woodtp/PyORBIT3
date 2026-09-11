@@ -9,7 +9,7 @@
 using namespace OrbitUtils;
 
 // Constructor
-Grid2D::Grid2D(int xSize, int ySize): CppPyWrapper(NULL)
+Grid2D::Grid2D(int xSize, int ySize)
 {
 	xSize_ = xSize;
 	ySize_ = ySize;
@@ -23,7 +23,7 @@ Grid2D::Grid2D(int xSize, int ySize): CppPyWrapper(NULL)
 
 Grid2D::Grid2D(int xSize, int ySize,
 	       double xMin, double xMax,
-	       double yMin, double yMax): CppPyWrapper(NULL)
+	       double yMin, double yMax)
 {
 	xSize_ = xSize;
 	ySize_ = ySize;

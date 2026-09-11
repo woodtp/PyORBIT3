@@ -37,7 +37,7 @@ TImpedance::TImpedance(double length,
   _nBins        = nBins;
   _useX         = useX;
   _useY         = useY;
-  zGrid         = new Grid1D(_nBins, _length);
+  zGrid.reset(new Grid1D(_nBins, _length));
 
   _qX = 0.0;
   _qY = 0.0;
@@ -97,15 +97,6 @@ TImpedance::TImpedance(double length,
 
 TImpedance::~TImpedance()
 {
-  if(zGrid->getPyWrapper() != NULL)
-  {
-    Py_DECREF(zGrid->getPyWrapper());
-  }
-  else
-  {
-    delete zGrid;
-  }
-
   delete[] _xCentroid;
   delete[] _xpCentroid;
   delete[] _zXImped_nplus;

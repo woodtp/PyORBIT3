@@ -12,6 +12,12 @@ using namespace wrap_orbit_utils;
 
 namespace wrap_field_source_grid3d{
 
+	typedef struct {
+		PyObject_HEAD
+		void* cpp_obj;
+		PyObject* grids[3];
+	} pyORBIT_MagnetFieldSourceGrid3D;
+
   void error(const char* msg){ ORBIT_MPI_Finalize(msg); }
 
 #ifdef __cplusplus
@@ -25,15 +31,18 @@ extern "C" {
 	//It never will be called directly
 	static PyObject* MagnetFieldSourceGrid3D_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
 	{
-		pyORBIT_Object* self;
-		self = (pyORBIT_Object *) type->tp_alloc(type, 0);
+		pyORBIT_MagnetFieldSourceGrid3D* self;
+		self = (pyORBIT_MagnetFieldSourceGrid3D *) type->tp_alloc(type, 0);
 		self->cpp_obj = NULL;
+		self->grids[0] = NULL;
+		self->grids[1] = NULL;
+		self->grids[2] = NULL;
 		return (PyObject *) self;
 	}
 
   //initializator for python  MagnetFieldSourceGrid3D class
   //this is implementation of the __init__ method
-  static int MagnetFieldSourceGrid3D_init(pyORBIT_Object *self, PyObject *args, PyObject *kwds){
+  static int MagnetFieldSourceGrid3D_init(pyORBIT_MagnetFieldSourceGrid3D *self, PyObject *args, PyObject *kwds){
  		PyObject* pyBxGrid3D;
  		PyObject* pyByGrid3D;
  		PyObject* pyBzGrid3D;
@@ -55,20 +64,17 @@ extern "C" {
 		Py_INCREF(pyBxGrid3D);
 		Py_INCREF(pyByGrid3D);
 		Py_INCREF(pyBzGrid3D);
+		self->grids[0] = pyBxGrid3D;
+		self->grids[1] = pyByGrid3D;
+		self->grids[2] = pyBzGrid3D;
 		((MagnetFieldSourceGrid3D*) self->cpp_obj)->setPyWrapper((PyObject*) self);
     return 0;
   }
 
   /** Returns 3 Grid3D objects with Bx,By,Bz fields that were used in the constructor */
   static PyObject* MagnetFieldSourceGrid3D_getGrid3Ds(PyObject *self, PyObject *args){
-  	MagnetFieldSourceGrid3D* cpp_fieldSource = (MagnetFieldSourceGrid3D*)((pyORBIT_Object*) self)->cpp_obj;
-  	Grid3D* BxGrid3D = cpp_fieldSource->getBxGrid();
-  	Grid3D* ByGrid3D = cpp_fieldSource->getByGrid();
-  	Grid3D* BzGrid3D = cpp_fieldSource->getBzGrid();
- 		PyObject* pyBxGrid3D = (PyObject*) BxGrid3D->getPyWrapper();
- 		PyObject* pyByGrid3D = (PyObject*) ByGrid3D->getPyWrapper();
- 		PyObject* pyBzGrid3D = (PyObject*) BzGrid3D->getPyWrapper();
- 		return Py_BuildValue("(OOO)",pyBxGrid3D,pyByGrid3D,pyBzGrid3D);
+		pyORBIT_MagnetFieldSourceGrid3D* source = (pyORBIT_MagnetFieldSourceGrid3D*) self;
+		return Py_BuildValue("(OOO)", source->grids[0], source->grids[1], source->grids[2]);
   }
 
   /** Sets or returns X,Y,Z axis symmetries */
@@ -189,8 +195,11 @@ extern "C" {
   //-----------------------------------------------------
   //destructor for python MagnetFieldSourceGrid3D class (__del__ method).
   //-----------------------------------------------------
-  static void MagnetFieldSourceGrid3D_del(pyORBIT_Object* self){
+  static void MagnetFieldSourceGrid3D_del(pyORBIT_MagnetFieldSourceGrid3D* self){
 		delete ((MagnetFieldSourceGrid3D*)self->cpp_obj);
+		Py_CLEAR(self->grids[0]);
+		Py_CLEAR(self->grids[1]);
+		Py_CLEAR(self->grids[2]);
 		self->ob_base.ob_type->tp_free((PyObject*)self);
   }
 
@@ -216,7 +225,7 @@ extern "C" {
 	static PyTypeObject pyORBIT_MagnetFieldSourceGrid3D_Type = {
 		PyVarObject_HEAD_INIT(NULL, 0)
 		"MagnetFieldSourceGrid3D", /*tp_name*/
-		sizeof(pyORBIT_Object), /*tp_basicsize*/
+		sizeof(pyORBIT_MagnetFieldSourceGrid3D), /*tp_basicsize*/
 		0, /*tp_itemsize*/
 		(destructor) MagnetFieldSourceGrid3D_del , /*tp_dealloc*/
 		0, /*tp_print*/

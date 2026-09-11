@@ -22,15 +22,12 @@
 //ORBIT bunch
 #include "orbit/Bunch.hh"
 
-//pyORBIT utils
-#include "utils/CppPyWrapper.hh"
-
 #include "spacecharge/Grid2D.hh"
 
 #include <iostream>
 #include <cstdlib>
 
-class Grid3D: public OrbitUtils::CppPyWrapper
+class Grid3D
 {
 public:
   //--------------------------------------

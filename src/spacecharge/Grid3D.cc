@@ -24,7 +24,7 @@
 using namespace OrbitUtils;
 
 /** Constructor */
-Grid3D::Grid3D(int nX, int nY, int nZ): CppPyWrapper(NULL)
+Grid3D::Grid3D(int nX, int nY, int nZ)
 {
   nX_ = nX;
   nY_ = nY;
