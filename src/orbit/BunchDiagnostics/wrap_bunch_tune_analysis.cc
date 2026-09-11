@@ -31,7 +31,6 @@ static PyObject* BunchTuneAnalysis_new(PyTypeObject *type, PyObject *args, PyObj
 /** Implementation of the __init__ method */
 static int BunchTuneAnalysis_init(pyORBIT_Object *self, PyObject *args, PyObject *kwds){
 	self->cpp_obj =  new BunchTuneAnalysis();
-	((BunchTuneAnalysis*) self->cpp_obj)->setPyWrapper((PyObject*) self);
 	return 0;
 }
 

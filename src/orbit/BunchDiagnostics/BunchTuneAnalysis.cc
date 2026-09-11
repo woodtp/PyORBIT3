@@ -8,7 +8,7 @@
 #include <cstdlib>
 
 
-BunchTuneAnalysis::BunchTuneAnalysis(): CppPyWrapper(NULL) {
+BunchTuneAnalysis::BunchTuneAnalysis() {
     double matrix[6][6] = {
         {1.0, 0.0, 0.0, 0.0, 0.0, 0.0},
         {0.0, 1.0, 0.0, 0.0, 0.0, 0.0},

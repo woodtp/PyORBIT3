@@ -2,7 +2,6 @@
 #define BUNCH_TWISS_ANALYSIS_H
 
 //pyORBIT utils
-#include "utils/CppPyWrapper.hh"
 
 #include "orbit/Bunch.hh"
 
@@ -13,7 +12,7 @@ using namespace std;
   As results it returns the Twiss parameters for each plane.
 */
 
-class BunchTwissAnalysis: public OrbitUtils::CppPyWrapper
+class BunchTwissAnalysis
 {
 	public:
 

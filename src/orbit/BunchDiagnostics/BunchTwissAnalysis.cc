@@ -9,7 +9,7 @@
 #include "orbit/SyncPart.hh"
 
 /** Constructor */
-BunchTwissAnalysis::BunchTwissAnalysis(): CppPyWrapper(NULL)
+BunchTwissAnalysis::BunchTwissAnalysis()
 {
 
 	avg_arr = (double* ) malloc (6*sizeof(double));

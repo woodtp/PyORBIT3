@@ -12,7 +12,7 @@
 #include "orbit/OrbitConst.hh"
 
 /** Constructor */
-SynchPartRedefinitionZdE::SynchPartRedefinitionZdE(): CppPyWrapper(NULL)
+SynchPartRedefinitionZdE::SynchPartRedefinitionZdE()
 {
 
 	z_dE_avg_arr = (double* ) malloc (2*sizeof(double));
