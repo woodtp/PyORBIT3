@@ -102,7 +102,6 @@ sources = files([
   'orbit/Apertures/PhaseAperture.cc',
   'orbit/Apertures/Aperture.cc',
   'orbit/Apertures/RectangularApertureShape.cc',
-  'orbit/Apertures/PyBaseApertureShape.cc',
   'orbit/Apertures/ConvexApertureShape.cc',
   'orbit/Apertures/EnergyAperture.cc',
   'orbit/Apertures/BaseAperture.cc',
@@ -111,7 +110,6 @@ sources = files([
   'orbit/Apertures/BaseApertureShape.cc',
   'trackerrk4/ExternalEffects.cc',
   'trackerrk4/ExtEffectsContainer.cc',
-  'trackerrk4/PyExternalEffects.cc',
   'trackerrk4/RungeKuttaTracker.cc',
   'mpi/orbit_mpi.cc',
   'spacecharge/PoissonSolverFFT3D.cc',
@@ -136,7 +134,6 @@ sources = files([
   'utils/FieldSourceContainer.cc',
   'utils/AttributesBucket.cc',
   'utils/bessel.cc',
-  'utils/PyBaseFieldSource.cc',
   'utils/OU_SplineCH.cc',
   'utils/CppPyWrapper.cc',
   'utils/StringUtils.cc',
@@ -213,7 +210,6 @@ api_headers = [
   'orbit/Apertures/EllipseApertureShape.hh',
   'orbit/Apertures/EnergyAperture.hh',
   'orbit/Apertures/PhaseAperture.hh',
-  'orbit/Apertures/PyBaseApertureShape.hh',
   'orbit/Apertures/RectangularApertureShape.hh',
   'orbit/Bunch.hh',
   'orbit/BunchDiagnostics/BunchTuneAnalysis.hh',
@@ -270,7 +266,6 @@ api_headers = [
   'teapot/teapotbase.hh',
   'trackerrk4/ExtEffectsContainer.hh',
   'trackerrk4/ExternalEffects.hh',
-  'trackerrk4/PyExternalEffects.hh',
   'trackerrk4/RungeKuttaTracker.hh',
   'utils/AttributesBucket.hh',
   'utils/BaseFieldSource.hh',
@@ -280,7 +275,6 @@ api_headers = [
   'utils/MathPolynomial.hh',
   'utils/OU_Function.hh',
   'utils/OU_SplineCH.hh',
-  'utils/PyBaseFieldSource.hh',
   'utils/Random.hh',
   'utils/StringUtils.hh',
   'utils/bessel.hh',
@@ -325,6 +319,14 @@ pkgconfig.generate(
   subdirs: 'pyorbit3',
   extra_cflags: '-DUSE_MPI=' + use_mpi_flag,
   install_dir: get_option('libdir') / 'pkgconfig',
+)
+
+binding_lib = shared_library(
+  'pyorbit3_python',
+  sources: 'main/pyORBIT_Object.cc',
+  dependencies: python.dependency(),
+  gnu_symbol_visibility: 'default',
+  install: true,
 )
 
 ext_modules = {
@@ -373,6 +375,7 @@ ext_modules = {
     'trackerrk4/wrap_runge_kutta_tracker.cc',
     'trackerrk4/wrap_py_external_effects.cc',
     'trackerrk4/wrap_ext_effects_container.cc',
+    'trackerrk4/PyExternalEffects.cc',
   ),
   'teapot_base': files(
     'core/teapot_base_init.cc',
@@ -412,6 +415,7 @@ ext_modules = {
     'utils/bunch/wrap_bunch_utils_functions.cc',
     'utils/harmonic_analysis/wrap_harmonic_data.cc',
     'utils/wrap_random.cc',
+    'utils/PyBaseFieldSource.cc',
   ),
   'aperture': files(
     'core/aperture_init.cc',
@@ -425,6 +429,7 @@ ext_modules = {
     'orbit/Apertures/wrap_PrimitiveApertureShape.cc',
     'orbit/Apertures/wrap_CompositeApertureShape.cc',
     'orbit/Apertures/wrap_ConvexApertureShape.cc',
+    'orbit/Apertures/PyBaseApertureShape.cc',
   ),
   'foil': files(
     'core/foil_init.cc',
@@ -477,7 +482,7 @@ foreach name, src_list : ext_modules
   name,
   sources: src_list,
   include_directories: inc,
-  link_with: core_lib,
+  link_with: [core_lib, binding_lib],
   dependencies: dependencies,
   install_rpath: core_install_rpath,
   install: true,

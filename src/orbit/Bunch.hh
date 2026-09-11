@@ -34,7 +34,6 @@
 
 //from utils
 #include "utils/AttributesBucket.hh"
-#include "utils/CppPyWrapper.hh"
 
 #ifndef BUNCH_H
 #define BUNCH_H
@@ -45,7 +44,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////
 
-class  Bunch: public OrbitUtils::CppPyWrapper
+class Bunch
 {
 public:
   //--------------------------------------

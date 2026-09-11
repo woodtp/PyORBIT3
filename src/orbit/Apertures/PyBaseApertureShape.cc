@@ -1,4 +1,5 @@
 #include "orbit/Apertures/PyBaseApertureShape.hh"
+#include "main/pyORBIT_Object.hh"
 
 #include <iostream>
 #include <cmath>
@@ -39,7 +40,7 @@ int PyBaseApertureShape::inside(Bunch* bunch, int count){
 	double** coord = bunch->coordArr();
 
 	PyObject* py_wrp = getPyWrapper();
-	PyObject* py_bunch = bunch->getPyWrapper();
+	PyObject* py_bunch = pyorbit::getPyWrapper(bunch);
 
 	int res_isinside = 0;
 

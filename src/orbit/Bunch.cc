@@ -32,7 +32,7 @@ using namespace OrbitUtils;
   changed, and dumped to a file.
  */
 
-Bunch::Bunch(): CppPyWrapper(NULL)
+Bunch::Bunch()
 {
 
   //initialization all necessary variables and attributes

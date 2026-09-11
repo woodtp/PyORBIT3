@@ -62,7 +62,7 @@ namespace wrap_orbit_bunch{
 		//std::cerr<<"The Bunch __init__ has been called!"<<std::endl;
 		//instantiation of a new c++ Bunch
 		self->base.cpp_obj = (void*) new Bunch();
-		((Bunch*) self->base.cpp_obj)->setPyWrapper((PyObject*) self);
+		pyorbit::registerPyWrapper(self->base.cpp_obj, (PyObject*) self);
 
 		PyObject* mpi_comm_type = wrap_orbit_mpi_comm::getMPI_CommType("MPI_Comm");
 		if (mpi_comm_type == NULL) {
@@ -1239,6 +1239,7 @@ namespace wrap_orbit_bunch{
   //this is implementation of the __del__ method
   static void Bunch_del(pyORBIT_Object* self){
         Bunch* cpp_bunch = (Bunch*) self->cpp_obj;
+        pyorbit::unregisterPyWrapper(cpp_bunch, (PyObject*) self);
         delete cpp_bunch;
         Py_XDECREF(((pyORBIT_Bunch*) self)->sync_part);
         Py_XDECREF(((pyORBIT_Bunch*) self)->mpi_comm);

@@ -25,7 +25,7 @@
 
 using namespace OrbitUtils;
 
-BunchExtremaCalculator::BunchExtremaCalculator(): CppPyWrapper(NULL)
+BunchExtremaCalculator::BunchExtremaCalculator()
 {
 }
 
