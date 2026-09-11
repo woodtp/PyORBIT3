@@ -21,12 +21,11 @@
 ///////////////////////////////////////////////////////////////////////////
 
 //pyORBIT utils
-#include "utils/CppPyWrapper.hh"
 #include "orbit/Bunch.hh"
 
 using namespace std;
 
-class EnergyAperture: public OrbitUtils::CppPyWrapper
+class EnergyAperture
 {
   public:
 

@@ -3,7 +3,6 @@
 #define APERTURE_H
 
 //pyORBIT utils
-#include "utils/CppPyWrapper.hh"
 #include "orbit/Bunch.hh"
 
 using namespace std;
@@ -12,7 +11,7 @@ using namespace std;
   The aperture class is used to define how a bunch propogates through an aperture
 */
 
-class Aperture: public OrbitUtils::CppPyWrapper
+class Aperture
 {
 public:
 

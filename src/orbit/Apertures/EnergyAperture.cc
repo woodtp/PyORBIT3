@@ -33,7 +33,7 @@
 /**
  The EnergyAperture class constructor.
  */
-EnergyAperture::EnergyAperture(): CppPyWrapper(NULL)
+EnergyAperture::EnergyAperture()
 {
 	minEnergy_ = -1.0e+36;
 	maxEnergy_ = +1.0e+36;

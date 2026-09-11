@@ -40,7 +40,6 @@ extern "C" {
 	  	ORBIT_MPI_Finalize("Aperture class constructor - cannot parse arguments! It should be (shape,a,b,c,d,pos)");
 	  }
 	  self->cpp_obj =  new Aperture(shape,a,b,c,d,pos);
-	  ((Aperture*) self->cpp_obj)->setPyWrapper((PyObject*) self);
     return 0;
   }
 

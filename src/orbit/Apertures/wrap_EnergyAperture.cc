@@ -28,7 +28,6 @@ extern "C" {
   /** This is implementation of the __init__ method */
   static int EnergyAperture_init(pyORBIT_Object *self, PyObject *args, PyObject *kwds){
 	  self->cpp_obj =  new EnergyAperture();
-	  ((EnergyAperture*) self->cpp_obj)->setPyWrapper((PyObject*) self);
     return 0;
   }
 

@@ -35,7 +35,6 @@ extern "C" {
 	  	ORBIT_MPI_Finalize("PhaseAperture class constructor - cannot parse arguments! It should be (frequency)");
 	  }
 	  self->cpp_obj =  new PhaseAperture(frequency);
-	  ((PhaseAperture*) self->cpp_obj)->setPyWrapper((PyObject*) self);
     return 0;
   }
 

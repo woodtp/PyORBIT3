@@ -35,7 +35,7 @@
  The PhaseAperture class constructor. It needs the RF frequency in Hz to translate
  from z coordinate in meters to phase in degrees.
  */
-PhaseAperture::PhaseAperture(double frequency): CppPyWrapper(NULL)
+PhaseAperture::PhaseAperture(double frequency)
 {
 	frequency_ = frequency;
 	minPhase_ = -1.0e+36;
