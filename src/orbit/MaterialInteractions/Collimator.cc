@@ -51,7 +51,7 @@ using namespace OrbitUtils;
 
 Collimator::Collimator(double length, int ma,
 					   double density_fac, int shape,
-					   double a, double b, double c, double d, double angle, double pos): CppPyWrapper(NULL)
+					   double a, double b, double c, double d, double angle, double pos)
 {
 	length_ = length;
 	ma_ = ma;

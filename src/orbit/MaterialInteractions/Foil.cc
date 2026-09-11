@@ -35,7 +35,7 @@ using namespace OrbitUtils;
 //
 ///////////////////////////////////////////////////////////////////////////
 
-Foil::Foil(double xmin, double xmax, double ymin, double ymax, double thick): CppPyWrapper(NULL)
+Foil::Foil(double xmin, double xmax, double ymin, double ymax, double thick)
 {
 	xmin_ = xmin;
 	xmax_ = xmax;

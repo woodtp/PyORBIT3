@@ -68,7 +68,6 @@ namespace wrap_fieldtracker{
           	       ax, ay, ex,  epx, l, zi,  zf, ds,  niters, resid,
           	       xrefi, yrefi, eulerai, eulerbi, eulergi, cpp_bunch, filename_str);
 
-            ((FieldTracker*) self->cpp_obj)->setPyWrapper((PyObject*) self);
             return 0;
         }
 

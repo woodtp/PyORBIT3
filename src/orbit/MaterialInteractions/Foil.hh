@@ -2,8 +2,6 @@
 #ifndef FOIL_H
 #define FOIL_H
 
-//pyORBIT utils
-#include "utils/CppPyWrapper.hh"
 #include "orbit/Bunch.hh"
 
 using namespace std;
@@ -12,7 +10,7 @@ using namespace std;
   The foil class is used to define how a bunch propogates through a foil
 */
 
-class Foil: public OrbitUtils::CppPyWrapper
+class Foil
 {
 public:
 

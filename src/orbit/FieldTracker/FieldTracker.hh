@@ -3,8 +3,6 @@
 #ifndef FIELDTRACKER_H
 #define FIELDTRACKER_H
 
-//pyORBIT utils
-#include "utils/CppPyWrapper.hh"
 #include "orbit/Bunch.hh"
 #include "spacecharge/Grid3D.hh"
 
@@ -15,7 +13,7 @@ using namespace std;
  3-dimensional magnetic field
  */
 
-class FieldTracker: public OrbitUtils::CppPyWrapper
+class FieldTracker
 {
 public:
 

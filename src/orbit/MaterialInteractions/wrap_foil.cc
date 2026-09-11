@@ -37,7 +37,6 @@ extern "C" {
 		  error("PyBunch - addParticle - cannot parse arguments! It should be (xmin, xmax, ymin, ymax, thick)");
 	  }
 		self->cpp_obj =  new Foil(xmin, xmax, ymin, ymax, thick);
-	  ((Foil*) self->cpp_obj)->setPyWrapper((PyObject*) self);
     return 0;
   }
 

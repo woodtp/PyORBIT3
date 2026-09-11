@@ -38,7 +38,6 @@ extern "C" {
           error("Collimator - cannot parse arguments! It should be (length,ma,density_fac,shape,a,b,c,d,angle,pos)");
       }
         self->cpp_obj =  new Collimator(length,ma,density_fac,shape,a,b,c,d,angle,pos);
-      ((Collimator*) self->cpp_obj)->setPyWrapper((PyObject*) self);
     return 0;
   }
 
