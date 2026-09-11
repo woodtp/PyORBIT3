@@ -13,7 +13,7 @@ using namespace OrbitUtils;
 // Constructor
 Frequency_Cav::Frequency_Cav(double RFFreq,
                              double RFE0TL,
-                             double RFPhase): CppPyWrapper(NULL)
+                             double RFPhase)
 {
   _RFFreq  = RFFreq;
   _RFE0TL  = RFE0TL;

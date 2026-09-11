@@ -11,11 +11,10 @@
 #include "orbit/Bunch.hh"
 
 //pyORBIT utils
-#include "utils/CppPyWrapper.hh"
 
 using namespace std;
 
-class Barrier_Cav: public OrbitUtils::CppPyWrapper
+class Barrier_Cav
 {
   public:
     Barrier_Cav(double ZtoPhi,    double RFVoltage,

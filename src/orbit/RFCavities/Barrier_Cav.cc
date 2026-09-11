@@ -15,7 +15,7 @@ Barrier_Cav::Barrier_Cav(double ZtoPhi,
                          double RFPhasep,
                          double RFPhasem,
                          double dRFPhasep,
-                         double dRFPhasem): CppPyWrapper(NULL)
+                         double dRFPhasem)
 {
   _ZtoPhi    = ZtoPhi;
   _RFVoltage = RFVoltage;

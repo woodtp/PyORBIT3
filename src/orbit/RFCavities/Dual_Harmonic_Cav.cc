@@ -16,7 +16,7 @@ Dual_Harmonic_Cav::Dual_Harmonic_Cav(double ZtoPhi   ,
                            double RFVoltage,
                            double RatioVoltage,
                            double RFPhase,
-                           double RFPhase2): CppPyWrapper(NULL)
+                           double RFPhase2)
 {
   _ZtoPhi    = ZtoPhi;
   _RFHNum    = RFHNum;

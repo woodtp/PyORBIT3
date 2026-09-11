@@ -72,7 +72,6 @@ static int Dual_Harmonic_Cav_init(pyORBIT_Object *self,
                                    RatioVoltage,
                                    RFPhase,
                                    RFPhase2);
-  ((Dual_Harmonic_Cav*) self->cpp_obj)->setPyWrapper((PyObject*) self);
   return 0;
 }
 

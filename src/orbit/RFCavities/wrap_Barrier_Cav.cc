@@ -69,7 +69,6 @@ static int Barrier_Cav_init(pyORBIT_Object *self,
                                   RFPhasem,
                                   dRFPhasep,
                                   dRFPhasem);
-  ((Barrier_Cav*) self->cpp_obj)->setPyWrapper((PyObject*) self);
   return 0;
 }
 

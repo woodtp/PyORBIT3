@@ -14,7 +14,7 @@ Harmonic_Cav::Harmonic_Cav(double ZtoPhi   ,
                            double dESync   ,
                            double RFHNum   ,
                            double RFVoltage,
-                           double RFPhase): CppPyWrapper(NULL)
+                           double RFPhase)
 {
   _ZtoPhi    = ZtoPhi;
   _dESync    = dESync;

@@ -11,11 +11,10 @@
 #include "orbit/Bunch.hh"
 
 //pyORBIT utils
-#include "utils/CppPyWrapper.hh"
 
 using namespace std;
 
-class Harmonic_Cav: public OrbitUtils::CppPyWrapper
+class Harmonic_Cav
 {
   public:
     Harmonic_Cav(double ZtoPhi, double dESync   ,
