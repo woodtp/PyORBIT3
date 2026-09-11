@@ -35,7 +35,6 @@ extern "C" {
   /** This is implementation of the __init__ method */
   static int Polynomial_init(pyORBIT_Object *self, PyObject *args, PyObject *kwds){
 	  self->cpp_obj =  new Polynomial(0);
-	  ((Polynomial*) self->cpp_obj)->setPyWrapper((PyObject*) self);
     int nVars = PyTuple_Size(args);
 		int order = -1;
 		if(nVars == 1){

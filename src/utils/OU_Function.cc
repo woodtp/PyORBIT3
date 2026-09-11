@@ -22,7 +22,7 @@
 
 using namespace OrbitUtils;
 
-Function::Function(): CppPyWrapper(NULL)
+Function::Function()
 {
 	x_arr = NULL;
 	y_arr = NULL;

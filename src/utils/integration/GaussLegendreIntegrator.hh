@@ -21,8 +21,6 @@
 #include <cstdlib>
 #include <cmath>
 
-#include "utils/CppPyWrapper.hh"
-
 #include "utils/OU_Function.hh"
 #include "utils/OU_SplineCH.hh"
 
@@ -30,7 +28,7 @@ using namespace std;
 
 namespace OrbitUtils{
 
-	class  GaussLegendreIntegrator : public CppPyWrapper
+	class GaussLegendreIntegrator
 	{
 	public:
 		//-----------------------------------------

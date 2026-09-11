@@ -31,7 +31,7 @@
 namespace OrbitUtils{
 
 
-	SplineCH::SplineCH(): CppPyWrapper(NULL)
+	SplineCH::SplineCH()
 	{
 		x_arr = NULL;
 		y_arr = NULL;

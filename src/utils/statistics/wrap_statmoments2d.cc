@@ -48,7 +48,6 @@ extern "C" {
 				self->cpp_obj =  new StatMoments2D(max_order);
 			}
 		}
-	  ((StatMoments2D*) self->cpp_obj)->setPyWrapper((PyObject*) self);
     return 0;
   }
 

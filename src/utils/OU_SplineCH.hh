@@ -31,12 +31,11 @@
 #include <cstdlib>
 #include <cmath>
 
-#include "utils/CppPyWrapper.hh"
 #include "utils/OU_Function.hh"
 
 namespace OrbitUtils{
 
-	class  SplineCH : public CppPyWrapper
+	class SplineCH
 	{
 	public:
 		//-----------------------------------------

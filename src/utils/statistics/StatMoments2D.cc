@@ -9,7 +9,7 @@
 using namespace OrbitUtils;
 
 /** Constructor with max order = 2 by default */
-StatMoments2D::StatMoments2D(): CppPyWrapper(NULL)
+StatMoments2D::StatMoments2D()
 {
   max_order = 2;
 	stat_arr = NULL;
@@ -17,7 +17,7 @@ StatMoments2D::StatMoments2D(): CppPyWrapper(NULL)
 }
 
 /** Constructor with maximal order parameter */
-StatMoments2D::StatMoments2D(int maxOrder): CppPyWrapper(NULL)
+StatMoments2D::StatMoments2D(int maxOrder)
 {
   max_order = maxOrder;
 	if(max_order < 2) max_order = 2;

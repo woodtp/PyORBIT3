@@ -3,9 +3,6 @@
 
 #include "mpi/orbit_mpi.hh"
 
-//pyORBIT utils
-#include "utils/CppPyWrapper.hh"
-
 using namespace std;
 
 /**
@@ -15,7 +12,7 @@ It is used by other classes to calculate Twiss paraemeters etc.
 
 namespace OrbitUtils{
 
-	class StatMoments2D: public CppPyWrapper
+	class StatMoments2D
 	{
 	public:
 

@@ -61,7 +61,6 @@ extern "C" {
 		if(self->cpp_obj == NULL){
 			error("GaussLegendreIntegrator([nPoints[,x_min,x_max]]) - constructor signature.");
 		}
-	  ((GaussLegendreIntegrator*) self->cpp_obj)->setPyWrapper((PyObject*) self);
     return 0;
   }
 

@@ -24,7 +24,7 @@
 
 using namespace OrbitUtils;
 
-GaussLegendreIntegrator::GaussLegendreIntegrator(): CppPyWrapper(NULL)
+GaussLegendreIntegrator::GaussLegendreIntegrator()
 {
 	n_int_points = 1024;
 	x0 = 0.;
@@ -34,7 +34,7 @@ GaussLegendreIntegrator::GaussLegendreIntegrator(): CppPyWrapper(NULL)
 	n_int_points = pw_finc->getSize();
 }
 
-GaussLegendreIntegrator::GaussLegendreIntegrator(int nPoints): CppPyWrapper(NULL)
+GaussLegendreIntegrator::GaussLegendreIntegrator(int nPoints)
 {
 	n_int_points = nPoints;
 	x0 = 0.;
@@ -44,7 +44,7 @@ GaussLegendreIntegrator::GaussLegendreIntegrator(int nPoints): CppPyWrapper(NULL
 	n_int_points = pw_finc->getSize();
 }
 
-GaussLegendreIntegrator::GaussLegendreIntegrator(int nPoints, double x_from, double x_to): CppPyWrapper(NULL)
+GaussLegendreIntegrator::GaussLegendreIntegrator(int nPoints, double x_from, double x_to)
 {
 	n_int_points = nPoints;
 	x0 = x_from;

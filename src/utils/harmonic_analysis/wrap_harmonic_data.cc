@@ -62,7 +62,6 @@ extern "C" {
 		else{
 			error("HarmonicData(order,pyFunction) or HarmonicData(harmonicData)- constructor parameters are needed");
 		}
-		((HarmonicData*) self->cpp_obj)->setPyWrapper((PyObject*) self);
     return 0;
   }
 

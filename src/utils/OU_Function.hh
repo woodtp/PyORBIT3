@@ -18,8 +18,6 @@
 #ifndef ORBIT_UTILS_FUNCTION_H
 #define ORBIT_UTILS_FUNCTION_H
 
-#include "utils/CppPyWrapper.hh"
-
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
@@ -29,7 +27,7 @@ using namespace std;
 
 namespace OrbitUtils{
 
-	class  Function : public CppPyWrapper
+	class Function
 	{
 	public:
 		//-----------------------------------------

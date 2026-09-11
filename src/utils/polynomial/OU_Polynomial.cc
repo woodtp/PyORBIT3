@@ -24,7 +24,7 @@
 
 using namespace OrbitUtils;
 
-Polynomial::Polynomial(int order_in): CppPyWrapper(NULL)
+Polynomial::Polynomial(int order_in)
 {
 	if(order_in < 0){
 		ORBIT_MPI_Finalize("Orbit Utilites Polynomial::Polynomial(order) - order should be >= 0. Stop.");

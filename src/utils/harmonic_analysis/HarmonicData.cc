@@ -36,7 +36,7 @@
 
 using namespace OrbitUtils;
 
-HarmonicData::HarmonicData(int order_in, Function* inFunc): CppPyWrapper(NULL)
+HarmonicData::HarmonicData(int order_in, Function* inFunc)
 {
 	this->init(order_in,inFunc);
 }
