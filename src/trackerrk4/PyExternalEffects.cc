@@ -77,7 +77,7 @@ void PyExternalEffects::applyEffects(Bunch* bunch,
 	PyObject* py_wrp = getPyWrapper();
 	PyObject* py_bunch = pyorbit::getPyWrapper(bunch);
 	PyObject* py_field = fieldSource->getPyWrapper();
-	PyObject* py_tracker = tracker->getPyWrapper();
+	PyObject* py_tracker = pyorbit::getPyWrapper(tracker);
 	PyObject* res_tuple = PyObject_CallMethod(py_wrp,const_cast<char*>("applyEffects"),const_cast<char*>("OddOO"),
 		py_bunch,
 		t,t_step,
@@ -95,7 +95,7 @@ void PyExternalEffects::applyEffectsForEach(Bunch* bunch, int index,
 	PyObject* py_wrp = getPyWrapper();
 	PyObject* py_bunch = pyorbit::getPyWrapper(bunch);
 	PyObject* py_field = fieldSource->getPyWrapper();
-	PyObject* py_tracker = tracker->getPyWrapper();
+	PyObject* py_tracker = pyorbit::getPyWrapper(tracker);
 	PyObject* pyInVct = Py_BuildValue("(dddddd)",y_in_vct[0],y_in_vct[1],y_in_vct[2],
 		                                           y_in_vct[3],y_in_vct[4],y_in_vct[5]);
 	PyObject* pyOutVct = Py_BuildValue("(dddddd)",y_out_vct[0],y_out_vct[1],y_out_vct[2],

@@ -21,11 +21,9 @@
 #include "utils/BaseFieldSource.hh"
 #include "trackerrk4/ExternalEffects.hh"
 
-#include "utils/CppPyWrapper.hh"
-
 namespace TrackerRK4{
 
-	class RungeKuttaTracker: public OrbitUtils::CppPyWrapper
+	class RungeKuttaTracker
 	{
 		//--------------------------------------------------
 		// public methods of the RungeKuttaTracker class

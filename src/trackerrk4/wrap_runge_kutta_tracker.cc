@@ -41,7 +41,7 @@ extern "C" {
 			error("PyRungeKuttaTracker - RungeKuttaTracker(length[m]) - constructor needs a parameter.");
 		}
 		self->cpp_obj = new RungeKuttaTracker(length);
-		((RungeKuttaTracker*) self->cpp_obj)->setPyWrapper((PyObject*) self);
+		pyorbit::registerPyWrapper(self->cpp_obj, (PyObject*) self);
 		//std::cerr<<"The RungeKuttaTracker __init__ has been called!"<<std::endl;
 		return 0;
   }
@@ -211,6 +211,7 @@ extern "C" {
   //-----------------------------------------------------
   static void RungeKuttaTracker_del(pyORBIT_Object* self){
 		//std::cerr<<"The RungeKuttaTracker __del__ has been called!"<<std::endl;
+		pyorbit::unregisterPyWrapper(self->cpp_obj, (PyObject*) self);
 		delete ((RungeKuttaTracker*)self->cpp_obj);
 		self->ob_base.ob_type->tp_free((PyObject*)self);
   }
