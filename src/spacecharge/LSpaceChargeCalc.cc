@@ -25,7 +25,7 @@
 
 using namespace OrbitUtils;
 
-LSpaceChargeCalc::LSpaceChargeCalc(double b_a_in, double length_in, int nMacrosMin_in, int useSpaceCharge_in, int nBins_in) : CppPyWrapper(NULL) {
+LSpaceChargeCalc::LSpaceChargeCalc(double b_a_in, double length_in, int nMacrosMin_in, int useSpaceCharge_in, int nBins_in) {
     b_a = b_a_in;
     length = length_in;
     nMacrosMin = nMacrosMin_in;

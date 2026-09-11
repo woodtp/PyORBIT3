@@ -26,7 +26,7 @@
 
 using namespace OrbitUtils;
 
-SpaceChargeCalcUnifEllipse::SpaceChargeCalcUnifEllipse(int nEllipses_in): CppPyWrapper(NULL)
+SpaceChargeCalcUnifEllipse::SpaceChargeCalcUnifEllipse(int nEllipses_in)
 {
 	nEllipses = nEllipses_in;
   ellipsoidCalc_arr = new UniformEllipsoidFieldCalculator*[nEllipses];

@@ -12,7 +12,6 @@
 //ORBIT bunch
 #include "orbit/Bunch.hh"
 //pyORBIT utils
-#include "utils/CppPyWrapper.hh"
 #include "utils/bunch/BunchExtremaCalculator.hh"
 
 #include "spacecharge/Grid1D.hh"
@@ -22,7 +21,7 @@
 
 using namespace std;
 
-class SpaceChargeForceCalc2p5D: public OrbitUtils::CppPyWrapper
+class SpaceChargeForceCalc2p5D
 {
 public:
 

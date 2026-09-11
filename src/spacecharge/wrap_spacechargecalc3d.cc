@@ -41,7 +41,6 @@ extern "C" {
 			ORBIT_MPI_Finalize("PySpaceChargeCalc3D - SpaceChargeCalc3D(xSize,ySize,xzSize) - constructor needs parameters.");
 		}
 		self->cpp_obj = new SpaceChargeCalc3D(xSize,ySize,zSize);
-		((SpaceChargeCalc3D*) self->cpp_obj)->setPyWrapper((PyObject*) self);
 		return 0;
 	}
 

@@ -21,7 +21,7 @@
 
 using namespace OrbitUtils;
 
-SpaceChargeCalcSliceBySlice2D::SpaceChargeCalcSliceBySlice2D(int xSize, int ySize, int zSize, double xy_ratio_in): CppPyWrapper(NULL)
+SpaceChargeCalcSliceBySlice2D::SpaceChargeCalcSliceBySlice2D(int xSize, int ySize, int zSize, double xy_ratio_in)
 {
 	xy_ratio = xy_ratio_in;
 	useLongTracking = 0;
@@ -31,7 +31,7 @@ SpaceChargeCalcSliceBySlice2D::SpaceChargeCalcSliceBySlice2D(int xSize, int ySiz
 	bunchExtremaCalc = new BunchExtremaCalculator();
 }
 
-SpaceChargeCalcSliceBySlice2D::SpaceChargeCalcSliceBySlice2D(int xSize, int ySize, int zSize): CppPyWrapper(NULL)
+SpaceChargeCalcSliceBySlice2D::SpaceChargeCalcSliceBySlice2D(int xSize, int ySize, int zSize)
 {
 	xy_ratio = 1.0;
 	useLongTracking = 0;

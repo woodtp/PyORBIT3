@@ -46,7 +46,6 @@ extern "C" {
 		} else {
 			self->cpp_obj = new SpaceChargeCalc2p5D(xSize,ySize,zSize);
 		}
-		((SpaceChargeCalc2p5D*) self->cpp_obj)->setPyWrapper((PyObject*) self);
 		//std::cerr<<"The SpaceChargeCalc2p5D __init__ has been called!"<<std::endl;
 		return 0;
 	}

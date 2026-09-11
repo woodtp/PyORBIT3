@@ -30,7 +30,7 @@
 
 using namespace OrbitUtils;
 
-SpaceChargeCalc3D::SpaceChargeCalc3D(int xSize, int ySize, int zSize): CppPyWrapper(NULL)
+SpaceChargeCalc3D::SpaceChargeCalc3D(int xSize, int ySize, int zSize)
 {
 	xy_ratio = 1.0;
 	xz_ratio = 1.0;

@@ -55,7 +55,6 @@ extern "C"
 
 		self->cpp_obj = new LSpaceChargeCalc(b_a, length, nMacrosMin, useSpaceCharge, nBins);
 
-		((LSpaceChargeCalc*) self->cpp_obj)->setPyWrapper((PyObject*) self);
 
 		return 0;
 	}

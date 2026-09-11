@@ -17,13 +17,12 @@
 #include "orbit/Bunch.hh"
 
 //pyORBIT utils
-#include "utils/CppPyWrapper.hh"
 
 #include "spacecharge/UniformEllipsoidFieldCalculator.hh"
 
 using namespace std;
 
-class SpaceChargeCalcUnifEllipse: public OrbitUtils::CppPyWrapper
+class SpaceChargeCalcUnifEllipse
 {
 public:
 

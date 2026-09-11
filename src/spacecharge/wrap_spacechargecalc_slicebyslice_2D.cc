@@ -46,7 +46,6 @@ extern "C" {
 		} else {
 			self->cpp_obj = new SpaceChargeCalcSliceBySlice2D(xSize,ySize,zSize);
 		}
-		((SpaceChargeCalcSliceBySlice2D*) self->cpp_obj)->setPyWrapper((PyObject*) self);
 		//std::cerr<<"The SpaceChargeCalcSliceBySlice2D __init__ has been called!"<<std::endl;
 		return 0;
 	}

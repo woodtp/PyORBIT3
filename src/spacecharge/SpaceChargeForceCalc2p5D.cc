@@ -22,7 +22,7 @@
 
 using namespace OrbitUtils;
 
-SpaceChargeForceCalc2p5D::SpaceChargeForceCalc2p5D(int xSize, int ySize, int zSize): CppPyWrapper(NULL)
+SpaceChargeForceCalc2p5D::SpaceChargeForceCalc2p5D(int xSize, int ySize, int zSize)
 {
 	forceSolver = new ForceSolverFFT2D(xSize, ySize);
 	rhoGrid = new Grid2D(xSize, ySize);

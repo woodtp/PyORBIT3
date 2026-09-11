@@ -46,7 +46,6 @@ extern "C" {
 		} else {
 			self->cpp_obj = new SpaceChargeCalc2p5Drb(xSize,ySize,zSize);
 		}
-		((SpaceChargeCalc2p5Drb*) self->cpp_obj)->setPyWrapper((PyObject*) self);
 		return 0;
 	}
 

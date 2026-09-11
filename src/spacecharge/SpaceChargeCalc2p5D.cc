@@ -22,7 +22,7 @@
 
 using namespace OrbitUtils;
 
-SpaceChargeCalc2p5D::SpaceChargeCalc2p5D(int xSize, int ySize, int zSize, double xy_ratio_in): CppPyWrapper(NULL)
+SpaceChargeCalc2p5D::SpaceChargeCalc2p5D(int xSize, int ySize, int zSize, double xy_ratio_in)
 {
 	xy_ratio = xy_ratio_in;
 	poissonSolver = new PoissonSolverFFT2D(xSize, ySize, -xy_ratio, xy_ratio, -1.0, 1.0);
@@ -32,7 +32,7 @@ SpaceChargeCalc2p5D::SpaceChargeCalc2p5D(int xSize, int ySize, int zSize, double
 	bunchExtremaCalc = new BunchExtremaCalculator();
 }
 
-SpaceChargeCalc2p5D::SpaceChargeCalc2p5D(int xSize, int ySize, int zSize): CppPyWrapper(NULL)
+SpaceChargeCalc2p5D::SpaceChargeCalc2p5D(int xSize, int ySize, int zSize)
 {
 	xy_ratio = 1.0;
 	poissonSolver = new PoissonSolverFFT2D(xSize, ySize, -xy_ratio, xy_ratio, -1.0, 1.0);

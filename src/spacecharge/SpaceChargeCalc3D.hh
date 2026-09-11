@@ -19,7 +19,6 @@
 #include "orbit/Bunch.hh"
 
 //pyORBIT utils
-#include "utils/CppPyWrapper.hh"
 #include "utils/bunch/BunchExtremaCalculator.hh"
 
 #include "spacecharge/Grid3D.hh"
@@ -27,7 +26,7 @@
 
 using namespace std;
 
-class SpaceChargeCalc3D: public OrbitUtils::CppPyWrapper
+class SpaceChargeCalc3D
 {
 public:
 
