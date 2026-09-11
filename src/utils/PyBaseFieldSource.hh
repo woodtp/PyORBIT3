@@ -55,6 +55,9 @@ namespace OrbitUtils{
 				double& fe_x, double& fe_y, double& fe_z,
 				double& fm_x, double& fm_y, double& fm_z);
 
+		private:
+			PyObject* py_wrapper;
+
 	};
 };
 

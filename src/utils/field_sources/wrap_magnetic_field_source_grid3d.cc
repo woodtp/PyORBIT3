@@ -16,6 +16,7 @@ namespace wrap_field_source_grid3d{
 		PyObject_HEAD
 		void* cpp_obj;
 		PyObject* grids[3];
+		PyObject* transform;
 	} pyORBIT_MagnetFieldSourceGrid3D;
 
   void error(const char* msg){ ORBIT_MPI_Finalize(msg); }
@@ -37,6 +38,7 @@ extern "C" {
 		self->grids[0] = NULL;
 		self->grids[1] = NULL;
 		self->grids[2] = NULL;
+		self->transform = NULL;
 		return (PyObject *) self;
 	}
 
@@ -67,7 +69,7 @@ extern "C" {
 		self->grids[0] = pyBxGrid3D;
 		self->grids[1] = pyByGrid3D;
 		self->grids[2] = pyBzGrid3D;
-		((MagnetFieldSourceGrid3D*) self->cpp_obj)->setPyWrapper((PyObject*) self);
+		pyorbit::registerPyWrapper(self->cpp_obj, (PyObject*) self);
     return 0;
   }
 
@@ -162,6 +164,7 @@ extern "C" {
 
   /** Sets / Returns the coordinates transformation matrix 4x4 from external to inner system */
   static PyObject* MagnetFieldSourceGrid3D_transormfMatrix(PyObject *self, PyObject *args){
+	  pyORBIT_MagnetFieldSourceGrid3D* source = (pyORBIT_MagnetFieldSourceGrid3D*) self;
 	  MagnetFieldSourceGrid3D* cpp_fieldSource = (MagnetFieldSourceGrid3D*)((pyORBIT_Object*) self)->cpp_obj;
 	  int nArgs = PyTuple_Size(args);
 	  PyObject* pyMatrix;
@@ -178,28 +181,30 @@ extern "C" {
 	  	if(cpp_matrix->rows() != 4 || cpp_matrix->columns() != 4){
 	  		error("MagnetFieldSourceGrid3D.transormfMatrix(Matrix) - Matrix is not 4x4.");
 	  	}
-	  	// the Py_INCREF(pyMatrix) call will be performed inside setCoordsTransformMatrix(...) method
 	  	cpp_fieldSource->setCoordsTransformMatrix(cpp_matrix);
+		Py_INCREF(pyMatrix);
+		Py_XDECREF(source->transform);
+		source->transform = pyMatrix;
 	  	Py_INCREF(Py_None);
 	  	return Py_None;
 	  }
-	  cpp_matrix = cpp_fieldSource->getCoordsTransformMatrix();
-	  pyMatrix = (PyObject*) ((pyORBIT_Object*) cpp_matrix->getPyWrapper());
-	  if(pyMatrix == NULL){
+	  if(source->transform == NULL){
 	  	error("MagnetFieldSourceGrid3D.transormfMatrix() - cannot return Matrix 4x4. You have to assign it first.");
 	  }
-	  Py_INCREF(pyMatrix);
-	  return pyMatrix;
+	  Py_INCREF(source->transform);
+	  return source->transform;
   }
 
   //-----------------------------------------------------
   //destructor for python MagnetFieldSourceGrid3D class (__del__ method).
   //-----------------------------------------------------
   static void MagnetFieldSourceGrid3D_del(pyORBIT_MagnetFieldSourceGrid3D* self){
+		pyorbit::unregisterPyWrapper(self->cpp_obj, (PyObject*) self);
 		delete ((MagnetFieldSourceGrid3D*)self->cpp_obj);
 		Py_CLEAR(self->grids[0]);
 		Py_CLEAR(self->grids[1]);
 		Py_CLEAR(self->grids[2]);
+		Py_CLEAR(self->transform);
 		self->ob_base.ob_type->tp_free((PyObject*)self);
   }
 

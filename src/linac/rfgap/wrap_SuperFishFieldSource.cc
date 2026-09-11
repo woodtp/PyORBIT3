@@ -46,7 +46,7 @@ extern "C" {
   //this is implementation of the __init__ method
   static int SuperFishFieldSource_init(pyORBIT_SuperFishFieldSource *self, PyObject *args, PyObject *kwds){
 		self->cpp_obj = new SuperFishFieldSource();
-		((SuperFishFieldSource*) self->cpp_obj)->setPyWrapper((PyObject*) self);
+		pyorbit::registerPyWrapper(self->cpp_obj, (PyObject*) self);
 		return 0;
   }
 
@@ -265,6 +265,7 @@ extern "C" {
   static void SuperFishFieldSource_del(pyORBIT_SuperFishFieldSource* self){
 		//std::cerr<<"The SuperFishFieldSource __del__ has been called!"<<std::endl;
 		SuperFishFieldSource* cpp_SuperFishFieldSource = (SuperFishFieldSource*) self->cpp_obj;
+		pyorbit::unregisterPyWrapper(cpp_SuperFishFieldSource, (PyObject*) self);
 		delete cpp_SuperFishFieldSource;
 		Py_CLEAR(self->grids[0]);
 		Py_CLEAR(self->grids[1]);

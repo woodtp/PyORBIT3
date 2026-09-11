@@ -33,6 +33,7 @@
 #include <iostream>
 #include <cmath>
 #include <cfloat>
+#include <memory>
 
 #include "utils/BaseFieldSource.hh"
 #include "utils/matrix/Matrix.hh"
@@ -80,6 +81,7 @@ namespace OrbitUtils{
 			/**
 			      Sets coordinates transformation matrix 4x4.
 			      It includes rotation 3x3 matrix and origin shift.
+			      The caller retains ownership of the matrix.
 			 */
 			void setCoordsTransformMatrix(Matrix* coordTransformM4x4);
 
@@ -87,6 +89,7 @@ namespace OrbitUtils{
 		protected:
 
 			//Matrix for transformation from external to shifted system
+			std::unique_ptr<Matrix> ownedCoordTransformM4x4;
 			Matrix* coordTransformM4x4;
 
 			//-----------------------------------
@@ -103,7 +106,7 @@ namespace OrbitUtils{
 
 
 			//Matrix for transformation E and B from shifted to external system
-			Matrix* coordTransformM3x3;
+			std::unique_ptr<Matrix> coordTransformM3x3;
 
 	};
 };

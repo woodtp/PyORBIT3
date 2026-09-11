@@ -18,7 +18,7 @@
 
 using namespace OrbitUtils;
 
-BaseFieldSource::BaseFieldSource(): CppPyWrapper(NULL)
+BaseFieldSource::BaseFieldSource()
 {
 }
 
