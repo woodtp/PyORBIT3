@@ -55,7 +55,7 @@ void PyExternalEffects::setupEffects(Bunch* bunch){
 
 void PyExternalEffects::prepareEffects(Bunch* bunch, double t){
 	PyObject* py_bunch = pyorbit::getPyWrapper(bunch);
-	PyObject* res_tuple = PyObject_CallMethod(py_wrapper,const_cast<char*>("prepareEffects"),const_cast<char*>("Od"),py_bunch, time);
+	PyObject* res_tuple = PyObject_CallMethod(py_wrapper,const_cast<char*>("prepareEffects"),const_cast<char*>("Od"),py_bunch, t);
 	Py_DECREF(res_tuple);
 }
 
