@@ -20,7 +20,7 @@
 ///////////////////////////////////////////////////////////////////////////
 
 /** BaseApertureShape constructor */
-BaseApertureShape::BaseApertureShape(): CppPyWrapper(NULL)
+BaseApertureShape::BaseApertureShape()
 {
 	shapeName = "no_shape";
 	typeName = "no_type";

@@ -58,7 +58,7 @@ extern "C" {
   	if(self->cpp_obj == NULL){
   		ORBIT_MPI_Finalize("PrimitiveApertureShape(shapeType, par1[,par2]) - shapeType should be circle,ellipse, or rectangular. Stop.");
   	}
-	  ((BaseApertureShape*) self->cpp_obj)->setPyWrapper((PyObject*) self);
+	  pyorbit::registerPyWrapper(self->cpp_obj, (PyObject*) self);
     return 0;
   }
 
@@ -198,6 +198,7 @@ extern "C" {
   //-----------------------------------------------------
   static void PrimitiveApertureShape_del(pyORBIT_Object* self){
 		//std::cerr<<"debug PrimitiveApertureShape __del__ has been called!"<<std::endl;
+		pyorbit::unregisterPyWrapper(self->cpp_obj, (PyObject*) self);
 		delete ((BaseApertureShape*)self->cpp_obj);
 		self->ob_base.ob_type->tp_free((PyObject*)self);
   }

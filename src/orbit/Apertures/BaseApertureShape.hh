@@ -5,9 +5,6 @@
 #include "orbit/Bunch.hh"
 #include "orbit/Apertures/BaseApertureShape.hh"
 
-//pyORBIT utils
-#include "utils/CppPyWrapper.hh"
-
 using namespace std;
 
 ///////////////////////////////////////////////////////////////////////////
@@ -26,7 +23,7 @@ using namespace std;
    It defines the interface for BaseApertureShape subclasses.
 */
 
-class BaseApertureShape: public OrbitUtils::CppPyWrapper
+class BaseApertureShape
 {
 public:
 

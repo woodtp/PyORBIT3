@@ -5,9 +5,6 @@
 #include "orbit/Bunch.hh"
 #include "orbit/Apertures/BaseApertureShape.hh"
 
-//pyORBIT utils
-#include "utils/CppPyWrapper.hh"
-
 using namespace std;
 
 ///////////////////////////////////////////////////////////////////////////
@@ -29,7 +26,7 @@ using namespace std;
    of particle's coordinates.
 */
 
-class BaseAperture: public OrbitUtils::CppPyWrapper
+class BaseAperture
 {
 public:
 
@@ -42,7 +39,7 @@ public:
 	/** Returns aperture shape */
 	BaseApertureShape* getApertureShape();
 
-	/** Sets aperture shape */
+	/** Sets a borrowed aperture shape. The caller retains ownership. */
 	void setApertureShape(BaseApertureShape* apertureShape);
 
 	/** Routine for transfering particles through a aperture */

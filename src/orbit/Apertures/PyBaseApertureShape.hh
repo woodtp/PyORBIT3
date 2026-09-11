@@ -1,8 +1,7 @@
 #ifndef PY_BASE_APERTURE_SHAPE_H
 #define PY_BASE_APERTURE_SHAPE_H
 
-//pyORBIT utils
-#include "utils/CppPyWrapper.hh"
+#include <Python.h>
 
 #include "orbit/Bunch.hh"
 #include "orbit/Apertures/BaseApertureShape.hh"
@@ -32,13 +31,16 @@ class PyBaseApertureShape: public BaseApertureShape
 public:
 
 	/** PyBaseApertureShape constructor */
-	PyBaseApertureShape();
+	PyBaseApertureShape(PyObject* py_wrapper);
 
 	/** PyBaseApertureShape decstructor */
 	virtual ~PyBaseApertureShape();
 
 	/** Return 1 if the particular macro-particle is inside this shape */
 	int inside(Bunch* bunch, int count);
+
+private:
+	PyObject* py_wrapper;
 
 };
 
