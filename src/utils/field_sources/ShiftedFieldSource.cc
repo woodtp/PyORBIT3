@@ -141,8 +141,8 @@ void ShiftedFieldSource::setCoordsTransformMatrix(Matrix* coordTransformM4x4_In)
 	ownedCoordTransformM4x4.reset();
 	coordTransformM4x4 = coordTransformM4x4_In;
 
-	for(int ind_x; ind_x < 3; ind_x++){
-		for(int ind_y; ind_y < 3; ind_y++){
+	for(int ind_x = 0; ind_x < 3; ind_x++){
+		for(int ind_y = 0; ind_y < 3; ind_y++){
 			coordTransformM3x3->getArray()[ind_x][ind_y] = coordTransformM4x4->getArray()[ind_x][ind_y];
 		}
 	}
