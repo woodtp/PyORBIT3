@@ -40,7 +40,6 @@ extern "C" {
 			ORBIT_MPI_Finalize("PyForceSolverFFT2D - ForceSolverFFT2D(nX,nY) - constructor needs parameters.");
 		}
 		self->cpp_obj = new ForceSolverFFT2D(xSize,ySize);
-		((ForceSolverFFT2D*) self->cpp_obj)->setPyWrapper((PyObject*) self);
 		//std::cerr<<"The ForceSolverFFT2D __init__ has been called!"<<std::endl;
 		return 0;
   }

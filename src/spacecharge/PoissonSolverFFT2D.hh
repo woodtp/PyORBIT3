@@ -10,9 +10,6 @@
 #include <cmath>
 #include <string>
 
-//pyORBIT utils
-#include "utils/CppPyWrapper.hh"
-
 //FFTW library header
 #include "fftw3.h"
 

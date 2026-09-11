@@ -42,7 +42,6 @@ extern "C" {
 			ORBIT_MPI_Finalize("PyPoissonSolverFFT2D - PoissonSolverFFT2D(nX,nY[,xMin,xMax,yMin,yMax]) - constructor needs parameters.");
 		}
 		self->cpp_obj = new PoissonSolverFFT2D(xSize,ySize,xMin,xMax,yMin,yMax);
-		((PoissonSolverFFT2D*) self->cpp_obj)->setPyWrapper((PyObject*) self);
 		//std::cerr<<"The PoissonSolverFFT2D __init__ has been called!"<<std::endl;
 		return 0;
   }

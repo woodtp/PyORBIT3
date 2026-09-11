@@ -4,9 +4,6 @@
 #include "spacecharge/Grid2D.hh"
 #include <string>
 
-//pyORBIT utils
-#include "utils/CppPyWrapper.hh"
-
 using namespace std;
 
 /**
@@ -15,7 +12,7 @@ and calculates the potential created by charges on the boundary
 surface.
 */
 
-class BaseBoundary2D: public OrbitUtils::CppPyWrapper
+class BaseBoundary2D
 {
 	public:
 

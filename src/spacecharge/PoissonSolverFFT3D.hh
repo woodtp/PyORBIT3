@@ -11,9 +11,6 @@
 #include <string>
 #include <cfloat>
 
-//pyORBIT utils
-#include "utils/CppPyWrapper.hh"
-
 //FFTW library header
 #include "fftw3.h"
 

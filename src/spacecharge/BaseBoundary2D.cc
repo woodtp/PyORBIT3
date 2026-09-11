@@ -19,7 +19,7 @@ surface.
 */
 
 // Constructor
-BaseBoundary2D::BaseBoundary2D(int nPoints, int nModes): CppPyWrapper(NULL)
+BaseBoundary2D::BaseBoundary2D(int nPoints, int nModes)
 {
 
 	initialized_ = 0;

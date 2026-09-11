@@ -5,7 +5,7 @@
 using namespace OrbitUtils;
 
 // Constructor
-PoissonSolver2D::PoissonSolver2D(int xSize, int ySize): CppPyWrapper(NULL)
+PoissonSolver2D::PoissonSolver2D(int xSize, int ySize)
 {
 	xSize_ = xSize;
 	ySize_ = ySize;
@@ -20,7 +20,7 @@ PoissonSolver2D::PoissonSolver2D(int xSize, int ySize): CppPyWrapper(NULL)
 // Constructor
 PoissonSolver2D::PoissonSolver2D(int xSize, int ySize,
 			                           double xMin, double xMax,
-									               double yMin, double yMax): CppPyWrapper(NULL)
+									               double yMin, double yMax)
 {
 	xSize_ = xSize;
 	ySize_ = ySize;

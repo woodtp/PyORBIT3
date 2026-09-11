@@ -10,9 +10,6 @@
 #include <cmath>
 #include <string>
 
-//pyORBIT utils
-#include "utils/CppPyWrapper.hh"
-
 #include "spacecharge/Grid3D.hh"
 
 using namespace std;
@@ -22,7 +19,7 @@ using namespace std;
   created by 3D charge distribution.
 */
 
-class PoissonSolver3D: public OrbitUtils::CppPyWrapper
+class PoissonSolver3D
 {
 public:
 

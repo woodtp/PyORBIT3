@@ -10,9 +10,6 @@
 #include <cmath>
 #include <string>
 
-//pyORBIT utils
-#include "utils/CppPyWrapper.hh"
-
 #include "spacecharge/Grid2D.hh"
 
 using namespace std;
@@ -22,7 +19,7 @@ using namespace std;
   potential of a 2D charge distribution.
 */
 
-class PoissonSolver2D: public OrbitUtils::CppPyWrapper
+class PoissonSolver2D
 {
 public:
 

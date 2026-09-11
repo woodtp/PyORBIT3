@@ -10,9 +10,6 @@
 #include <cmath>
 #include <string>
 
-//pyORBIT utils
-#include "utils/CppPyWrapper.hh"
-
 #include "spacecharge/Grid2D.hh"
 
 using namespace std;
@@ -22,7 +19,7 @@ using namespace std;
   created by a 2D charge distribution.
 */
 
-class ForceSolver2D: public OrbitUtils::CppPyWrapper
+class ForceSolver2D
 {
 public:
 

@@ -45,7 +45,6 @@ extern "C" {
 				ORBIT_MPI_Finalize("PyBoundary2D - Boundary2D(nPoints,nModes) - constructor needs parameters.");
 			}
 			self->cpp_obj = new BaseBoundary2D(nPoints, nModes);
-			((BaseBoundary2D*) self->cpp_obj)->setPyWrapper((PyObject*) self);
 			//std::cerr<<"The Boundary2D __init__ has been called!"<<std::endl;
 			return 0;
 		}
@@ -58,7 +57,6 @@ extern "C" {
 			string shape(shape_name);
 			if(nVars == 4){ yDim = xDim;}
 			self->cpp_obj = new ShapedBoundary2D(nPoints, nModes,shape,xDim,yDim);
-			((BaseBoundary2D*) self->cpp_obj)->setPyWrapper((PyObject*) self);
 			//std::cerr<<"The Boundary2D __init__ has been called!"<<std::endl;
 			return 0;
 		}
