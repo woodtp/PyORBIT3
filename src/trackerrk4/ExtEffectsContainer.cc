@@ -37,22 +37,9 @@ ExtEffectsContainer::ExtEffectsContainer(){
 }
 
 ExtEffectsContainer::~ExtEffectsContainer(){
-
-	for (int i=0;i<ref.size();i++){
-		if(ref[i]->getPyWrapper() == NULL){
-			delete ref[i];
-		} else {
-			Py_XDECREF(ref[i]->getPyWrapper());
-		}
-	}
-
 }
 
 void ExtEffectsContainer::AddEffect(ExternalEffects* eff)	{
-	if(eff->getPyWrapper() != NULL){
-		Py_INCREF(eff->getPyWrapper());
-	}
-
 	ref.push_back(eff);
 
 	ref_setup.push_back(eff);

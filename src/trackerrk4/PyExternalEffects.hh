@@ -67,7 +67,8 @@ namespace TrackerRK4{
 														  OrbitUtils::BaseFieldSource* fieldSource,
 															RungeKuttaTracker* tracker);
 
-
+		private:
+			PyObject* py_wrapper;
 	};
 };
 
