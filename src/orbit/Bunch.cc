@@ -21,6 +21,7 @@
 #include "utils/StringUtils.hh"
 #include "utils/BufferStore.hh"
 
+#include <cstring>
 #include <iomanip>
 #include <string>
 
