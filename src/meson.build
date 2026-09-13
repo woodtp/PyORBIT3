@@ -1,4 +1,8 @@
-python = import('python').find_installation('python3', pure: false)
+build_python = get_option('BUILD_PYTHON')
+if build_python
+  python = import('python').find_installation('python3', pure: false)
+  python_dependency = python.dependency()
+endif
 
 cpp = meson.get_compiler('cpp')
 
@@ -6,19 +10,8 @@ if cpp.has_argument('-march=native')
   add_project_arguments('-march=native', language: 'cpp')
 endif
 
-dependencies = []
-
-dependencies += dependency('fftw3', version: '>= 3.0.0', required: true)
-
-python_embed_dependency = python.dependency(embed: true)
-core_link_args = []
-
-if host_machine.system() == 'darwin'
-  dependencies += python.dependency()
-  core_link_args += ['-Wl,-undefined,dynamic_lookup']
-else
-  dependencies += python_embed_dependency
-endif
+core_dependencies = [dependency('fftw3', version: '>= 3.0.0', required: true)]
+pc_requires = ['fftw3 >= 3.0.0']
 
 # Detecting if MPICH or OPENMPI are installed and enabling support if present
 mpi_use = get_option('USE_MPI')
@@ -26,12 +19,14 @@ use_mpi_flag = '0'
 
 if mpi_use == 'mpich'
   message('Requested to use MPICH as the MPI implementation.')
-  dependencies += dependency('mpich', version: '>= 4.0.0', required: true)
+  core_dependencies += dependency('mpich', version: '>= 4.0.0', required: true)
+  pc_requires += ['mpich >= 4.0.0']
   add_project_arguments('-DUSE_MPI=1', language: 'cpp')
   use_mpi_flag = '1'
 elif mpi_use == 'ompi'
   message('Requested to use OpenMPI as the MPI implementation.')
-  dependencies += dependency('ompi', version: '>= 4.0.0', required: true)
+  core_dependencies += dependency('ompi', version: '>= 4.0.0', required: true)
+  pc_requires += ['ompi >= 4.0.0']
   add_project_arguments('-DUSE_MPI=1', language: 'cpp')
   use_mpi_flag = '1'
 elif mpi_use == 'none'
@@ -42,12 +37,14 @@ else
 
    if mpich_dependency.found()
      add_project_arguments('-DUSE_MPI=1', language: 'cpp')
-     dependencies += mpich_dependency
+     core_dependencies += mpich_dependency
+     pc_requires += ['mpich >= 4.0.0']
      message('Using MPICH as the MPI implementation.')
      use_mpi_flag = '1'
    elif openmpi_dependency.found()
      add_project_arguments('-DUSE_MPI=1', language: 'cpp')
-     dependencies += openmpi_dependency
+     core_dependencies += openmpi_dependency
+     pc_requires += ['ompi >= 4.0.0']
      message('Using OpenMPI as the MPI implementation.')
      use_mpi_flag = '1'
    else
@@ -168,26 +165,9 @@ core_lib = library(
   'pyorbit3',
   sources: sources,
   include_directories: inc,
-  dependencies: dependencies,
-  link_args: core_link_args,
+  dependencies: core_dependencies,
   install: true,
 )
-
-core_install_dir = get_option('prefix') / get_option('libdir')
-extension_install_dir = python.get_install_dir() / 'orbit/core'
-core_relative_install_dir = run_command(
-  python,
-  '-c',
-  'import os, sys; print(os.path.relpath(sys.argv[1], sys.argv[2]))',
-  core_install_dir,
-  extension_install_dir,
-  check: true,
-).stdout().strip()
-if host_machine.system() == 'darwin'
-  core_install_rpath = '@loader_path/' + core_relative_install_dir
-else
-  core_install_rpath = '$ORIGIN/' + core_relative_install_dir
-endif
 
 api_headers = [
   'linac/rfgap/BaseRfGap.hh',
@@ -298,13 +278,6 @@ api_headers = [
 
 install_headers(api_headers, subdir : 'pyorbit3', preserve_path : true)
 
-pc_requires = [python_embed_dependency, 'fftw3 >= 3.0.0']
-if get_option('USE_MPI') == 'mpich'
-  pc_requires += ['mpich >= 4.0.0']
-elif get_option('USE_MPI') == 'ompi'
-  pc_requires += ['ompi >= 4.0.0']
-endif
-
 pkgconfig = import('pkgconfig')
 
 pkgconfig.generate(
@@ -319,10 +292,27 @@ pkgconfig.generate(
   install_dir: get_option('libdir') / 'pkgconfig',
 )
 
+if build_python
+core_install_dir = get_option('prefix') / get_option('libdir')
+extension_install_dir = python.get_install_dir() / 'orbit/core'
+core_relative_install_dir = run_command(
+  python,
+  '-c',
+  'import os, sys; print(os.path.relpath(sys.argv[1], sys.argv[2]))',
+  core_install_dir,
+  extension_install_dir,
+  check: true,
+).stdout().strip()
+if host_machine.system() == 'darwin'
+  core_install_rpath = '@loader_path/' + core_relative_install_dir
+else
+  core_install_rpath = '$ORIGIN/' + core_relative_install_dir
+endif
+
 binding_lib = shared_library(
   'pyorbit3_python',
   sources: 'main/pyORBIT_Object.cc',
-  dependencies: python.dependency(),
+  dependencies: python_dependency,
   gnu_symbol_visibility: 'default',
   install: true,
 )
@@ -478,12 +468,13 @@ ext_modules = {
 foreach name, src_list : ext_modules
   python.extension_module(
   name,
-  sources: src_list,
-  include_directories: inc,
-  link_with: [core_lib, binding_lib],
-  dependencies: dependencies,
+    sources: src_list,
+    include_directories: inc,
+    link_with: [core_lib, binding_lib],
+    dependencies: core_dependencies + [python_dependency],
   install_rpath: core_install_rpath,
   install: true,
   subdir: 'orbit/core',
   )
 endforeach
+endif
