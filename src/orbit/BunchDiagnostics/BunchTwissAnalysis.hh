@@ -5,7 +5,6 @@
 
 #include "orbit/Bunch.hh"
 
-using namespace std;
 
 /**
   The BunchTwissAnalysis class calculates the average of 6D coordinates and they correlations.

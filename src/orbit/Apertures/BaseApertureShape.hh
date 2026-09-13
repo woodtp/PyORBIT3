@@ -5,7 +5,6 @@
 #include "orbit/Bunch.hh"
 #include "orbit/Apertures/BaseApertureShape.hh"
 
-using namespace std;
 
 ///////////////////////////////////////////////////////////////////////////
 //
@@ -49,19 +48,19 @@ public:
 	double getCenterY();
 
 	/** Returns the shape name */
-	string getName();
+	std::string getName();
 
 	/** Sets the shape name */
-	void setName(string shapeName);
+	void setName(std::string shapeName);
 
 	/** Returns the shape type name */
-	string getTypeName();
+	std::string getTypeName();
 
 protected:
 
-	string shapeName;
+	std::string shapeName;
 
-	string typeName;
+	std::string typeName;
 
 	double x_center, y_center;
 

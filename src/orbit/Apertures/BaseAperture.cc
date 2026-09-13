@@ -182,12 +182,12 @@ int BaseAperture::getNumberOfLost(){
 }
 
 /** Returns the aperture name */
-string BaseAperture::getName(){
+std::string BaseAperture::getName(){
 	return apertureName;
 }
 
 /** Sets the aperture name */
-void BaseAperture::setName(string apertureNameIn){
+void BaseAperture::setName(std::string apertureNameIn){
 	apertureName = apertureNameIn;
 }
 

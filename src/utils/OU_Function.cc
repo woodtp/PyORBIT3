@@ -641,7 +641,7 @@ void Function::findMinMaxXY(){
 }
 
 
-void Function::print(ostream& Out)
+void Function::print(std::ostream& Out)
 {
   if(rank_MPI == 0){
 		Out<<std::setprecision(15)<< std::setiosflags(std::ios::scientific);
@@ -667,8 +667,8 @@ void Function::print(ostream& Out)
 
 void Function::print(const char* fileName)
 {
-  ofstream F_dump;
-  if(rank_MPI == 0)F_dump.open (fileName, ios::out);
+  std::ofstream F_dump;
+  if(rank_MPI == 0)F_dump.open (fileName, std::ios::out);
   print(F_dump);
   if(rank_MPI == 0){F_dump.close();}
   return;

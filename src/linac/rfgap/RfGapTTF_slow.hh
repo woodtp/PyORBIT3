@@ -22,7 +22,6 @@
 //pyORBIT utils
 #include "utils/polynomial/OU_Polynomial.hh"
 
-using namespace std;
 
 /**
   This class represents a RF gap as a Parmila type gap.

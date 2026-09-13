@@ -12,7 +12,6 @@
 
 #include "spacecharge/Grid2D.hh"
 
-using namespace std;
 
 /**
   The ForceSolver2D class calculates 2D forces along X and Y axes

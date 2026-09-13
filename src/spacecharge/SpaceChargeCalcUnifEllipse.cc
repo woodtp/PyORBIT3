@@ -20,6 +20,7 @@
 
 #include "orbit/ParticlesAttributes/ParticleMacroSize.hh"
 
+#include <cstdlib>
 #include <iostream>
 #include <cmath>
 #include <cfloat>

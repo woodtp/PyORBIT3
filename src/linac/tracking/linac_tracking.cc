@@ -31,6 +31,7 @@
 #include "orbit/Bunch.hh"
 #include "orbit/SyncPart.hh"
 
+#include <cmath>
 #include <complex>
 
 namespace linac_tracking

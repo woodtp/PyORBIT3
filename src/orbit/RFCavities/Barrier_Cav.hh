@@ -12,7 +12,6 @@
 
 //pyORBIT utils
 
-using namespace std;
 
 class Barrier_Cav
 {

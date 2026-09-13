@@ -21,6 +21,7 @@
 #include "utils/StringUtils.hh"
 #include "utils/BufferStore.hh"
 
+#include <cmath>
 #include <cstring>
 #include <iomanip>
 #include <string>
@@ -196,7 +197,7 @@ void Bunch::initBunchAttributes(const char* fileName){
   std::vector<std::string> attr_names;
   attr_names.clear();
 
-  ifstream is;
+  std::ifstream is;
 
   int error_ind = 0;
   if(rank_MPI == 0){
@@ -560,7 +561,7 @@ void Bunch::resize()
 
       std::map<std::string,ParticleAttributes*>::iterator pos;
       for (pos = attrCntrMap.begin(); pos != attrCntrMap.end(); ++pos) {
-                string name = pos->first;
+                std::string name = pos->first;
                 ParticleAttributes* attrCntrl = pos->second;
                 for(int i = nOldTotalSize; i < nTotalSize; i++){
                     attrCntrl->init(i);
@@ -1075,10 +1076,10 @@ void Bunch::print(std::ostream& Out)
 
 void Bunch::print(const char* fileName)
 {
-    ofstream F_dump;
+    std::ofstream F_dump;
 
     if(rank_MPI == 0){
-        F_dump.open (fileName, ios::out);
+        F_dump.open (fileName, std::ios::out);
     }
 
     print(F_dump);
@@ -1110,7 +1111,7 @@ int Bunch::readBunchCoords(const char* fileName, int nParts)
 {
     double x,y,z, px,py,pz;
 
-    ifstream is;
+    std::ifstream is;
 
     int error_ind = 0;
 
@@ -1303,7 +1304,7 @@ int Bunch::readParticleAttributesNames(const char* fileName,
 
     attr_names.clear();
 
-    ifstream is;
+    std::ifstream is;
 
     int error_ind = 0;
 
@@ -1416,7 +1417,7 @@ int Bunch::readParticleAttributesNames(const char* fileName,
     for(int i = 0; i < nDicts; i++){
         int nT = StringUtils::Tokenize(v_str_part_attr[i],v_str_dict);
         int dict_size = (v_str_dict.size() - 3)/2;
-        map<std::string,double> attr_dict;
+        std::map<std::string,double> attr_dict;
         for(int k = 0; k < dict_size; k++){
             int val = 0;
             sscanf(v_str_dict[2*k+3+1].c_str(),"%df",&val);
@@ -1604,7 +1605,7 @@ ParticleAttributes* Bunch::removeParticleAttributesWithoutDelete(const std::stri
 
     std::map<std::string,int>::iterator pos;
     for (pos = attrCntrLowIndMap.begin(); pos != attrCntrLowIndMap.end(); ++pos) {
-        string name = pos->first;
+        std::string name = pos->first;
         int ind = pos->second;
         if(ind >= lowInd) {
             attrCntrLowIndMap[name] =  attrCntrLowIndMap[name] - attr_length;

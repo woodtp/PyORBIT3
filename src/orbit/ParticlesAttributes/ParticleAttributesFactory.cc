@@ -78,7 +78,7 @@ ParticleAttributes* ParticleAttributesFactory::getParticleAttributesInstance(
 
 	if(name == "Amplitudes"){
 		if(params_dict.size() == 0){
-			cout<<"dictionary Amplitudes(dict) should be defined "<<"\n";
+			std::cout<<"dictionary Amplitudes(dict) should be defined "<<"\n";
 		} else {
 			if(params_dict.count("size") == 1){
 				part_atrs = new WaveFunctionAmplitudes(bunch,(int) params_dict["size"]);
@@ -99,7 +99,7 @@ ParticleAttributes* ParticleAttributesFactory::getParticleAttributesInstance(
 
 	if(name == "Populations"){
 		if(params_dict.size() == 0){
-			cout<<"dictionary AtomPopulations(dict) should be defined "<<"\n";
+			std::cout<<"dictionary AtomPopulations(dict) should be defined "<<"\n";
 		} else {
 			if(params_dict.count("size") == 1){
 				part_atrs = new AtomPopulations(bunch,(int) params_dict["size"]);
@@ -119,7 +119,7 @@ ParticleAttributes* ParticleAttributesFactory::getParticleAttributesInstance(
 
 	if(name == "pq_coords"){
 		if(params_dict.size() == 0){
-			cout<<"dictionary pq_coords(dict) should be defined "<<"\n";
+			std::cout<<"dictionary pq_coords(dict) should be defined "<<"\n";
 		} else {
 			if(params_dict.count("size") == 1){
 				part_atrs = new pq_coordinates(bunch,(int) params_dict["size"]);
@@ -139,7 +139,7 @@ ParticleAttributes* ParticleAttributesFactory::getParticleAttributesInstance(
 
 	if(name == "part_time"){
 		if(params_dict.size() == 0){
-			cout<<"dictionary prf_time(dict) should be defined "<<"\n";
+			std::cout<<"dictionary prf_time(dict) should be defined "<<"\n";
 		} else {
 			if(params_dict.count("size") == 1){
 				part_atrs = new part_time(bunch, (int)params_dict["size"]);
@@ -159,7 +159,7 @@ ParticleAttributes* ParticleAttributesFactory::getParticleAttributesInstance(
 
 	if(name == "Evolution"){
 		if(params_dict.size() == 0){
-			cout<<"dictionary Evolution(dict) should be defined "<<"\n";
+			std::cout<<"dictionary Evolution(dict) should be defined "<<"\n";
 		} else {
 			if(params_dict.count("size") == 1){
 				part_atrs = new Evolution(bunch, (int) params_dict["size"]);
@@ -205,7 +205,7 @@ ParticleAttributes* ParticleAttributesFactory::getParticleAttributesInstance(
 	return part_atrs;
 }
 
-void ParticleAttributesFactory::getParticleAttributesNames(std::vector<string>& names){
+void ParticleAttributesFactory::getParticleAttributesNames(std::vector<std::string>& names){
 	names.clear();
 	names.push_back("macrosize");
 	names.push_back("ParticleIdNumber");

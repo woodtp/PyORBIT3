@@ -12,7 +12,6 @@
 
 #include "spacecharge/Grid3D.hh"
 
-using namespace std;
 
 /**
   The PoissonSolver3D class calculates 3D voltage distribution

@@ -23,7 +23,6 @@
 #include <cstdlib>
 #include <cmath>
 
-using namespace std;
 
 namespace OrbitUtils{
 

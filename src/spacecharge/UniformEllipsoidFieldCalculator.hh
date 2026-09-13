@@ -7,7 +7,6 @@
 #include <cstdlib>
 #include <cmath>
 
-using namespace std;
 
 /**
   This class calculates the field of uniformly charged ellipsoid by using

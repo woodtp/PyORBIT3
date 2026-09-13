@@ -54,7 +54,7 @@ extern "C" {
 			if(!PyArg_ParseTuple(args,"iisd|d:__init__",&nPoints,&nModes,&shape_name,&xDim,&yDim)){
 				ORBIT_MPI_Finalize("PyBoundary2D - Boundary2D(nPoints,nModes,shape,xDim,yDim) - constructor needs parameters.");
 			}
-			string shape(shape_name);
+			std::string shape(shape_name);
 			if(nVars == 4){ yDim = xDim;}
 			self->cpp_obj = new ShapedBoundary2D(nPoints, nModes,shape,xDim,yDim);
 			//std::cerr<<"The Boundary2D __init__ has been called!"<<std::endl;

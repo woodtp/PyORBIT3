@@ -24,7 +24,6 @@
 #include "utils/OU_Function.hh"
 #include "utils/OU_SplineCH.hh"
 
-using namespace std;
 
 namespace OrbitUtils{
 

@@ -12,7 +12,6 @@
 //ORBIT bunch
 #include "orbit/Bunch.hh"
 
-using namespace std;
 
 /**
   This class repersents a 2D rectangular grid.

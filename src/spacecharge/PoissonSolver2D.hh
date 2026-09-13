@@ -12,7 +12,6 @@
 
 #include "spacecharge/Grid2D.hh"
 
-using namespace std;
 
 /**
   The PoissonSolver2D class calculates electrostatic

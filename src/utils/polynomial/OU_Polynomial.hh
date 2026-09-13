@@ -18,7 +18,6 @@
 #ifndef ORBIT_UTILS_POLYNOMIAL_H
 #define ORBIT_UTILS_POLYNOMIAL_H
 
-using namespace std;
 
 namespace OrbitUtils{
 

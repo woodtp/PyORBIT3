@@ -23,7 +23,6 @@
 
 //pyORBIT utils
 
-using namespace std;
 
 /**
   This class represents a RF gap as a Three Points type gap.

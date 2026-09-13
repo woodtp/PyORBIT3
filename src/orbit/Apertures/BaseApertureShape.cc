@@ -65,19 +65,19 @@ double BaseApertureShape::getCenterY()
 
 
 /** Returns the shape name */
-string BaseApertureShape::getName()
+std::string BaseApertureShape::getName()
 {
 	return shapeName;
 }
 
 /** Sets the shape name */
-void BaseApertureShape::setName(string shapeNameIn)
+void BaseApertureShape::setName(std::string shapeNameIn)
 {
 	shapeName = shapeNameIn;
 }
 
 /** Returns the shape type name */
-string BaseApertureShape::getTypeName()
+std::string BaseApertureShape::getTypeName()
 {
 	return typeName;
 }

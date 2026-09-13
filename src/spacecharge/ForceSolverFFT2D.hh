@@ -16,7 +16,6 @@
 
 #include "spacecharge/ForceSolver2D.hh"
 
-using namespace std;
 
 /**
   The ForceSolverFFT2D class is used to calculate the force

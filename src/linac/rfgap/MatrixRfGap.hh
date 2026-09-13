@@ -18,7 +18,6 @@ For this RF gap we know the E0TL, frequency, and phase only.
 
 //pyORBIT utils
 
-using namespace std;
 
 /**
   This class represents a RF gap as transport matrix. No nonlinear effects.

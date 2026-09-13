@@ -35,7 +35,6 @@
 #include <map>
 #include <vector>
 
-using namespace std;
 
 #ifndef SYNC_PARTICLE_H
 #define SYNC_PARTICLE_H

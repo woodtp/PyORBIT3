@@ -20,7 +20,6 @@
 #include "spacecharge/PoissonSolverFFT2D.hh"
 #include "spacecharge/BaseBoundary2D.hh"
 
-using namespace std;
 
 class SpaceChargeCalcSliceBySlice2D
 {

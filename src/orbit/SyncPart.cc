@@ -31,6 +31,8 @@
 #include "utils/StringUtils.hh"
 #include "utils/BufferStore.hh"
 
+#include <cmath>
+#include <cstring>
 #include <iomanip>
 #include <string>
 
@@ -322,7 +324,7 @@ void SyncPart::readSyncPart(const char* fileName){
   std::vector<std::string> attr_names;
   attr_names.clear();
 
-  ifstream is;
+  std::ifstream is;
 
   int error_ind = 0;
   if(rank_MPI == 0){
@@ -343,7 +345,7 @@ void SyncPart::readSyncPart(const char* fileName){
   }
 
   std::string  str;
-  std::vector<string> v_str;
+  std::vector<std::string> v_str;
 
   int stop_ind = 0;
   int def_found_ind = 0;

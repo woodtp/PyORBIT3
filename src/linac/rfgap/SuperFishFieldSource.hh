@@ -15,7 +15,6 @@
 #include <cmath>
 #include <memory>
 
-using namespace std;
 
 class SuperFishFieldSource: public OrbitUtils::BaseFieldSource
 {

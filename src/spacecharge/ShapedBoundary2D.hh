@@ -6,7 +6,6 @@
 
 #include "spacecharge/BaseBoundary2D.hh"
 
-using namespace std;
 
 /**
 The ShapedBoundary2D class defines a boundary geometry for three cases:
@@ -20,7 +19,7 @@ class ShapedBoundary2D: public BaseBoundary2D
 	public:
 
 		/** Constructor */
-		ShapedBoundary2D(int nPoints, int nModes, string shape, double xDim, double yDim);
+		ShapedBoundary2D(int nPoints, int nModes, std::string shape, double xDim, double yDim);
 
 		/** Destructor */
 		virtual ~ShapedBoundary2D();

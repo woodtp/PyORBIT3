@@ -25,7 +25,6 @@
 #include "spacecharge/Grid3D.hh"
 #include "spacecharge/PoissonSolverFFT3D.hh"
 
-using namespace std;
 
 class SpaceChargeCalc3D
 {

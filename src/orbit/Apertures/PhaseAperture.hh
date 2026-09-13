@@ -24,7 +24,6 @@
 //pyORBIT utils
 #include "orbit/Bunch.hh"
 
-using namespace std;
 
 class PhaseAperture
 {

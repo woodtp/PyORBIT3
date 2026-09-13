@@ -16,7 +16,6 @@
 
 #include "spacecharge/PoissonSolver3D.hh"
 
-using namespace std;
 
 /**
   The PoissonSolverFFT3D class calculates electrostatic

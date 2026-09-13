@@ -5,7 +5,6 @@
 
 #include "orbit/Bunch.hh"
 
-using namespace std;
 
 /**
   The SynchPartRedefinitionZdE class calculates the average of z and dE coordinates

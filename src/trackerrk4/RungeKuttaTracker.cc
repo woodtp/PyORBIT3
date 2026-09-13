@@ -16,6 +16,7 @@
 ///////////////////////////////////////////////////////////////////////////
 #include "trackerrk4/RungeKuttaTracker.hh"
 
+#include <cmath>
 #include <iostream>
 #include <fstream>
 #include <cstdlib>

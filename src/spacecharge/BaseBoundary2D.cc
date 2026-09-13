@@ -1,6 +1,7 @@
 #include "spacecharge/BaseBoundary2D.hh"
 #include "orbit/OrbitConst.hh"
 
+#include <cmath>
 #include <iostream>
 #include <cfloat>
 
@@ -234,7 +235,7 @@ void BaseBoundary2D::initializeBPs(){
 }
 
 /** Returns the name of the shape */
-string BaseBoundary2D::getShapeName(){
+std::string BaseBoundary2D::getShapeName(){
 	return shape_;
 }
 

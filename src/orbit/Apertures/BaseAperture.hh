@@ -5,7 +5,6 @@
 #include "orbit/Bunch.hh"
 #include "orbit/Apertures/BaseApertureShape.hh"
 
-using namespace std;
 
 ///////////////////////////////////////////////////////////////////////////
 //
@@ -49,10 +48,10 @@ public:
 	int getNumberOfLost();
 
 	/** Returns the aperture name */
-	string getName();
+	std::string getName();
 
 	/** Sets the aperture name */
-	void setName(string apertureNameIn);
+	void setName(std::string apertureNameIn);
 
 	/** Sets the position of the node in the lattice */
 	double getPosition();
@@ -73,7 +72,7 @@ public:
 protected:
 
 	//name of the aperture
-	string apertureName;
+	std::string apertureName;
 
 	//Counters
 	int nLost_;

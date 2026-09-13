@@ -4,7 +4,6 @@
 #include "orbit/Bunch.hh"
 #include "orbit/Apertures/BaseApertureShape.hh"
 
-using namespace std;
 
 ///////////////////////////////////////////////////////////////////////////
 //

@@ -3,7 +3,6 @@
 
 #include "mpi/orbit_mpi.hh"
 
-using namespace std;
 
 /**
 The Moments1D class calculates the arbitrary moments of the (u,up) distribution.

@@ -5,7 +5,6 @@
 //pyORBIT utils
 #include "orbit/Bunch.hh"
 
-using namespace std;
 
 /**
   The aperture class is used to define how a bunch propogates through an aperture

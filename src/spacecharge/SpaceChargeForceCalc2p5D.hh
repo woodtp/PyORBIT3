@@ -20,7 +20,6 @@
 #include "spacecharge/ForceSolverFFT2D.hh"
 #include "spacecharge/BaseBoundary2D.hh"
 
-using namespace std;
 
 class SpaceChargeForceCalc2p5D
 {

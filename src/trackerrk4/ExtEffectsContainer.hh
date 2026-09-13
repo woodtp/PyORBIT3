@@ -48,11 +48,11 @@ using namespace OrbitUtils;
 
 		private:
 
-			vector<ExternalEffects*>	ref;
-			vector<ExternalEffects*>	ref_setup;
-			vector<ExternalEffects*>	ref_prepare;
-			vector<ExternalEffects*>	ref_apply;
-			vector<ExternalEffects*>	ref_finalize;
+			std::vector<ExternalEffects*>	ref;
+			std::vector<ExternalEffects*>	ref_setup;
+			std::vector<ExternalEffects*>	ref_prepare;
+			std::vector<ExternalEffects*>	ref_apply;
+			std::vector<ExternalEffects*>	ref_finalize;
 
 	};
 

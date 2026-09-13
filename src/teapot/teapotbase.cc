@@ -36,6 +36,7 @@
 #include "orbit/Bunch.hh"
 #include "orbit/SyncPart.hh"
 
+#include <cmath>
 #include <complex>
 
 namespace teapot_base

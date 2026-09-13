@@ -21,7 +21,6 @@
 //FFTW library header
 #include "fftw3.h"
 
-using namespace std;
 
 class LSpaceChargeCalc
 {

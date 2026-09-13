@@ -20,7 +20,6 @@
 
 #include "spacecharge/UniformEllipsoidFieldCalculator.hh"
 
-using namespace std;
 
 class SpaceChargeCalcUnifEllipse
 {

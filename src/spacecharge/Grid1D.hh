@@ -10,7 +10,6 @@
 // ORBIT bunch
 #include "orbit/Bunch.hh"
 
-using namespace std;
 
 
 class Grid1D

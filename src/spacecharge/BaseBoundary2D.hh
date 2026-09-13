@@ -4,7 +4,6 @@
 #include "spacecharge/Grid2D.hh"
 #include <string>
 
-using namespace std;
 
 /**
 The BaseBoundary2D class defines a boundary geometry
@@ -59,7 +58,7 @@ class BaseBoundary2D
 		void initializeBPs();
 
 		/** Returns the name of the shape */
-		string getShapeName();
+		std::string getShapeName();
 
 		/** Returns the shape index */
 		int getShapeType();
@@ -71,7 +70,7 @@ class BaseBoundary2D
 	public:
 
 		/** NOSHAPE String constant */
-		string NO_SHAPE;
+		std::string NO_SHAPE;
 
 		const static int IS_INSIDE;
 		const static int IS_OUTSIDE;
@@ -89,7 +88,7 @@ class BaseBoundary2D
 
 	protected:
 
-		string shape_;
+		std::string shape_;
 		int shape_type_;
 
 		//should be set to 1 in the base constructor

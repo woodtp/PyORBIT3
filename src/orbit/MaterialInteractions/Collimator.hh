@@ -4,7 +4,6 @@
 
 #include "orbit/Bunch.hh"
 
-using namespace std;
 
 /**
   The collimator class is used to define how a bunch propogates through a collimator

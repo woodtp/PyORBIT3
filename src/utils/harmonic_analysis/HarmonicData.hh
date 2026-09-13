@@ -33,7 +33,6 @@
 
 #include "utils/OU_Function.hh"
 
-using namespace std;
 
 namespace OrbitUtils{
 

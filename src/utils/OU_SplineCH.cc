@@ -207,7 +207,7 @@ namespace OrbitUtils{
 		return yyp;
 	}
 
-	void SplineCH::print(ostream& Out)
+	void SplineCH::print(std::ostream& Out)
 	{
 		if(rank_MPI == 0){
 		  Out<<std::setprecision(15)<< std::setiosflags(std::ios::scientific);
@@ -228,8 +228,8 @@ namespace OrbitUtils{
 
 	void SplineCH::print(const char* fileName)
 	{
-		ofstream F_dump;
-		if(rank_MPI == 0)F_dump.open (fileName, ios::out);
+		std::ofstream F_dump;
+		if(rank_MPI == 0)F_dump.open (fileName, std::ios::out);
 		print(F_dump);
 		if(rank_MPI == 0){F_dump.close();}
 		return;

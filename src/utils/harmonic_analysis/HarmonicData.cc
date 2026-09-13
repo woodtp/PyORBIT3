@@ -29,6 +29,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////
 #include <cfloat>
+#include <cmath>
 
 #include "mpi/orbit_mpi.hh"
 #include "utils/harmonic_analysis/HarmonicData.hh"
