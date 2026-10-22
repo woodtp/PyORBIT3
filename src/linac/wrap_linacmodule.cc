@@ -30,6 +30,10 @@ extern "C" {
     PyMODINIT_FUNC initlinac(){
         //create new module
         PyObject* module = PyModule_Create(&linacModDef);
+        if (module == nullptr) {
+            return nullptr;
+        }
+
         //add the other classes init
         wrap_linac::initBaseRfGap(module);
         wrap_linac::initBaseRfGap_slow(module);
@@ -39,8 +43,14 @@ extern "C" {
         wrap_linac::initSuperFishFieldSource(module);
         wrap_linac::initRfGapThreePointTTF(module);
         wrap_linac::initRfGapThreePointTTF_slow(module);
+
         //initialization of the linac tracking module
         wrap_linac_tracking::initlinactracking(module);
+        if(PyErr_Occurred()) {
+            Py_DECREF(module);
+            return nullptr;
+        }
+
         return module;
     }
 

@@ -106,6 +106,20 @@ int ORBIT_MPI_Finalize(const char* message){
   return res;
 }
 
+void ORBIT_MPI_Abort(const char* message)
+{
+    if (message != nullptr) 
+    {
+        std::cerr << message << std::endl;
+    }
+
+#if USE_MPI > 0
+    MPI_Abort(MPI_COMM_WORLD, EXIT_FAILURE);
+#endif
+
+    std::_Exit(EXIT_FAILURE);
+}
+
 /** A C wrapper around MPI_Get_processor_name. */
 int ORBIT_MPI_Get_processor_name(char *name, int* len){
   int res = 0;

@@ -1298,6 +1298,10 @@ namespace wrap_orbit_bunch{
         Bunch_new, /* tp_new */
     };
 
+    PyTypeObject* bunchType() {
+        return &pyORBIT_Bunch_Type;
+    }
+
   static PyMethodDef BunchModuleMethods[] = { {NULL,NULL} };
 
 

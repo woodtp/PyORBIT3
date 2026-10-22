@@ -152,6 +152,7 @@ int ORBIT_MPI_Init();
 int ORBIT_MPI_Initialized(int *init);
 void ORBIT_MPI_Finalize();
 int ORBIT_MPI_Finalize(const char* message);
+[[noreturn]] void ORBIT_MPI_Abort(const char* message = nullptr);
 int ORBIT_MPI_Get_processor_name(char *name, int* len);
 double ORBIT_MPI_Wtime(void);
 double ORBIT_MPI_Wtick();

@@ -18,7 +18,7 @@
 #ifndef LINAC_TRACKING_H
 #define LINAC_TRACKING_H
 
-#include "Bunch.hh"
+class Bunch;
 
 namespace linac_tracking
 {
@@ -31,6 +31,11 @@ namespace linac_tracking
     /**
         Quadrupole element one: linear transport matrix for linac.
         kq = quadrupole field strength [m^(-2)]
+
+        @note The longitudinal update approximates \f$\beta_z = P_z/E\f$
+        as constant at its entrance value throughout each slice. Tracking the
+        element with more slices recomputes this value along the trajectory
+        and improves the longitudinal approximation.
     */
     void linac_quad1(Bunch* bunch, double length, double kq, int useCharge);
 
