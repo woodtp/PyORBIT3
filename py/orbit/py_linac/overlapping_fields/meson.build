@@ -3,6 +3,8 @@
 
 py_sources = files([
     '__init__.py',
+    'enge_function.py',
+    'quad_field_profile.py',
 	'jparc_enge_func_factory.py',
 	'sns_enge_func_factory.py',
 	'overlapping_quad_fields_lib.py'
